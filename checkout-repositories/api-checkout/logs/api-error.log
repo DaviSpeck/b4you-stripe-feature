@@ -2385,3 +2385,6 @@
 07/02/2026, 12:13:31 error: {"type":"CHECKOUT_EVENT_PERSIST_ERROR","error":"getaddrinfo ENOTFOUND sixbase-mango5-db.cqrtxwzx6yv6.sa-east-1.rds.amazonaws.com","eventId":"14b788d4-975d-474b-b44d-fa1d058c993e"}
 07/02/2026, 12:13:31 error: {"type":"CHECKOUT_EVENT_PERSIST_ERROR","error":"getaddrinfo ENOTFOUND sixbase-mango5-db.cqrtxwzx6yv6.sa-east-1.rds.amazonaws.com","eventId":"b2a87424-b3fa-4d49-a601-3a8c97035245"}
 07/02/2026, 23:00:51 error: {"type":"CHECKOUT_EVENT_PERSIST_ERROR","error":"getaddrinfo ENOTFOUND sixbase-mango5-db.cqrtxwzx6yv6.sa-east-1.rds.amazonaws.com","eventId":"cd0e8644-d3b2-4e5e-b023-1904a810cd38"}
+08/02/2026, 11:38:05 error: {"message":"stripe_payment_intent_failed","transaction_id":"58c0b82d-1d39-4d9a-9d70-6e0c3c7f4a01","order_id":"order-123","sale_id":"sale-456","provider":"stripe","error":"Stripe error"}
+08/02/2026, 11:58:46 error: {"message":"stripe_payment_intent_failed","transaction_id":"58c0b82d-1d39-4d9a-9d70-6e0c3c7f4a01","order_id":"order-123","sale_id":"sale-456","provider":"stripe","error":"Stripe error"}
+08/02/2026, 11:58:46 error: {"message":"stripe_payment_intent_failed","transaction_id":"58c0b82d-1d39-4d9a-9d70-6e0c3c7f4a01","order_id":"order-123","sale_id":"sale-456","provider":"stripe","error":"db failure"}

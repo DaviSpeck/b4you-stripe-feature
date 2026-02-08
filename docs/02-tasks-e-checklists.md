@@ -51,17 +51,21 @@
 11. Definir contrato de resposta que permita identificar provedor no checkout.
 12. Validar compatibilidade com o fluxo nacional (sem regressões).
 
-### Checklist do MVP
-- [ ] Fluxo internacional definido e isolado.
-- [ ] Contrato de API validado com checkout.
-- [ ] Feature flag bloqueia acessos não liberados.
-- [ ] Rastreabilidade completa via IDs internos.
-- [ ] Metadata enviada ao Stripe confirmada nos webhooks.
-- [ ] Rotas nacionais preservadas sem regressão.
-- [ ] Idempotência de criação validada.
-- [ ] Status do pagamento possui timestamps críticos.
-- [ ] `provider` persistido e exposto no contrato.
-- [ ] Compatibilidade confirmada com o fluxo nacional.
+### Checklist — FASE 1 (api-checkout) ✅
+- [x] Fluxo internacional definido e isolado. **(validado por testes)**
+- [x] Feature flag bloqueia acessos não liberados. **(validado por testes)**
+- [x] Rastreabilidade completa via IDs internos. **(validado por testes)**
+- [x] Rotas nacionais preservadas sem regressão. **(validado por testes)**
+- [x] Idempotência de criação validada. **(validado por testes)**
+- [x] `provider` persistido e exposto no contrato. **(validado por testes)**
+- [x] Contrato de API validado no nível de DTO/response. **(validado por testes)**
+- [x] Persistência de `provider_payment_intent_id` registrada. **(validado por testes)**
+
+### Checklist do MVP (itens pós-FASE 1)
+- [ ] Metadata enviada ao Stripe confirmada nos webhooks. **(FASE 2)**
+- [ ] Status do pagamento possui timestamps críticos. **(FASE 3)**
+- [ ] Exposição de status consolidado conforme eventos recebidos. **(FASE 2/3)**
+- [ ] Compatibilidade confirmada com o fluxo nacional (sem regressões). **(revalidação contínua)**
 
 ### Ordem sugerida
 1. Contrato do fluxo internacional.

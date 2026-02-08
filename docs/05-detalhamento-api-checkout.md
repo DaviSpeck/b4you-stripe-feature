@@ -11,11 +11,13 @@ Documentar o fluxo operacional do pagamento internacional via Stripe, mantendo a
 - O PaymentIntent é criado **imediatamente após a validação do produto/oferta internacional** e do contexto de compra.
 - A criação ocorre **somente no fluxo internacional**, nunca no nacional.
 - A criação inclui metadata obrigatória: `transaction_id`, `order_id`, `sale_id` e `provider`.
+- A persistência do PaymentIntent ocorre na tabela `stripe_payment_intents` (migração centralizada no **sixbase-api**).
 
 ## Estados internos (pré e pós webhooks)
 - **Pré-webhook**: o pagamento permanece em estado **pendente** no modelo interno, aguardando confirmação por webhook.
 - **Pós-webhook**: o estado interno é atualizado **exclusivamente** pelos webhooks processados pelas lambdas.
 - O api-checkout **não** realiza polling para confirmação.
+- **FASE 1**: não existe lógica de estado final; apenas criação e persistência do PaymentIntent com status `pending`.
 
 ## Estratégia de idempotência na criação de pagamento
 - A criação do PaymentIntent deve aceitar **retries do checkout** sem duplicar transações.
@@ -55,3 +57,4 @@ Documentar o fluxo operacional do pagamento internacional via Stripe, mantendo a
 - Não executa split, KYC ou Stripe Connect.
 - Não reinterpreta estado sem webhook.
 - Não altera regras do fluxo nacional.
+- Não confirma pagamento (sem estados finais na FASE 1).

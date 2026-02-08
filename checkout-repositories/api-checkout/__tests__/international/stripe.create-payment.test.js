@@ -178,4 +178,92 @@ describe('Stripe international payment intent - Phase 1', () => {
 
     expect(Pagarme).not.toHaveBeenCalled();
   });
+
+  it('handles concurrent idempotent requests without duplicating intents', async () => {
+    StripePaymentIntentsRepository.findByTransactionId
+      .mockResolvedValueOnce(null)
+      .mockResolvedValueOnce({
+        provider_payment_intent_id: 'pi_race',
+      });
+    mockStripeCreate.mockResolvedValue({
+      id: 'pi_race',
+      client_secret: 'secret_race',
+    });
+    mockStripeRetrieve.mockResolvedValue({
+      client_secret: 'secret_race',
+    });
+
+    const [first, second] = await Promise.all([
+      new CreateStripePaymentIntent().execute(basePayload),
+      new CreateStripePaymentIntent().execute(basePayload),
+    ]);
+
+    expect(mockStripeCreate).toHaveBeenCalledTimes(1);
+    expect(mockStripeRetrieve).toHaveBeenCalledTimes(1);
+    expect(first.provider_payment_intent_id).toBe('pi_race');
+    expect(second.provider_payment_intent_id).toBe('pi_race');
+  });
+
+  it('rejects divergent payload for the same transaction_id', async () => {
+    const req = {
+      body: {
+        ...basePayload,
+        amount: 'not-a-number',
+        currency: 'us',
+      },
+    };
+    const res = buildRes();
+    const next = jest.fn();
+    const middleware = validateDTO(createStripePaymentIntentDTO);
+
+    await middleware(req, res, next);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(next).not.toHaveBeenCalled();
+  });
+
+  it('blocks when feature flag toggles off between retries', async () => {
+    StripePaymentIntentsRepository.findByTransactionId.mockResolvedValue(null);
+    mockStripeCreate.mockResolvedValue({
+      id: 'pi_flag',
+      client_secret: 'secret_flag',
+    });
+
+    const req = { body: basePayload };
+    const res = buildRes();
+    const next = jest.fn();
+
+    await stripeFeatureFlag(req, res, next);
+    expect(next).toHaveBeenCalled();
+
+    process.env.STRIPE_INTERNATIONAL_ENABLED = 'false';
+
+    const res2 = buildRes();
+    const next2 = jest.fn();
+
+    await stripeFeatureFlag(req, res2, next2);
+    expect(res2.status).toHaveBeenCalledWith(403);
+    expect(next2).not.toHaveBeenCalled();
+  });
+
+  it('returns 500 when persistence fails after Stripe creation', async () => {
+    StripePaymentIntentsRepository.findByTransactionId.mockResolvedValue(null);
+    StripePaymentIntentsRepository.create.mockRejectedValue(
+      new Error('db failure'),
+    );
+    mockStripeCreate.mockResolvedValue({
+      id: 'pi_persist',
+      client_secret: 'secret_persist',
+    });
+
+    const req = { body: basePayload };
+    const res = buildRes();
+
+    await createStripePaymentIntentController(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.send).toHaveBeenCalledWith({
+      message: 'Erro ao criar pagamento internacional',
+    });
+  });
 });

@@ -36,3 +36,5 @@ Entregar um fluxo internacional mínimo viável com Stripe que suporte:
 - **02-tasks-e-checklists.md**: lista de tasks, checklist MVP e dependências.
 - **03-criterios-de-aceite-e-validacao.md**: critérios de aceite e go/no-go.
 - **04-riscos-e-pontos-de-atencao.md**: riscos e decisões futuras.
+
+> Nota de governança: o **dashboard** é o canal de gestão da feature após liberação (uso por produtores), enquanto o **backoffice** permanece como canal interno da B4You para configurar produtos/ofertas internacionais e habilitar a integração do checkout.

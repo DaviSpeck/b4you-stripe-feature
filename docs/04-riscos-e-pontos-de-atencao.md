@@ -5,12 +5,14 @@
 - Inconsistências de mapeamento entre eventos Stripe e estados internos.
 - Dependências cruzadas entre serviços com feature flag inconsistente.
 - Falha de idempotência pode duplicar eventos e gerar estados inválidos.
+- Eventos fora de ordem podem causar estado final incorreto.
 
 ## Riscos operacionais
 - Atraso no processamento de webhooks em picos de tráfego.
 - Falta de monitoramento específico para eventos críticos.
 - Processos de suporte sem visibilidade de `provider_*` IDs.
 - Configuração incorreta no backoffice pode expor Stripe indevidamente.
+- Confusão de governança entre dashboard e backoffice pode gerar operações indevidas.
 
 ## Riscos de negócio
 - Experiência internacional inconsistente se fluxo EN não estiver completo.

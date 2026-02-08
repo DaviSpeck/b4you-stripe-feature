@@ -9,6 +9,7 @@
 5. Instrumentar logs e métricas específicas de Stripe.
 6. Implementar idempotência por `event_id` e janela de reprocessamento.
 7. Definir política de rejeição de eventos inválidos e rastrear falhas.
+8. Garantir tratamento de eventos fora de ordem (status conflitantes).
 
 ### Checklist do MVP
 - [ ] Webhook criado para eventos de pagamento.
@@ -18,6 +19,7 @@
 - [ ] Observabilidade mínima (logs, métricas e alertas).
 - [ ] Idempotência validada para reprocessamento de eventos.
 - [ ] Rejeição de eventos inválidos auditável.
+- [ ] Tratamento de eventos fora de ordem validado.
 
 ### Ordem sugerida
 1. Webhooks e validação.
@@ -39,6 +41,8 @@
 5. Expor status do pagamento conforme eventos recebidos.
 6. Definir metadata obrigatória enviada ao Stripe (`transaction_id`, `order_id`, `sale_id`).
 7. Garantir separação explícita de rotas nacionais vs. internacionais.
+8. Implementar idempotência na criação de intentos (retries do checkout).
+9. Definir timestamps relevantes (criação, autorização, captura, falha).
 
 ### Checklist do MVP
 - [ ] Fluxo internacional definido e isolado.
@@ -47,6 +51,8 @@
 - [ ] Rastreabilidade completa via IDs internos.
 - [ ] Metadata enviada ao Stripe confirmada nos webhooks.
 - [ ] Rotas nacionais preservadas sem regressão.
+- [ ] Idempotência de criação validada.
+- [ ] Status do pagamento possui timestamps críticos.
 
 ### Ordem sugerida
 1. Contrato do fluxo internacional.
@@ -68,6 +74,7 @@
 4. Garantir funcionamento com feature flag.
 5. Garantir experiência de erro para eventos de falha e chargeback.
 6. Exibir moeda e idioma coerentes com internacional.
+7. Exibir estados pós-compra (pending/refunded/dispute) quando aplicável.
 
 ### Checklist do MVP
 - [ ] Páginas internacionais em EN.
@@ -76,6 +83,7 @@
 - [ ] Feature flag funcionando.
 - [ ] Mensagens de erro para falhas e chargeback.
 - [ ] Moeda e idioma coerentes com internacional.
+- [ ] Estados pós-compra disponíveis para consulta.
 
 ### Ordem sugerida
 1. UI internacional.
@@ -94,12 +102,14 @@
 2. Redirecionar para novo checkout internacional quando aplicável.
 3. Preservar fluxo nacional.
 4. Garantir compatibilidade de parâmetros e tracking existentes.
+5. Assegurar que falhas no handoff não quebrem o fluxo nacional.
 
 ### Checklist do MVP
 - [ ] Detecção de produto internacional por flag explícita.
 - [ ] Redirecionamento consistente para novo checkout.
 - [ ] Fluxo nacional intacto.
 - [ ] Parâmetros legados mantidos no handoff.
+- [ ] Fallback seguro em caso de falha no redirecionamento.
 
 ### Ordem sugerida
 1. Identificação do produto internacional.
@@ -118,6 +128,7 @@
 3. Relacionar transações a `transaction_id`, `order_id`, `sale_id`.
 4. Aplicar feature flag nas visualizações.
 5. Exibir histórico básico de eventos Stripe por transação.
+6. Exibir status de habilitação internacional para o produtor.
 
 ### Checklist do MVP
 - [ ] Visualização de pagamentos internacionais.
@@ -125,6 +136,7 @@
 - [ ] Rastreabilidade com IDs internos.
 - [ ] Feature flag aplicada.
 - [ ] Histórico de eventos Stripe acessível.
+- [ ] Status de habilitação internacional visível ao produtor.
 
 ### Ordem sugerida
 1. Modelos de dados e endpoints.
@@ -143,6 +155,7 @@
 3. Expor endpoints para dashboards e checkouts.
 4. Garantir auditoria das mudanças de flag.
 5. Expor endpoints de consulta de status internacional por produto/oferta.
+6. Expor endpoints de status da feature para consumo pelo dashboard.
 
 ### Checklist do MVP
 - [ ] Cadastro de produtos/ofertas internacionais.
@@ -150,6 +163,7 @@
 - [ ] Endpoints para consulta de estado.
 - [ ] Auditoria básica habilitada.
 - [ ] Consulta de status internacional por produto/oferta disponível.
+- [ ] Endpoint de status da feature disponível para dashboard.
 
 ### Ordem sugerida
 1. Modelo de produto internacional.
@@ -169,12 +183,14 @@
 3. Exibir histórico básico de alterações (usuário, data, ação).
 4. Garantir validações para impedir uso de internacional sem flag.
 5. Integrar com endpoints do sixbase-api-backoffice.
+6. Indicar claramente que o uso operacional ocorre no dashboard.
 
 ### Checklist do MVP
 - [ ] Cadastro/edição de produto internacional disponível.
 - [ ] Feature flag de Stripe controlável no backoffice.
 - [ ] Histórico básico de alterações visível.
 - [ ] Validações de internacional aplicadas.
+- [ ] Mensagem de governança exibida para usuários internos.
 
 ### Ordem sugerida
 1. Campos de produto/oferta internacional.

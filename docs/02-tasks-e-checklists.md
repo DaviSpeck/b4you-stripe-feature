@@ -84,6 +84,8 @@
 5. Garantir experiência de erro para eventos de falha e chargeback.
 6. Exibir moeda e idioma coerentes com internacional.
 7. Exibir estados pós-compra (pending/refunded/dispute) quando aplicável.
+8. Definir base compartilhada de UI e i18n para EN/PT.
+9. Implementar camada de comunicação com api-checkout reutilizável pelo legado.
 
 ### Checklist do MVP
 - [ ] Páginas internacionais em EN.
@@ -93,6 +95,8 @@
 - [ ] Mensagens de erro para falhas e chargeback.
 - [ ] Moeda e idioma coerentes com internacional.
 - [ ] Estados pós-compra disponíveis para consulta.
+- [ ] Base de UI/i18n compartilhada com o legado.
+- [ ] Cliente de comunicação com api-checkout reutilizável.
 
 ### Ordem sugerida
 1. UI internacional.
@@ -112,6 +116,8 @@
 3. Preservar fluxo nacional.
 4. Garantir compatibilidade de parâmetros e tracking existentes.
 5. Assegurar que falhas no handoff não quebrem o fluxo nacional.
+6. Consolidar componentes e mensagens com o novo checkout.
+7. Adotar camada de comunicação com api-checkout compartilhada.
 
 ### Checklist do MVP
 - [ ] Detecção de produto internacional por flag explícita.
@@ -119,6 +125,8 @@
 - [ ] Fluxo nacional intacto.
 - [ ] Parâmetros legados mantidos no handoff.
 - [ ] Fallback seguro em caso de falha no redirecionamento.
+- [ ] Componentes e mensagens compartilhados com o novo checkout.
+- [ ] Comunicação com api-checkout alinhada ao novo checkout.
 
 ### Ordem sugerida
 1. Identificação do produto internacional.

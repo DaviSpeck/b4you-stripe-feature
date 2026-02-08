@@ -65,17 +65,22 @@
   - Exibição de estados intermediários e finais (approved, pending, failed).
   - Tratamento de estados de reembolso e disputa (informativo pós-compra).
   - Persistência de contexto mínimo para recuperação de sessão.
+  - Garantir base compartilhada para internacionalização (EN/PT) com o legado.
+  - Manter contratos de comunicação com api-checkout alinhados ao legado.
 - **Módulos/camadas impactadas**:
   - UI/UX internacional.
   - Integração com gateway.
   - Controle por feature flag.
   - Internacionalização (strings e mensagens EN).
   - Componentes de status pós-compra (success/failure/pending).
+  - Camada de configuração de tema/branding compartilhada.
+  - Camada de comunicação com api-checkout (SDK/cliente HTTP comum).
 - **Visão geral das mudanças esperadas**:
   - Rotas e páginas específicas para internacional.
   - Parametrização de moeda e idioma.
   - Contrato de tratamento de erros e mensagens de falha.
   - Manuseio de falhas de autorização e 3DS (quando aplicável).
+  - Estratégia de compartilhamento de componentes e textos com o legado.
 
 ## sixbase-checkout (checkout legado)
 - **Objetivo no Stripe**: manter compatibilidade e roteamento correto para internacional.
@@ -84,15 +89,20 @@
   - Manter experiência nacional intacta.
   - Garantir compatibilidade com URLs e parâmetros existentes.
   - Preservar métricas e tracking legados no handoff.
+  - Utilizar estrutura compartilhada de UI/i18n com o novo checkout.
+  - Manter camada de comunicação com api-checkout alinhada ao novo checkout.
 - **Módulos/camadas impactadas**:
   - Roteamento de checkout.
   - Feature flag.
   - Identificação de produto/oferta internacional.
   - Camada de tracking e analytics.
+  - Camada de UI compartilhada (componentes e mensagens).
+  - Camada de configuração por país/idioma.
 - **Visão geral das mudanças esperadas**:
   - Identificação de produto internacional e handoff para novo checkout.
   - Mecanismo de fallback seguro para fluxo nacional.
   - Manutenção de parâmetros críticos (campaign, affiliate, etc).
+  - Consolidação do layout e fluxo entre nacional e internacional.
 
 ## sixbase-dashboard
 - **Objetivo no Stripe**: exibir controle e status para operações internacionais.

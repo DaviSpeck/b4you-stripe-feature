@@ -25,12 +25,16 @@
 - Tratamento de erros e mensagens consistentes.
 - Exibição de moeda e idioma alinhados ao internacional.
 - Estados pós-compra (pending/refunded/dispute) disponíveis.
+- Base compartilhada de UI/i18n para EN/PT com o legado.
+- Cliente de comunicação com api-checkout compartilhado.
 
 ### sixbase-checkout (checkout legado)
 - Redirecionamento para checkout internacional apenas quando produto for internacional.
 - Fluxo nacional inalterado.
 - Parâmetros legados preservados no redirecionamento.
 - Fallback seguro preserva experiência nacional.
+- Componentes e mensagens compartilhados com o novo checkout.
+- Camada de comunicação com api-checkout alinhada ao novo checkout.
 
 ### sixbase-dashboard
 - Exibição de transações internacionais e status.

@@ -7,6 +7,7 @@
 - Falha de idempotência pode duplicar eventos e gerar estados inválidos.
 - Eventos fora de ordem podem causar estado final incorreto.
 - Falhas de identificação do provedor podem gerar conciliação incorreta.
+- Divergência entre UI e i18n nos checkouts pode gerar duplicação de manutenção.
 
 ## Riscos operacionais
 - Atraso no processamento de webhooks em picos de tráfego.

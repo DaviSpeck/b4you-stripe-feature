@@ -10,6 +10,7 @@ const router = express.Router();
 router.use(session);
 router.use(metricsProm);
 
+router.use('/international', require('./international'));
 router.use('/sales', require('./sales'));
 router.use('/event', require('./event'));
 router.use('/events', require('./events'));

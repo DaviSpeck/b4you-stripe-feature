@@ -44,6 +44,13 @@ const httpErrorsTotal = new client.Counter({
     registers: [register],
 });
 
+const paymentIntentsCreatedTotal = new client.Counter({
+    name: 'payment_intents_created_total',
+    help: 'Total de PaymentIntents criados',
+    labelNames: ['provider'],
+    registers: [register],
+});
+
 const inFlightRequests = new client.Gauge({
     name: 'in_flight_requests',
     help: 'Requisições em processamento',
@@ -168,4 +175,14 @@ function setupMetricsEndpoint(app) {
     });
 }
 
-module.exports = { metricsProm, setupMetricsEndpoint };
+const incrementPaymentIntentsCreated = (provider) => {
+    if (!provider) return;
+    paymentIntentsCreatedTotal.labels({ provider }).inc();
+};
+
+module.exports = {
+    metricsProm,
+    setupMetricsEndpoint,
+    incrementPaymentIntentsCreated,
+    register,
+};

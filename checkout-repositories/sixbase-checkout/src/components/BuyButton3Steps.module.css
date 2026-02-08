@@ -1,0 +1,15 @@
+button[id='button3steps']{
+    height: 50px !important;
+    width: 100% !important;
+    gap: 23px !important;
+    display: flex !important;
+    padding: 0 31px !important;
+    align-self: stretch !important;
+    align-items: center !important;
+    flex-shrink: 0 !important;
+    border-radius: 8px !important;
+    justify-content: center!important;
+    background-color: rgba(32, 195, 116, 1) !important;
+    box-shadow: none;
+    
+  }

@@ -1,0 +1,369 @@
+components:
+  schemas:
+    Manager:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID do usuário backoffice
+          example: 5
+        email:
+          type: string
+          format: email
+          description: Email do gerente
+          example: "gerente@b4you.com.br"
+      required:
+        - id
+        - email
+
+    ManagersList:
+      type: object
+      properties:
+        managers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Manager'
+      required:
+        - managers
+
+    RevenueResponse:
+      type: object
+      properties:
+        total_revenue:
+          type: number
+          format: float
+          description: Faturamento total do período
+          example: 125000.50
+        mom_value:
+          type: number
+          format: float
+          description: Variação absoluta em relação ao período anterior (pode ser negativo)
+          example: 15000.00
+        mom_percentage:
+          type: number
+          format: float
+          description: Variação percentual em relação ao período anterior (pode ser negativo)
+          example: 13.64
+        clients_achieved_goal:
+          type: integer
+          description: Quantidade de clientes que bateram meta no período
+          example: 8
+      required:
+        - total_revenue
+        - mom_value
+        - mom_percentage
+        - clients_achieved_goal
+
+    Client:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID do cliente
+          example: 123
+        name:
+          type: string
+          description: Nome completo do cliente
+          example: "João Silva"
+        email:
+          type: string
+          format: email
+          description: Email do cliente
+          example: "joao@example.com"
+        created_at:
+          type: string
+          format: date-time
+          description: Data de criação do cliente
+          example: "2025-01-15T10:30:00.000Z"
+        last_sale_date:
+          type: string
+          format: date-time
+          nullable: true
+          description: Data da última venda
+          example: "2025-10-20T14:45:00.000Z"
+        sales_count:
+          type: integer
+          description: Total de vendas realizadas
+          example: 15
+        manager_email:
+          type: string
+          format: email
+          description: Email do gerente responsável pelo cliente
+          example: "gerente@b4you.com.br"
+      required:
+        - id
+        - name
+        - email
+        - created_at
+        - sales_count
+        - manager_email
+
+    ClientsResponse:
+      type: object
+      properties:
+        total_clients:
+          type: integer
+          description: Total de clientes vinculados ao gerente
+          example: 100
+        active_clients:
+          type: integer
+          description: Clientes que fizeram pelo menos 1 venda nos últimos 30 dias
+          example: 65
+        inactive_clients:
+          type: integer
+          description: Clientes que NÃO fizeram vendas nos últimos 30 dias
+          example: 30
+        new_clients:
+          type: integer
+          description: Clientes criados nos últimos 30 dias
+          example: 5
+        clients:
+          type: array
+          items:
+            $ref: '#/components/schemas/Client'
+      required:
+        - total_clients
+        - active_clients
+        - inactive_clients
+        - new_clients
+        - clients
+
+    GoalStatus:
+      type: object
+      properties:
+        next_goal:
+          type: number
+          format: float
+          description: Valor da próxima meta
+          example: 5000000
+        percentage_achieved:
+          type: number
+          format: float
+          description: Porcentagem atingida da próxima meta
+          example: 57.3
+        goal_achieved:
+          type: boolean
+          description: Se já atingiu a próxima meta
+          example: false
+      required:
+        - next_goal
+        - percentage_achieved
+        - goal_achieved
+
+    Producer:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID do produtor
+          example: 101
+        name:
+          type: string
+          description: Nome completo do produtor
+          example: "Maria Santos"
+        email:
+          type: string
+          format: email
+          description: Email do produtor
+          example: "maria@example.com"
+        birth_date:
+          type: string
+          nullable: true
+          description: Data de aniversário (formato DD/MM)
+          example: "15/03"
+        phone:
+          type: string
+          nullable: true
+          description: Telefone/WhatsApp do produtor
+          example: "11987654321"
+        period_revenue:
+          type: number
+          format: float
+          description: Faturamento do período selecionado
+          example: 125000.50
+        goal_status:
+          $ref: '#/components/schemas/GoalStatus'
+        birthday_in_period:
+          type: boolean
+          description: Se faz aniversário no período
+          example: true
+        award_achieved:
+          type: boolean
+          description: Se bateu uma nova meta no período
+          example: false
+      required:
+        - id
+        - name
+        - email
+        - period_revenue
+        - goal_status
+        - birthday_in_period
+        - award_achieved
+
+    ProducersResponse:
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total de produtores (após filtros)
+          example: 25
+        page:
+          type: integer
+          description: Página atual (0-based)
+          example: 0
+        size:
+          type: integer
+          description: Quantidade de itens por página
+          example: 10
+        goal_achieved_count:
+          type: integer
+          description: Quantidade de produtores que bateram meta no período
+          example: 8
+        producers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Producer'
+      required:
+        - total
+        - page
+        - size
+        - goal_achieved_count
+        - producers
+
+    BirthdayEvent:
+      type: object
+      properties:
+        producer_id:
+          type: integer
+          description: ID do produtor
+          example: 101
+        name:
+          type: string
+          description: Nome completo do produtor
+          example: "João Silva"
+        email:
+          type: string
+          format: email
+          description: Email do produtor
+          example: "joao@example.com"
+        phone:
+          type: string
+          nullable: true
+          description: Telefone/WhatsApp do produtor
+          example: "11987654321"
+        revenue:
+          type: number
+          format: float
+          description: Faturamento do produtor no período
+          example: 12500.50
+        manager_email:
+          type: string
+          format: email
+          description: Email do gerente responsável pelo produtor
+          example: "gerente@b4you.com.br"
+      required:
+        - producer_id
+        - name
+        - email
+        - revenue
+        - manager_email
+
+    GoalEvent:
+      type: object
+      properties:
+        producer_id:
+          type: integer
+          description: ID do produtor
+          example: 201
+        name:
+          type: string
+          description: Nome completo do produtor
+          example: "Maria Santos"
+        email:
+          type: string
+          format: email
+          description: Email do produtor
+          example: "maria@example.com"
+        phone:
+          type: string
+          nullable: true
+          description: Telefone/WhatsApp do produtor
+          example: "11976543210"
+        revenue:
+          type: number
+          format: float
+          description: Faturamento total do produtor
+          example: 78000.00
+        milestone_achieved:
+          type: string
+          description: Meta atingida
+          example: "R$ 50.000"
+        manager_email:
+          type: string
+          format: email
+          description: Email do gerente responsável pelo produtor
+          example: "gerente@b4you.com.br"
+      required:
+        - producer_id
+        - name
+        - email
+        - revenue
+        - milestone_achieved
+        - manager_email
+
+    DayEvents:
+      type: object
+      properties:
+        birthdays:
+          type: array
+          items:
+            $ref: '#/components/schemas/BirthdayEvent'
+          description: Aniversariantes do dia
+        goals:
+          type: array
+          items:
+            $ref: '#/components/schemas/GoalEvent'
+          description: Produtores que bateram meta no dia
+      required:
+        - birthdays
+        - goals
+
+    CalendarResponse:
+      type: object
+      properties:
+        monthly_birthday_count:
+          type: integer
+          description: Quantidade de aniversariantes no mês
+          example: 12
+        monthly_goals_achieved_count:
+          type: integer
+          description: Quantidade de produtores que bateram meta no mês
+          example: 8
+        events_by_date:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/DayEvents'
+          description: Eventos agrupados por data (formato YYYY-MM-DD)
+          example:
+            "2025-11-03":
+              birthdays:
+                - producer_id: 101
+                  name: "João Silva"
+                  email: "joao@example.com"
+                  phone: "11987654321"
+                  revenue: 12500.50
+              goals: []
+            "2025-11-15":
+              birthdays: []
+              goals:
+                - producer_id: 201
+                  name: "Maria Santos"
+                  email: "maria@example.com"
+                  phone: "11976543210"
+                  revenue: 78000.00
+                  milestone_achieved: "R$ 50.000"
+      required:
+        - monthly_birthday_count
+        - monthly_goals_achieved_count
+        - events_by_date
+

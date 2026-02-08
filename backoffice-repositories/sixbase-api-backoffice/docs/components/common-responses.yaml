@@ -1,0 +1,29 @@
+components:
+  responses:
+    Success:
+      description: Operação realizada com sucesso
+      content:
+        application/json:
+          schema:
+            $ref: "./common-schemas.yaml#/components/schemas/SuccessResponse"
+    
+    BadRequest:
+      description: Dados inválidos
+      content:
+        application/json:
+          schema:
+            $ref: "./common-schemas.yaml#/components/schemas/Error"
+    
+    UnauthorizedError:
+      description: Não autorizado
+      content:
+        application/json:
+          schema:
+            $ref: "./common-schemas.yaml#/components/schemas/Error"
+    
+    InternalServerError:
+      description: Erro interno do servidor
+      content:
+        application/json:
+          schema:
+            $ref: "./common-schemas.yaml#/components/schemas/Error"

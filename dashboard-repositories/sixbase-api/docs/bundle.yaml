@@ -1,0 +1,1524 @@
+openapi: 3.0.3
+info:
+  title: Sixbase-api
+  version: 1.0.0
+  description: Documentação da Sixbase-api
+servers:
+  - url: 'http://localhost:{port}/api'
+    description: Local dev
+    variables:
+      port:
+        default: '5501'
+        enum:
+          - '5000'
+          - '5501'
+tags:
+  - name: Autenticação
+    description: 'Endpoints para autenticação, login, logout e gerenciamento de senhas'
+  - name: Vendas
+    description: 'Endpoints para gerenciamento de vendas, assinaturas e códigos de cliente'
+  - name: Saldo
+    description: 'Endpoints para consulta de saldo, comissões e informações bancárias'
+components:
+  schemas:
+    components:
+      schemas: null
+      sales:
+        ClientCodeRequest:
+          type: object
+          properties:
+            email:
+              type: string
+              format: email
+              example: cliente@email.com
+        ClientCodeResponse:
+          type: object
+          properties:
+            message:
+              type: string
+              example: Código de segurança enviado com sucesso
+        VerifyCodeRequest:
+          type: object
+          properties:
+            code:
+              type: string
+              example: ABC123
+        SaleItem:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+            product_name:
+              type: string
+              example: Curso de JavaScript
+            price:
+              type: number
+              format: float
+              example: 99.9
+            status:
+              type: string
+              example: active
+            purchase_date:
+              type: string
+              format: date-time
+              example: '2023-01-01T00:00:00Z'
+        VerifyCodeResponse:
+          type: object
+          properties:
+            sales:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  product_name:
+                    type: string
+                    example: Curso de JavaScript
+                  price:
+                    type: number
+                    format: float
+                    example: 99.9
+                  status:
+                    type: string
+                    example: active
+                  purchase_date:
+                    type: string
+                    format: date-time
+                    example: '2023-01-01T00:00:00Z'
+            message:
+              type: string
+              example: Vendas encontradas com sucesso
+        CancelSubscriptionRequest:
+          type: object
+          properties:
+            id_student:
+              type: integer
+              example: 1
+            uuid_subscription:
+              type: string
+              format: uuid
+              example: 123e4567-e89b-12d3-a456-426614174000
+        CancelSubscriptionResponse:
+          type: object
+          properties:
+            success:
+              type: boolean
+              example: true
+            message:
+              type: string
+              example: Assinatura cancelada com sucesso
+        UpdateCardRequest:
+          type: object
+          required:
+            - subscription_uuid
+            - student
+          properties:
+            subscription_uuid:
+              type: string
+              format: uuid
+              example: 123e4567-e89b-12d3-a456-426614174000
+            student:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                name:
+                  type: string
+                  example: João Silva
+            card_data:
+              type: object
+              properties:
+                number:
+                  type: string
+                  example: '4111111111111111'
+                expiry_month:
+                  type: string
+                  example: '12'
+                expiry_year:
+                  type: string
+                  example: '2025'
+                cvv:
+                  type: string
+                  example: '123'
+                holder_name:
+                  type: string
+                  example: JOÃO SILVA
+        UpdateCardResponse:
+          type: object
+          properties:
+            success:
+              type: boolean
+              example: true
+            message:
+              type: string
+              example: Cartão atualizado com sucesso
+  responses:
+    '200':
+      description: Operação realizada com sucesso
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Operação realizada com sucesso
+    '400':
+      description: Requisição inválida
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              statusCode:
+                type: integer
+                example: 400
+              message:
+                type: string
+                example: Erro na requisição
+    '401':
+      description: Usuário não autorizado
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              statusCode:
+                type: integer
+                example: 400
+              message:
+                type: string
+                example: Erro na requisição
+    '403':
+      description: Acesso negado
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              statusCode:
+                type: integer
+                example: 400
+              message:
+                type: string
+                example: Erro na requisição
+    '404':
+      description: Recurso não encontrado
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              statusCode:
+                type: integer
+                example: 400
+              message:
+                type: string
+                example: Erro na requisição
+    '429':
+      description: Muitas requisições
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              statusCode:
+                type: integer
+                example: 400
+              message:
+                type: string
+                example: Erro na requisição
+    '500':
+      description: Erro interno do servidor
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              statusCode:
+                type: integer
+                example: 400
+              message:
+                type: string
+                example: Erro na requisição
+  parameters:
+    UserIdParam:
+      name: userId
+      in: path
+      required: true
+      description: ID do usuário
+      schema:
+        type: integer
+        example: 1
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+paths:
+  /auth/login:
+    post:
+      tags:
+        - Autenticação
+      summary: Login do usuário
+      description: Autentica um usuário no sistema
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: usuario@email.com
+                password:
+                  type: string
+                  format: password
+                  example: '123456'
+      responses:
+        '200':
+          description: Login realizado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: Luca Gabriel
+                      email:
+                        type: string
+                        format: email
+                        example: luca@email.com
+        '401':
+          description: Usuário não autorizado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Erro na requisição
+        '429':
+          description: Muitas requisições
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Erro na requisição
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Erro na requisição
+  /auth/login-merlin:
+    post:
+      tags:
+        - Autenticação
+      summary: Login Merlin
+      description: Autentica um usuário no sistema Merlin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: usuario@email.com
+                password:
+                  type: string
+                  format: password
+                  example: '123456'
+                device_id:
+                  type: string
+                  nullable: true
+                  example: device-123
+      responses:
+        '200':
+          description: Login realizado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: Luca Gabriel
+                      email:
+                        type: string
+                        format: email
+                        example: luca@email.com
+        '401':
+          description: Usuário não autorizado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Erro na requisição
+        '429':
+          description: Muitas requisições
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Erro na requisição
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Erro na requisição
+  /auth/backoffice:
+    get:
+      tags:
+        - Autenticação
+      summary: Gerar autenticação do backoffice
+      description: Gera token de autenticação para o backoffice
+      responses:
+        '200':
+          description: Token gerado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: Luca Gabriel
+                      email:
+                        type: string
+                        format: email
+                        example: luca@email.com
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Erro na requisição
+  /auth/logout:
+    get:
+      tags:
+        - Autenticação
+      summary: Logout do usuário
+      description: Realiza logout do usuário logado
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Logout realizado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Logout realizado com sucesso
+        '401':
+          description: Usuário não autorizado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Erro na requisição
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Erro na requisição
+  /auth/me:
+    get:
+      tags:
+        - Autenticação
+      summary: Informações do usuário logado
+      description: Retorna informações do usuário atualmente logado
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Informações do usuário
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: Luca Gabriel
+                      email:
+                        type: string
+                        format: email
+                        example: luca@email.com
+                  isProducer:
+                    type: boolean
+                    example: true
+        '401':
+          description: Usuário não autorizado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Erro na requisição
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Erro na requisição
+  /auth/change-password:
+    post:
+      tags:
+        - Autenticação
+      summary: Alterar senha do usuário logado
+      description: Altera a senha do usuário atualmente logado
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - password
+                - new_password
+                - confirm_password
+              properties:
+                password:
+                  type: string
+                  format: password
+                  example: '123456'
+                new_password:
+                  type: string
+                  format: password
+                  example: '654321'
+                confirm_password:
+                  type: string
+                  format: password
+                  example: '654321'
+      responses:
+        '200':
+          description: Senha alterada com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Senha alterada com sucesso
+        '400':
+          description: Requisição inválida
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Erro na requisição
+        '401':
+          description: Usuário não autorizado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Erro na requisição
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Erro na requisição
+  '/auth/change-account/{account_id}':
+    put:
+      tags:
+        - Autenticação
+      summary: Alterar conta do usuário
+      description: Altera a conta ativa do usuário logado
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: account_id
+          in: path
+          required: true
+          description: ID da conta para alterar
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Conta alterada com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Operação realizada com sucesso
+        '400':
+          description: Requisição inválida
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Erro na requisição
+        '401':
+          description: Usuário não autorizado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Erro na requisição
+        '403':
+          description: Acesso negado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Erro na requisição
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Erro na requisição
+  '/auth/validate/token/{token}':
+    get:
+      tags:
+        - Autenticação
+      summary: Validar token
+      description: Valida se um token é válido
+      parameters:
+        - name: token
+          in: path
+          required: true
+          description: Token a ser validado
+          schema:
+            type: string
+            example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+      responses:
+        '200':
+          description: Token validado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  valid:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Token válido
+        '400':
+          description: Requisição inválida
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Erro na requisição
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Erro na requisição
+  /auth/forgotpassword:
+    post:
+      tags:
+        - Autenticação
+      summary: Esqueci minha senha
+      description: Envia email de recuperação de senha
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: usuario@email.com
+      responses:
+        '200':
+          description: Email de recuperação enviado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Email de recuperação enviado com sucesso
+        '400':
+          description: Requisição inválida
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Erro na requisição
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Erro na requisição
+  /auth/change/password:
+    post:
+      tags:
+        - Autenticação
+      summary: Alterar senha com token
+      description: Altera a senha usando token de recuperação
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - currentPassword
+                - newPassword
+              properties:
+                currentPassword:
+                  type: string
+                  format: password
+                  example: '123456'
+                newPassword:
+                  type: string
+                  format: password
+                  example: '654321'
+      responses:
+        '200':
+          description: Senha alterada com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Senha alterada com sucesso
+        '400':
+          description: Requisição inválida
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Erro na requisição
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Erro na requisição
+  /auth/student:
+    get:
+      tags:
+        - Autenticação
+      summary: Sessão do estudante
+      description: Retorna informações da sessão do estudante
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Sessão do estudante
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  student:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: Luca Gabriel
+                      email:
+                        type: string
+                        format: email
+                        example: luca@email.com
+                  session:
+                    type: object
+                    properties:
+                      active:
+                        type: boolean
+                        example: true
+        '401':
+          description: Usuário não autorizado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Erro na requisição
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Erro na requisição
+  /balance:
+    get:
+      tags:
+        - Saldo
+      summary: Obter saldo do usuário
+      description: 'Retorna informações detalhadas sobre o saldo do usuário, incluindo saldo disponível, bloqueado, configurações de saque e dados bancários'
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Saldo obtido com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  available_balance:
+                    type: number
+                    format: float
+                    example: 2500.75
+                    description: Saldo disponível para saque
+                  referral_balance:
+                    type: number
+                    format: float
+                    example: 150
+                    description: Saldo de indicações
+                  blocked_balance:
+                    type: number
+                    format: float
+                    example: 500.25
+                    description: Saldo bloqueado
+                  pending_balance:
+                    type: number
+                    format: float
+                    example: 500.25
+                    description: Saldo pendente
+                  bank_account:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 123
+                      bank_name:
+                        type: string
+                        example: Banco do Brasil
+                      agency:
+                        type: string
+                        example: '1234'
+                      account:
+                        type: string
+                        example: 12345-6
+                      account_type:
+                        type: string
+                        example: checking
+                      holder_name:
+                        type: string
+                        example: João Silva
+                      document:
+                        type: string
+                        example: 123.456.789-00
+                      pix_key:
+                        type: string
+                        example: joao@email.com
+                      pix_type:
+                        type: string
+                        example: email
+                  withdrawal_settings:
+                    type: object
+                    properties:
+                      cost:
+                        type: number
+                        format: float
+                        example: 2.5
+                      max_monthly_amount:
+                        type: number
+                        format: float
+                        example: 10000
+                      min_amount_per_request:
+                        type: number
+                        format: float
+                        example: 50
+                      available_amount:
+                        type: number
+                        format: float
+                        example: 7500
+                  withheld_balance:
+                    type: number
+                    format: float
+                    example: 100
+                    description: Saldo retido
+                  max_withdrawal_amount:
+                    type: number
+                    format: float
+                    example: 2000
+                    description: Valor máximo que pode ser sacado
+                  blocked:
+                    type: boolean
+                    example: false
+                    description: Se o usuário está bloqueado para saques
+              example:
+                available_balance: 2500.75
+                referral_balance: 150
+                blocked_balance: 500.25
+                pending_balance: 500.25
+                bank_account:
+                  id: 123
+                  bank_name: Banco do Brasil
+                  agency: '1234'
+                  account: 12345-6
+                  account_type: checking
+                  holder_name: João Silva
+                  document: 123.456.789-00
+                  pix_key: joao@email.com
+                  pix_type: email
+                withdrawal_settings:
+                  cost: 2.5
+                  max_monthly_amount: 10000
+                  min_amount_per_request: 50
+                  available_amount: 7500
+                withheld_balance: 100
+                max_withdrawal_amount: 2000
+                blocked: false
+        '401':
+          description: Não autorizado
+          content:
+            application/json:
+              description: Usuário não autorizado
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      statusCode:
+                        type: integer
+                        example: 400
+                      message:
+                        type: string
+                        example: Erro na requisição
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              description: Erro interno do servidor
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      statusCode:
+                        type: integer
+                        example: 400
+                      message:
+                        type: string
+                        example: Erro na requisição
+  /balance/total:
+    get:
+      tags:
+        - Saldo
+      summary: Obter total de comissões por tipo
+      description: 'Retorna o total de comissões do usuário separado por tipo (produtor, afiliado, outros) nos últimos 30 dias'
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Total de comissões obtido com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  producer:
+                    type: number
+                    format: float
+                    example: 1500
+                    description: Total de comissões como produtor
+                  affiliate:
+                    type: number
+                    format: float
+                    example: 800
+                    description: Total de comissões como afiliado
+                  others:
+                    type: number
+                    format: float
+                    example: 200
+                    description: Total de outras comissões
+                  createdAt:
+                    type: string
+                    format: date-time
+                    example: '2024-01-15T10:30:00Z'
+                    description: Data de criação do relatório
+              example:
+                producer: 1500
+                affiliate: 800
+                others: 200
+                createdAt: '2024-01-15T10:30:00Z'
+        '401':
+          description: Não autorizado
+          content:
+            application/json:
+              description: Usuário não autorizado
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      statusCode:
+                        type: integer
+                        example: 400
+                      message:
+                        type: string
+                        example: Erro na requisição
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              description: Erro interno do servidor
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      statusCode:
+                        type: integer
+                        example: 400
+                      message:
+                        type: string
+                        example: Erro na requisição
+  '/sales/{email}':
+    get:
+      tags:
+        - Vendas
+      summary: Obter código do cliente
+      description: Envia um código de segurança para o email do cliente
+      parameters:
+        - name: email
+          in: path
+          required: true
+          description: Email do cliente
+          schema:
+            type: string
+            format: email
+            example: cliente@email.com
+      responses:
+        '200':
+          description: Código enviado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Código de segurança enviado com sucesso
+        '400':
+          description: Requisição inválida
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Erro na requisição
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Erro na requisição
+  '/sales/code/{code}':
+    get:
+      tags:
+        - Vendas
+      summary: Verificar código e obter vendas
+      description: Verifica o código de segurança e retorna as vendas do cliente
+      parameters:
+        - name: code
+          in: path
+          required: true
+          description: Código de segurança
+          schema:
+            type: string
+            example: ABC123
+      responses:
+        '200':
+          description: Vendas encontradas com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sales:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        product_name:
+                          type: string
+                          example: Curso de JavaScript
+                        price:
+                          type: number
+                          format: float
+                          example: 99.9
+                        status:
+                          type: string
+                          example: active
+                        purchase_date:
+                          type: string
+                          format: date-time
+                          example: '2023-01-01T00:00:00Z'
+                  message:
+                    type: string
+                    example: Vendas encontradas com sucesso
+        '400':
+          description: Requisição inválida
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Erro na requisição
+        '404':
+          description: Recurso não encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Erro na requisição
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Erro na requisição
+  '/sales/subscriptions/cancel/{id_student}/{uuid_subscription}':
+    post:
+      tags:
+        - Vendas
+      summary: Cancelar assinatura
+      description: Cancela uma assinatura específica do estudante
+      parameters:
+        - name: id_student
+          in: path
+          required: true
+          description: ID do estudante
+          schema:
+            type: integer
+            example: 1
+        - name: uuid_subscription
+          in: path
+          required: true
+          description: UUID da assinatura
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426614174000
+      responses:
+        '200':
+          description: Assinatura cancelada com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Assinatura cancelada com sucesso
+        '400':
+          description: Requisição inválida
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Erro na requisição
+        '404':
+          description: Recurso não encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Erro na requisição
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Erro na requisição
+  /sales/subscriptions/card:
+    post:
+      tags:
+        - Vendas
+      summary: Atualizar cartão de crédito
+      description: Atualiza os dados do cartão de crédito de uma assinatura
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - subscription_uuid
+                - student
+              properties:
+                subscription_uuid:
+                  type: string
+                  format: uuid
+                  example: 123e4567-e89b-12d3-a456-426614174000
+                student:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    name:
+                      type: string
+                      example: João Silva
+                card_data:
+                  type: object
+                  properties:
+                    number:
+                      type: string
+                      example: '4111111111111111'
+                    expiry_month:
+                      type: string
+                      example: '12'
+                    expiry_year:
+                      type: string
+                      example: '2025'
+                    cvv:
+                      type: string
+                      example: '123'
+                    holder_name:
+                      type: string
+                      example: JOÃO SILVA
+      responses:
+        '200':
+          description: Cartão atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Cartão atualizado com sucesso
+        '400':
+          description: Requisição inválida
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Erro na requisição
+        '404':
+          description: Recurso não encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Erro na requisição
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Erro na requisição

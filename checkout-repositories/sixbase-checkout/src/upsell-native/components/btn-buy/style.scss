@@ -1,0 +1,44 @@
+.btn-buy {
+  @keyframes pulse-upsell {
+    0% {
+      transform: scale(0.97);
+    }
+    50% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(0.97);
+    }
+  }
+
+  width: 100%;
+  height: 45px;
+  cursor: pointer;
+  border-radius: 8px;
+  border: 0px solid transparent;
+  animation: pulse-upsell 1.5s infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 600;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+  @media (min-width: 600px) {
+    height: 55px;
+  }
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

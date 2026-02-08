@@ -1,0 +1,116 @@
+/sales/{email}:
+  get:
+    tags:
+      - "Vendas"
+    summary: Obter código do cliente
+    description: Envia um código de segurança para o email do cliente
+    parameters:
+      - name: email
+        in: path
+        required: true
+        description: Email do cliente
+        schema:
+          type: string
+          format: email
+          example: "cliente@email.com"
+    responses:
+      200:
+        description: Código enviado com sucesso
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas.yaml#/components/schemas/ClientCodeResponse"
+      400:
+        $ref: "../../components/common-responses.yaml#/components/responses/BadRequest"
+      500:
+        $ref: "../../components/common-responses.yaml#/components/responses/InternalServerError"
+
+/sales/code/{code}:
+  get:
+    tags:
+      - "Vendas"
+    summary: Verificar código e obter vendas
+    description: Verifica o código de segurança e retorna as vendas do cliente
+    parameters:
+      - name: code
+        in: path
+        required: true
+        description: Código de segurança
+        schema:
+          type: string
+          example: "ABC123"
+    responses:
+      200:
+        description: Vendas encontradas com sucesso
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas.yaml#/components/schemas/VerifyCodeResponse"
+      400:
+        $ref: "../../components/common-responses.yaml#/components/responses/BadRequest"
+      404:
+        $ref: "../../components/common-responses.yaml#/components/responses/NotFound"
+      500:
+        $ref: "../../components/common-responses.yaml#/components/responses/InternalServerError"
+
+/sales/subscriptions/cancel/{id_student}/{uuid_subscription}:
+  post:
+    tags:
+      - "Vendas"
+    summary: Cancelar assinatura
+    description: Cancela uma assinatura específica do estudante
+    parameters:
+      - name: id_student
+        in: path
+        required: true
+        description: ID do estudante
+        schema:
+          type: integer
+          example: 1
+      - name: uuid_subscription
+        in: path
+        required: true
+        description: UUID da assinatura
+        schema:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+    responses:
+      200:
+        description: Assinatura cancelada com sucesso
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas.yaml#/components/schemas/CancelSubscriptionResponse"
+      400:
+        $ref: "../../components/common-responses.yaml#/components/responses/BadRequest"
+      404:
+        $ref: "../../components/common-responses.yaml#/components/responses/NotFound"
+      500:
+        $ref: "../../components/common-responses.yaml#/components/responses/InternalServerError"
+
+/sales/subscriptions/card:
+  post:
+    tags:
+      - "Vendas"
+    summary: Atualizar cartão de crédito
+    description: Atualiza os dados do cartão de crédito de uma assinatura
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "./schemas.yaml#/components/schemas/UpdateCardRequest"
+    responses:
+      200:
+        description: Cartão atualizado com sucesso
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas.yaml#/components/schemas/UpdateCardResponse"
+      400:
+        $ref: "../../components/common-responses.yaml#/components/responses/BadRequest"
+      404:
+        $ref: "../../components/common-responses.yaml#/components/responses/NotFound"
+      500:
+        $ref: "../../components/common-responses.yaml#/components/responses/InternalServerError"

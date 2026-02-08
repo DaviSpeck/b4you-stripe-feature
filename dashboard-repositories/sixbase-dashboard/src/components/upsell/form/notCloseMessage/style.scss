@@ -1,0 +1,21 @@
+.container-inputs-not-close-message {
+  padding-top: 8px;
+  border: 1px solid rgb(230, 230, 230);
+  border-radius: 8px;
+  padding: 16px;
+  .wrapper-header {
+    display: flex;
+    align-items: center;
+    padding-bottom: 8px;
+    gap: 4px;
+    h3 {
+      font-size: 1rem !important;
+      margin: 0px;
+      color: #0f1b35;
+    }
+  }
+  .wrapper-inputs {
+    display: flex;
+    gap: 16px;
+  }
+}

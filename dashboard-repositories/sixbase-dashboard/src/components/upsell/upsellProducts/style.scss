@@ -1,0 +1,14 @@
+.input-loding {
+  display: flex;
+  align-items: center;
+  background-color: rgba(128, 128, 128, 0.258);
+  justify-content: space-between;
+  height: 37px;
+  padding: 0px 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 9999px;
+}
+
+#select-accept-action:disabled {
+  background-color: #eeeeee;
+}

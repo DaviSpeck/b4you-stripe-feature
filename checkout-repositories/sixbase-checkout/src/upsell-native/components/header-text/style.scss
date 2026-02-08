@@ -1,0 +1,53 @@
+.container-header-text {
+  display: flex;
+  width: 100%;
+  min-height: 48px;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 24px;
+  font-size: 0.775rem;
+
+  .unique-chance {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-right: 24px;
+
+    .unique-chance-text {
+      display: block;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+  }
+
+  h1 {
+    padding-left: 24px;
+    margin: 0px;
+    font-size: 0.775rem;
+  }
+
+  @media (max-width: 540px) {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px;
+
+    .unique-chance {
+      border: none !important;
+      text-align: center;
+      padding: 0px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+  }
+
+  @media (min-width: 740px) {
+    font-size: 1rem;
+
+    h1 {
+      font-size: 1rem;
+    }
+  }
+}

@@ -1,0 +1,63 @@
+.wrapper-select-offer {
+  display: flex;
+  width: 100%;
+
+  .select-offers-upsell {
+    width: 100%;
+  }
+
+  .btn-remove-offer {
+    width: 50px;
+    border: none;
+    border-radius: 0px 10px 10px 0px;
+    color: white;
+    background-color: red;
+  }
+}
+
+.input-loding {
+  display: flex;
+  align-items: center;
+  background-color: rgba(128, 128, 128, 0.258);
+  justify-content: space-between;
+  height: 37px;
+  padding: 0px 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 9999px;
+  width: 100%;
+}
+
+.input-native-upsell {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  label {
+    display: block;
+    margin: 0;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #475569;
+  }
+
+  input,
+  select {
+    border-radius: 100px;
+    border: 1px solid #e0e0e0;
+    padding: 8px;
+    padding-left: 16px;
+    padding-right: 16px;
+    font-size: 0.875rem;
+    color: black;
+
+    option {
+      border-radius: 10px;
+    }
+  }
+}
+
+.wrapper-many-offers {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}

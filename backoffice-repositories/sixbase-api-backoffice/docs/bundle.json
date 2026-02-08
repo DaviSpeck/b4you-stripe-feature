@@ -1,0 +1,4549 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "API Backoffice Documentation",
+    "description": "Documentação da API do Backoffice",
+    "version": "1.0.0",
+    "contact": {
+      "name": "B4YOU Team",
+      "email": "contato@b4you.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5501",
+      "description": "Servidor de desenvolvimento",
+      "variables": {
+        "port": {
+          "default": "5501",
+          "enum": [
+            "5000",
+            "5501"
+          ]
+        }
+      }
+    }
+  ],
+  "tags": [
+    {
+      "name": "Market",
+      "description": "Endpoints do Market"
+    },
+    {
+      "name": "Métricas Comerciais",
+      "description": "Endpoints do Painel 1 – Overview de Produtos"
+    },
+    {
+      "name": "Análise de Produtores",
+      "description": "Endpoints do Painel 2 – Análise de Produtores"
+    },
+    {
+      "name": "Reativação de Produtores",
+      "description": "Endpoints do Painel 3 – Reativação de Produtores"
+    },
+    {
+      "name": "Awards",
+      "description": "Endpoints para gerenciamento de premiações e envios"
+    },
+      "name": "Usuários",
+      "description": "Endpoints do módulo de usuários"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "components": {
+        "schemas": null,
+        "awards": {
+          "AwardShipment": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "example": 1,
+                "description": "ID único da premiação"
+              },
+              "producer_id": {
+                "type": "integer",
+                "example": 123,
+                "description": "ID do produtor"
+              },
+              "milestone": {
+                "type": "string",
+                "enum": [
+                  "10K",
+                  "50K",
+                  "500K",
+                  "1M",
+                  "5M",
+                  "10M"
+                ],
+                "example": "10K",
+                "description": "Marco de vendas alcançado"
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "pending",
+                  "sent"
+                ],
+                "example": "pending",
+                "description": "Status da premiação"
+              },
+              "tracking_code": {
+                "type": "string",
+                "maxLength": 100,
+                "nullable": true,
+                "example": "BR123456789BR",
+                "description": "Código de rastreamento"
+              },
+              "tracking_link": {
+                "type": "string",
+                "format": "url",
+                "maxLength": 300,
+                "nullable": true,
+                "example": "https://www.correios.com.br/rastreamento",
+                "description": "Link de rastreamento"
+              },
+              "achieved_date": {
+                "type": "string",
+                "format": "date-time",
+                "example": "2025-01-15T10:30:00Z",
+                "description": "Data em que o marco foi alcançado"
+              },
+              "sent_date": {
+                "type": "string",
+                "format": "date-time",
+                "nullable": true,
+                "example": null,
+                "description": "Data de envio (null se não enviado)"
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time",
+                "example": "2025-01-15T10:30:00Z",
+                "description": "Data de criação"
+              },
+              "updated_at": {
+                "type": "string",
+                "format": "date-time",
+                "example": "2025-01-15T10:30:00Z",
+                "description": "Data de atualização"
+              }
+            }
+          },
+          "ProducerInfo": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "example": 123,
+                "description": "ID do produtor"
+              },
+              "uuid": {
+                "type": "string",
+                "format": "uuid",
+                "example": "550e8400-e29b-41d4-a716-446655440000",
+                "description": "UUID único do produtor"
+              },
+              "full_name": {
+                "type": "string",
+                "example": "João Silva",
+                "description": "Nome completo do produtor"
+              },
+              "email": {
+                "type": "string",
+                "format": "email",
+                "example": "joao@email.com",
+                "description": "Email do produtor"
+              },
+              "phone": {
+                "type": "string",
+                "example": "5511999998888",
+                "description": "Telefone/WhatsApp do produtor"
+              }
+            }
+          },
+          "AwardShipmentWithProducer": {
+            "allOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "example": 1,
+                    "description": "ID único da premiação"
+                  },
+                  "producer_id": {
+                    "type": "integer",
+                    "example": 123,
+                    "description": "ID do produtor"
+                  },
+                  "milestone": {
+                    "type": "string",
+                    "enum": [
+                      "10K",
+                      "50K",
+                      "500K",
+                      "1M",
+                      "5M",
+                      "10M"
+                    ],
+                    "example": "10K",
+                    "description": "Marco de vendas alcançado"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "pending",
+                      "sent"
+                    ],
+                    "example": "pending",
+                    "description": "Status da premiação"
+                  },
+                  "tracking_code": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "nullable": true,
+                    "example": "BR123456789BR",
+                    "description": "Código de rastreamento"
+                  },
+                  "tracking_link": {
+                    "type": "string",
+                    "format": "url",
+                    "maxLength": 300,
+                    "nullable": true,
+                    "example": "https://www.correios.com.br/rastreamento",
+                    "description": "Link de rastreamento"
+                  },
+                  "achieved_date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2025-01-15T10:30:00Z",
+                    "description": "Data em que o marco foi alcançado"
+                  },
+                  "sent_date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "nullable": true,
+                    "example": null,
+                    "description": "Data de envio (null se não enviado)"
+                  },
+                  "created_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2025-01-15T10:30:00Z",
+                    "description": "Data de criação"
+                  },
+                  "updated_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2025-01-15T10:30:00Z",
+                    "description": "Data de atualização"
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "producer": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "example": 123,
+                        "description": "ID do produtor"
+                      },
+                      "uuid": {
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "550e8400-e29b-41d4-a716-446655440000",
+                        "description": "UUID único do produtor"
+                      },
+                      "full_name": {
+                        "type": "string",
+                        "example": "João Silva",
+                        "description": "Nome completo do produtor"
+                      },
+                      "email": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "joao@email.com",
+                        "description": "Email do produtor"
+                      },
+                      "phone": {
+                        "type": "string",
+                        "example": "5511999998888",
+                        "description": "Telefone/WhatsApp do produtor"
+                      }
+                    }
+                  },
+                  "user_total_comission": {
+                    "type": "number",
+                    "format": "float",
+                    "example": 15000.5,
+                    "description": "Total de comissões do produtor"
+                  }
+                }
+              }
+            ]
+          },
+          "CreateAwardShipmentRequest": {
+            "type": "object",
+            "required": [
+              "milestone"
+            ],
+            "properties": {
+              "producer_id": {
+                "type": "integer",
+                "example": 123,
+                "description": "ID do produtor (opcional se producer_uuid ou producer_email for fornecido)"
+              },
+              "producer_uuid": {
+                "type": "string",
+                "format": "uuid",
+                "example": "550e8400-e29b-41d4-a716-446655440000",
+                "description": "UUID do produtor (opcional se producer_id ou producer_email for fornecido)"
+              },
+              "producer_email": {
+                "type": "string",
+                "format": "email",
+                "example": "joao@email.com",
+                "description": "Email do produtor (opcional se producer_id ou producer_uuid for fornecido)"
+              },
+              "milestone": {
+                "type": "string",
+                "enum": [
+                  "10K",
+                  "50K",
+                  "500K",
+                  "1M",
+                  "5M",
+                  "10M"
+                ],
+                "example": "10K",
+                "description": "Marco de vendas alcançado"
+              },
+              "achieved_date": {
+                "type": "string",
+                "format": "date-time",
+                "example": "2025-01-15T10:30:00Z",
+                "description": "Data em que o marco foi alcançado (obrigatório na implementação)"
+              },
+              "tracking_code": {
+                "type": "string",
+                "maxLength": 100,
+                "nullable": true,
+                "example": "BR123456789BR",
+                "description": "Código de rastreamento"
+              },
+              "tracking_link": {
+                "type": "string",
+                "format": "url",
+                "maxLength": 300,
+                "nullable": true,
+                "example": "https://www.correios.com.br/rastreamento",
+                "description": "Link de rastreamento"
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "pending",
+                  "sent"
+                ],
+                "default": "pending",
+                "example": "pending",
+                "description": "Status da premiação"
+              },
+              "sent_date": {
+                "type": "string",
+                "format": "date-time",
+                "nullable": true,
+                "example": "2025-01-15T10:30:00Z",
+                "description": "Data de envio"
+              }
+            }
+          },
+          "ConfirmAwardShipmentRequest": {
+            "type": "object",
+            "properties": {
+              "tracking_code": {
+                "type": "string",
+                "maxLength": 100,
+                "nullable": true,
+                "example": "BR123456789BR",
+                "description": "Código de rastreamento"
+              },
+              "tracking_link": {
+                "type": "string",
+                "format": "url",
+                "maxLength": 300,
+                "nullable": true,
+                "example": "https://www.correios.com.br/rastreamento",
+                "description": "Link de rastreamento"
+              },
+              "sent_date": {
+                "type": "string",
+                "format": "date-time",
+                "nullable": true,
+                "example": "2025-01-15T10:30:00Z",
+                "description": "Data de envio (usa data atual se não informado)"
+              }
+            }
+          },
+          "UpdateAwardShipmentRequest": {
+            "type": "object",
+            "properties": {
+              "producer_id": {
+                "type": "integer",
+                "example": 123,
+                "description": "ID do produtor"
+              },
+              "milestone": {
+                "type": "string",
+                "enum": [
+                  "10K",
+                  "50K",
+                  "500K",
+                  "1M",
+                  "5M",
+                  "10M"
+                ],
+                "example": "10K",
+                "description": "Marco de vendas alcançado"
+              },
+              "achieved_date": {
+                "type": "string",
+                "format": "date-time",
+                "example": "2025-01-15T10:30:00Z",
+                "description": "Data em que o marco foi alcançado"
+              },
+              "tracking_code": {
+                "type": "string",
+                "maxLength": 100,
+                "nullable": true,
+                "example": "BR123456789BR",
+                "description": "Código de rastreamento"
+              },
+              "tracking_link": {
+                "type": "string",
+                "format": "url",
+                "maxLength": 300,
+                "nullable": true,
+                "example": "https://www.correios.com.br/rastreamento",
+                "description": "Link de rastreamento"
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "pending",
+                  "sent"
+                ],
+                "example": "pending",
+                "description": "Status da premiação"
+              },
+              "sent_date": {
+                "type": "string",
+                "format": "date-time",
+                "nullable": true,
+                "example": "2025-01-15T10:30:00Z",
+                "description": "Data de envio"
+              }
+            }
+          },
+          "ListAwardShipmentsRequest": {
+            "type": "object",
+            "properties": {
+              "producer_id": {
+                "type": "integer",
+                "example": 123,
+                "description": "ID do produtor"
+              },
+              "producer_uuid": {
+                "type": "string",
+                "format": "uuid",
+                "example": "550e8400-e29b-41d4-a716-446655440000",
+                "description": "UUID do produtor"
+              },
+              "milestone": {
+                "type": "string",
+                "enum": [
+                  "10K",
+                  "50K",
+                  "500K",
+                  "1M",
+                  "5M",
+                  "10M"
+                ],
+                "example": "10K",
+                "description": "Marco de vendas alcançado"
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "pending",
+                  "sent"
+                ],
+                "example": "pending",
+                "description": "Status da premiação"
+              },
+              "input": {
+                "type": "string",
+                "example": "João Silva",
+                "description": "Busca por nome, email ou WhatsApp do produtor"
+              },
+              "start_date": {
+                "type": "string",
+                "format": "date",
+                "example": "2025-01-01",
+                "description": "Data inicial para filtro (formato YYYY-MM-DD)"
+              },
+              "end_date": {
+                "type": "string",
+                "format": "date",
+                "example": "2025-01-31",
+                "description": "Data final para filtro (formato YYYY-MM-DD)"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 0,
+                "default": 0,
+                "example": 0,
+                "description": "Índice da página (0-based)"
+              },
+              "size": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 20,
+                "example": 20,
+                "description": "Quantidade de itens por página"
+              }
+            }
+          },
+          "PagedAwardShipmentsResponse": {
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer",
+                "example": 25,
+                "description": "Total de premiações encontradas"
+              },
+              "rows": {
+                "type": "array",
+                "items": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 1,
+                          "description": "ID único da premiação"
+                        },
+                        "producer_id": {
+                          "type": "integer",
+                          "example": 123,
+                          "description": "ID do produtor"
+                        },
+                        "milestone": {
+                          "type": "string",
+                          "enum": [
+                            "10K",
+                            "50K",
+                            "500K",
+                            "1M",
+                            "5M",
+                            "10M"
+                          ],
+                          "example": "10K",
+                          "description": "Marco de vendas alcançado"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "pending",
+                            "sent"
+                          ],
+                          "example": "pending",
+                          "description": "Status da premiação"
+                        },
+                        "tracking_code": {
+                          "type": "string",
+                          "maxLength": 100,
+                          "nullable": true,
+                          "example": "BR123456789BR",
+                          "description": "Código de rastreamento"
+                        },
+                        "tracking_link": {
+                          "type": "string",
+                          "format": "url",
+                          "maxLength": 300,
+                          "nullable": true,
+                          "example": "https://www.correios.com.br/rastreamento",
+                          "description": "Link de rastreamento"
+                        },
+                        "achieved_date": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2025-01-15T10:30:00Z",
+                          "description": "Data em que o marco foi alcançado"
+                        },
+                        "sent_date": {
+                          "type": "string",
+                          "format": "date-time",
+                          "nullable": true,
+                          "example": null,
+                          "description": "Data de envio (null se não enviado)"
+                        },
+                        "created_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2025-01-15T10:30:00Z",
+                          "description": "Data de criação"
+                        },
+                        "updated_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2025-01-15T10:30:00Z",
+                          "description": "Data de atualização"
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "producer": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "integer",
+                              "example": 123,
+                              "description": "ID do produtor"
+                            },
+                            "uuid": {
+                              "type": "string",
+                              "format": "uuid",
+                              "example": "550e8400-e29b-41d4-a716-446655440000",
+                              "description": "UUID único do produtor"
+                            },
+                            "full_name": {
+                              "type": "string",
+                              "example": "João Silva",
+                              "description": "Nome completo do produtor"
+                            },
+                            "email": {
+                              "type": "string",
+                              "format": "email",
+                              "example": "joao@email.com",
+                              "description": "Email do produtor"
+                            },
+                            "phone": {
+                              "type": "string",
+                              "example": "5511999998888",
+                              "description": "Telefone/WhatsApp do produtor"
+                            }
+                          }
+                        },
+                        "user_total_comission": {
+                          "type": "number",
+                          "format": "float",
+                          "example": 15000.5,
+                          "description": "Total de comissões do produtor"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "AwardShipmentResponse": {
+            "allOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "example": 1,
+                    "description": "ID único da premiação"
+                  },
+                  "producer_id": {
+                    "type": "integer",
+                    "example": 123,
+                    "description": "ID do produtor"
+                  },
+                  "milestone": {
+                    "type": "string",
+                    "enum": [
+                      "10K",
+                      "50K",
+                      "500K",
+                      "1M",
+                      "5M",
+                      "10M"
+                    ],
+                    "example": "10K",
+                    "description": "Marco de vendas alcançado"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "pending",
+                      "sent"
+                    ],
+                    "example": "pending",
+                    "description": "Status da premiação"
+                  },
+                  "tracking_code": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "nullable": true,
+                    "example": "BR123456789BR",
+                    "description": "Código de rastreamento"
+                  },
+                  "tracking_link": {
+                    "type": "string",
+                    "format": "url",
+                    "maxLength": 300,
+                    "nullable": true,
+                    "example": "https://www.correios.com.br/rastreamento",
+                    "description": "Link de rastreamento"
+                  },
+                  "achieved_date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2025-01-15T10:30:00Z",
+                    "description": "Data em que o marco foi alcançado"
+                  },
+                  "sent_date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "nullable": true,
+                    "example": null,
+                    "description": "Data de envio (null se não enviado)"
+                  },
+                  "created_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2025-01-15T10:30:00Z",
+                    "description": "Data de criação"
+                  },
+                  "updated_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2025-01-15T10:30:00Z",
+                    "description": "Data de atualização"
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "producer": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "example": 123,
+                        "description": "ID do produtor"
+                      },
+                      "uuid": {
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "550e8400-e29b-41d4-a716-446655440000",
+                        "description": "UUID único do produtor"
+                      },
+                      "full_name": {
+                        "type": "string",
+                        "example": "João Silva",
+                        "description": "Nome completo do produtor"
+                      },
+                      "email": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "joao@email.com",
+                        "description": "Email do produtor"
+                      },
+                      "phone": {
+                        "type": "string",
+                        "example": "5511999998888",
+                        "description": "Telefone/WhatsApp do produtor"
+                      }
+                    }
+                  },
+                  "user_total_comission": {
+                    "type": "number",
+                    "format": "float",
+                    "example": 15000.5,
+                    "description": "Total de comissões do produtor"
+                  }
+                }
+              }
+            ]
+          },
+          "DeleteResponse": {
+            "type": "object",
+            "properties": {
+              "success": {
+                "type": "boolean",
+                "example": true,
+                "description": "Indica se a operação foi bem-sucedida"
+              }
+            }
+          }
+        },
+        "market": {
+          "MarketPendingItem": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "example": 1,
+                "description": "ID da solicitação de aprovação"
+              },
+              "products": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "example": 123,
+                    "description": "ID do produto"
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "Curso de JavaScript Avançado",
+                    "description": "Nome do produto"
+                  },
+                  "uuid": {
+                    "type": "string",
+                    "example": "abc-123-def-456",
+                    "description": "UUID único do produto"
+                  }
+                }
+              },
+              "users": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "example": 456,
+                    "description": "ID do usuário"
+                  },
+                  "full_name": {
+                    "type": "string",
+                    "example": "João Silva",
+                    "description": "Nome completo do usuário"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "joao@email.com",
+                    "description": "E-mail do usuário"
+                  }
+                }
+              },
+              "id_status": {
+                "type": "integer",
+                "example": 1,
+                "description": "ID do status da aprovação"
+              },
+              "requested_at": {
+                "type": "string",
+                "format": "date-time",
+                "example": "2024-01-15T10:30:00Z",
+                "description": "Data da solicitação"
+              },
+              "accepted_at": {
+                "type": "string",
+                "format": "date-time",
+                "nullable": true,
+                "example": null,
+                "description": "Data da aprovação (null se não aprovado)"
+              },
+              "rejected_at": {
+                "type": "string",
+                "format": "date-time",
+                "nullable": true,
+                "example": null,
+                "description": "Data da rejeição (null se não rejeitado)"
+              }
+            }
+          },
+          "ProductBasic": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "example": 123,
+                "description": "ID do produto"
+              },
+              "name": {
+                "type": "string",
+                "example": "Curso de JavaScript Avançado",
+                "description": "Nome do produto"
+              },
+              "uuid": {
+                "type": "string",
+                "example": "abc-123-def-456",
+                "description": "UUID único do produto"
+              }
+            }
+          },
+          "UserBasic": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "example": 456,
+                "description": "ID do usuário"
+              },
+              "full_name": {
+                "type": "string",
+                "example": "João Silva",
+                "description": "Nome completo do usuário"
+              },
+              "email": {
+                "type": "string",
+                "format": "email",
+                "example": "joao@email.com",
+                "description": "E-mail do usuário"
+              }
+            }
+          },
+          "PagedMarketPending": {
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer",
+                "example": 25,
+                "description": "Total de registros encontrados"
+              },
+              "rows": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1,
+                      "description": "ID da solicitação de aprovação"
+                    },
+                    "products": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 123,
+                          "description": "ID do produto"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Curso de JavaScript Avançado",
+                          "description": "Nome do produto"
+                        },
+                        "uuid": {
+                          "type": "string",
+                          "example": "abc-123-def-456",
+                          "description": "UUID único do produto"
+                        }
+                      }
+                    },
+                    "users": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 456,
+                          "description": "ID do usuário"
+                        },
+                        "full_name": {
+                          "type": "string",
+                          "example": "João Silva",
+                          "description": "Nome completo do usuário"
+                        },
+                        "email": {
+                          "type": "string",
+                          "format": "email",
+                          "example": "joao@email.com",
+                          "description": "E-mail do usuário"
+                        }
+                      }
+                    },
+                    "id_status": {
+                      "type": "integer",
+                      "example": 1,
+                      "description": "ID do status da aprovação"
+                    },
+                    "requested_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2024-01-15T10:30:00Z",
+                      "description": "Data da solicitação"
+                    },
+                    "accepted_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "nullable": true,
+                      "example": null,
+                      "description": "Data da aprovação (null se não aprovado)"
+                    },
+                    "rejected_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "nullable": true,
+                      "example": null,
+                      "description": "Data da rejeição (null se não rejeitado)"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "metrics": {
+          "TotalActive": {
+            "type": "object",
+            "properties": {
+              "totalActive": {
+                "type": "integer",
+                "example": 42,
+                "description": "Número total de produtos ativos"
+              }
+            }
+          },
+          "DailyNewProducts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "date": {
+                  "type": "string",
+                  "format": "date",
+                  "example": "2025-09-01",
+                  "description": "Data no formato YYYY-MM-DD"
+                },
+                "count": {
+                  "type": "integer",
+                  "example": 5,
+                  "description": "Quantidade de novos produtos criados na data"
+                }
+              }
+            }
+          },
+          "ProductRanking": {
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer",
+                "example": 123,
+                "description": "Total de produtos no ranking"
+              },
+              "rows": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "uuid": {
+                      "type": "string",
+                      "format": "uuid",
+                      "example": "550e8400-e29b-41d4-a716-446655440000",
+                      "description": "UUID único do produto"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "Curso de JavaScript",
+                      "description": "Nome do produto"
+                    },
+                    "totalSales": {
+                      "type": "integer",
+                      "example": 1500,
+                      "description": "Total de vendas do produto"
+                    },
+                    "totalRevenue": {
+                      "type": "number",
+                      "format": "float",
+                      "example": 12345.67,
+                      "description": "Receita total do produto"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "ProducerBasic": {
+            "type": "object",
+            "properties": {
+              "uuid": {
+                "type": "string",
+                "format": "uuid",
+                "example": "550e8400-e29b-41d4-a716-446655440000",
+                "description": "UUID único do produtor"
+              },
+              "name": {
+                "type": "string",
+                "example": "João Silva",
+                "description": "Nome do produtor"
+              },
+              "whatsapp": {
+                "type": "string",
+                "example": "5511999998888",
+                "description": "Número de WhatsApp (somente dígitos)"
+              }
+            }
+          },
+          "ProducerComparative": {
+            "allOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "uuid": {
+                    "type": "string",
+                    "format": "uuid",
+                    "example": "550e8400-e29b-41d4-a716-446655440000",
+                    "description": "UUID único do produtor"
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "João Silva",
+                    "description": "Nome do produtor"
+                  },
+                  "whatsapp": {
+                    "type": "string",
+                    "example": "5511999998888",
+                    "description": "Número de WhatsApp (somente dígitos)"
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "prevSales": {
+                    "type": "number",
+                    "format": "double",
+                    "example": 10000.5,
+                    "description": "Vendas no período anterior"
+                  },
+                  "currSales": {
+                    "type": "number",
+                    "format": "double",
+                    "example": 15000.75,
+                    "description": "Vendas no período atual"
+                  },
+                  "diffPct": {
+                    "type": "number",
+                    "format": "double",
+                    "example": 50,
+                    "description": "Variação percentual entre os períodos"
+                  }
+                }
+              }
+            ]
+          },
+          "ProducerPerformanceDrop": {
+            "allOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "uuid": {
+                    "type": "string",
+                    "format": "uuid",
+                    "example": "550e8400-e29b-41d4-a716-446655440000",
+                    "description": "UUID único do produtor"
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "João Silva",
+                    "description": "Nome do produtor"
+                  },
+                  "whatsapp": {
+                    "type": "string",
+                    "example": "5511999998888",
+                    "description": "Número de WhatsApp (somente dígitos)"
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "older": {
+                    "type": "number",
+                    "format": "double",
+                    "example": 20000,
+                    "description": "Vendas no período mais antigo"
+                  },
+                  "recent": {
+                    "type": "number",
+                    "format": "double",
+                    "example": 8000,
+                    "description": "Vendas no período mais recente"
+                  },
+                  "dropPct": {
+                    "type": "number",
+                    "format": "double",
+                    "example": 60,
+                    "description": "Percentual de queda de performance"
+                  }
+                }
+              }
+            ]
+          },
+          "ProducerIntervals": {
+            "type": "object",
+            "properties": {
+              "pin30": {
+                "type": "integer",
+                "example": 45,
+                "description": "Quantidade de produtores ativos nos últimos 30 dias"
+              },
+              "pin60": {
+                "type": "integer",
+                "example": 67,
+                "description": "Quantidade de produtores ativos nos últimos 60 dias"
+              },
+              "pin90": {
+                "type": "integer",
+                "example": 89,
+                "description": "Quantidade de produtores ativos nos últimos 90 dias"
+              }
+            }
+          },
+          "PagedProducerBasic": {
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer",
+                "example": 150,
+                "description": "Total de produtores encontrados"
+              },
+              "rows": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "uuid": {
+                      "type": "string",
+                      "format": "uuid",
+                      "example": "550e8400-e29b-41d4-a716-446655440000",
+                      "description": "UUID único do produtor"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "João Silva",
+                      "description": "Nome do produtor"
+                    },
+                    "whatsapp": {
+                      "type": "string",
+                      "example": "5511999998888",
+                      "description": "Número de WhatsApp (somente dígitos)"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "PagedProducerComparative": {
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer",
+                "example": 75,
+                "description": "Total de produtores no comparativo"
+              },
+              "rows": {
+                "type": "array",
+                "items": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "uuid": {
+                          "type": "string",
+                          "format": "uuid",
+                          "example": "550e8400-e29b-41d4-a716-446655440000",
+                          "description": "UUID único do produtor"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "João Silva",
+                          "description": "Nome do produtor"
+                        },
+                        "whatsapp": {
+                          "type": "string",
+                          "example": "5511999998888",
+                          "description": "Número de WhatsApp (somente dígitos)"
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "prevSales": {
+                          "type": "number",
+                          "format": "double",
+                          "example": 10000.5,
+                          "description": "Vendas no período anterior"
+                        },
+                        "currSales": {
+                          "type": "number",
+                          "format": "double",
+                          "example": 15000.75,
+                          "description": "Vendas no período atual"
+                        },
+                        "diffPct": {
+                          "type": "number",
+                          "format": "double",
+                          "example": 50,
+                          "description": "Variação percentual entre os períodos"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "PagedProducerPerformanceDrop": {
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer",
+                "example": 25,
+                "description": "Total de produtores com queda de performance"
+              },
+              "rows": {
+                "type": "array",
+                "items": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "uuid": {
+                          "type": "string",
+                          "format": "uuid",
+                          "example": "550e8400-e29b-41d4-a716-446655440000",
+                          "description": "UUID único do produtor"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "João Silva",
+                          "description": "Nome do produtor"
+                        },
+                        "whatsapp": {
+                          "type": "string",
+                          "example": "5511999998888",
+                          "description": "Número de WhatsApp (somente dígitos)"
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "older": {
+                          "type": "number",
+                          "format": "double",
+                          "example": 20000,
+                          "description": "Vendas no período mais antigo"
+                        },
+                        "recent": {
+                          "type": "number",
+                          "format": "double",
+                          "example": 8000,
+                          "description": "Vendas no período mais recente"
+                        },
+                        "dropPct": {
+                          "type": "number",
+                          "format": "double",
+                          "example": 60,
+                          "description": "Percentual de queda de performance"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "users": {
+          "ReactivationProducer": {
+            "type": "object",
+            "properties": {
+              "uuid": {
+                "type": "string",
+                "format": "uuid",
+                "example": "550e8400-e29b-41d4-a716-446655440000",
+                "description": "UUID único do produtor"
+              },
+              "name": {
+                "type": "string",
+                "example": "João Silva",
+                "description": "Nome do produtor"
+              },
+              "email": {
+                "type": "string",
+                "format": "email",
+                "example": "joao.silva@email.com",
+                "description": "Email do produtor"
+              },
+              "reactivation_status": {
+                "type": "string",
+                "enum": [
+                  "not_contacted",
+                  "contacting",
+                  "success"
+                ],
+                "example": "not_contacted",
+                "description": "Status atual da reativação"
+              },
+              "lastMonthSales": {
+                "type": "integer",
+                "example": 1500,
+                "description": "Vendas do último mês"
+              },
+              "lastSaleDate": {
+                "type": "string",
+                "format": "date-time",
+                "example": "2025-01-15T10:30:00Z",
+                "description": "Data da última venda"
+              }
+            }
+          },
+          "PagedReactivationProducer": {
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer",
+                "example": 150,
+                "description": "Total de produtores encontrados"
+              },
+              "rows": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "uuid": {
+                      "type": "string",
+                      "format": "uuid",
+                      "example": "550e8400-e29b-41d4-a716-446655440000",
+                      "description": "UUID único do produtor"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "João Silva",
+                      "description": "Nome do produtor"
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "example": "joao.silva@email.com",
+                      "description": "Email do produtor"
+                    },
+                    "reactivation_status": {
+                      "type": "string",
+                      "enum": [
+                        "not_contacted",
+                        "contacting",
+                        "success"
+                      ],
+                      "example": "not_contacted",
+                      "description": "Status atual da reativação"
+                    },
+                    "lastMonthSales": {
+                      "type": "integer",
+                      "example": 1500,
+                      "description": "Vendas do último mês"
+                    },
+                    "lastSaleDate": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2025-01-15T10:30:00Z",
+                      "description": "Data da última venda"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "UpdateReactivationStatus": {
+            "type": "object",
+            "required": [
+              "status"
+            ],
+            "properties": {
+              "status": {
+                "type": "string",
+                "enum": [
+                  "not_contacted",
+                  "contacting",
+                  "success"
+                ],
+                "example": "contacting",
+                "description": "Novo status de reativação"
+              }
+            }
+          },
+          "UpdateManager": {
+            "type": "object",
+            "required": [
+              "managers"
+            ],
+            "properties": {
+              "managers": {
+                "type": "string",
+                "example": "João Silva",
+                "description": "Nome do gerente a ser associado ao usuário"
+              }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "Operação realizada com sucesso",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Operação realizada com sucesso"
+                }
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Dados inválidos",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "ERROR_CODE"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Mensagem de erro"
+                }
+              }
+            }
+          }
+        }
+      },
+      "401": {
+        "description": "Não autorizado",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "ERROR_CODE"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Mensagem de erro"
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Erro interno do servidor",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "ERROR_CODE"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Mensagem de erro"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "PageParam": {
+        "name": "page",
+        "in": "query",
+        "schema": {
+          "type": "integer",
+          "default": 1
+        },
+        "example": 1,
+        "description": "Número da página"
+      },
+      "LimitParam": {
+        "name": "limit",
+        "in": "query",
+        "schema": {
+          "type": "integer",
+          "default": 10
+        },
+        "example": 10,
+        "description": "Quantidade de itens por página"
+      },
+      "DaysParam": {
+        "name": "days",
+        "in": "query",
+        "description": "Número de dias da janela (ex.: 7, 15, 30). Default: 30",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "default": 30,
+          "minimum": 1
+        },
+        "example": 30
+      },
+      "PeriodParam": {
+        "name": "period",
+        "in": "query",
+        "description": "Tipo de comparação de períodos  \n  • **month** – mês anterior × atual  \n  • **days** – usa janela de dias (default)\n",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "month",
+            "days"
+          ],
+          "default": "days"
+        },
+        "example": "days"
+      },
+      "ThresholdParam": {
+        "name": "threshold",
+        "in": "query",
+        "description": "Filtro mínimo de vendas/receita (default: 0)",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "default": 0,
+          "minimum": 0
+        },
+        "example": 10
+      },
+      "DropPctParam": {
+        "name": "dropPct",
+        "in": "query",
+        "description": "Percentual mínimo de queda de performance (default: 50)",
+        "required": false,
+        "schema": {
+          "type": "number",
+          "format": "double",
+          "default": 50,
+          "minimum": 0,
+          "maximum": 100
+        },
+        "example": 50
+      },
+      "StartDateParam": {
+        "name": "startDate",
+        "in": "query",
+        "description": "Data inicial para filtro de vendas (YYYY-MM-DD HH:mm:ss)",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "example": "2025-01-01 00:00:00"
+      },
+      "EndDateParam": {
+        "name": "endDate",
+        "in": "query",
+        "description": "Data final para filtro de vendas (YYYY-MM-DD HH:mm:ss)",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "example": "2025-01-31 23:59:59"
+      },
+      "PrevStartParam": {
+        "name": "prevStart",
+        "in": "query",
+        "description": "Data inicial do período anterior (YYYY-MM-DD HH:mm:ss)",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "example": "2025-01-01 00:00:00"
+      },
+      "PrevEndParam": {
+        "name": "prevEnd",
+        "in": "query",
+        "description": "Data final do período anterior (YYYY-MM-DD HH:mm:ss)",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "example": "2025-01-31 23:59:59"
+      },
+      "CurrStartParam": {
+        "name": "currStart",
+        "in": "query",
+        "description": "Data inicial do período atual (YYYY-MM-DD HH:mm:ss)",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "example": "2025-02-01 00:00:00"
+      },
+      "CurrEndParam": {
+        "name": "currEnd",
+        "in": "query",
+        "description": "Data final do período atual (YYYY-MM-DD HH:mm:ss)",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "example": "2025-02-28 23:59:59"
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "paths": {
+    "/award-shipments": {
+      "get": {
+        "tags": [
+          "Awards"
+        ],
+        "summary": "Listar premiações",
+        "description": "Retorna uma lista paginada de premiações com informações do produtor e total de comissões",
+        "parameters": [
+          {
+            "name": "producer_id",
+            "in": "query",
+            "description": "Filtrar por ID do produtor",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 123
+          },
+          {
+            "name": "producer_uuid",
+            "in": "query",
+            "description": "Filtrar por UUID do produtor",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          },
+          {
+            "name": "milestone",
+            "in": "query",
+            "description": "Filtrar por marco de vendas",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "10K",
+                "50K",
+                "500K",
+                "1M",
+                "5M",
+                "10M"
+              ]
+            },
+            "example": "10K"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Filtrar por status",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pending",
+                "sent"
+              ]
+            },
+            "example": "pending"
+          },
+          {
+            "name": "input",
+            "in": "query",
+            "description": "Busca por nome, email ou WhatsApp do produtor",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "João Silva"
+          },
+          {
+            "name": "start_date",
+            "in": "query",
+            "description": "Data inicial para filtro (formato YYYY-MM-DD)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "example": "2025-01-01"
+          },
+          {
+            "name": "end_date",
+            "in": "query",
+            "description": "Data final para filtro (formato YYYY-MM-DD)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "example": "2025-01-31"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Índice da página (0-based)",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "minimum": 0
+            },
+            "example": 0
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Quantidade de itens por página",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 20,
+              "minimum": 1,
+              "maximum": 100
+            },
+            "example": 20
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de premiações obtida com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer",
+                      "example": 25,
+                      "description": "Total de premiações encontradas"
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "allOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "integer",
+                                "example": 1,
+                                "description": "ID único da premiação"
+                              },
+                              "producer_id": {
+                                "type": "integer",
+                                "example": 123,
+                                "description": "ID do produtor"
+                              },
+                              "milestone": {
+                                "type": "string",
+                                "enum": [
+                                  "10K",
+                                  "50K",
+                                  "500K",
+                                  "1M",
+                                  "5M",
+                                  "10M"
+                                ],
+                                "example": "10K",
+                                "description": "Marco de vendas alcançado"
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "pending",
+                                  "sent"
+                                ],
+                                "example": "pending",
+                                "description": "Status da premiação"
+                              },
+                              "tracking_code": {
+                                "type": "string",
+                                "maxLength": 100,
+                                "nullable": true,
+                                "example": "BR123456789BR",
+                                "description": "Código de rastreamento"
+                              },
+                              "tracking_link": {
+                                "type": "string",
+                                "format": "url",
+                                "maxLength": 300,
+                                "nullable": true,
+                                "example": "https://www.correios.com.br/rastreamento",
+                                "description": "Link de rastreamento"
+                              },
+                              "achieved_date": {
+                                "type": "string",
+                                "format": "date-time",
+                                "example": "2025-01-15T10:30:00Z",
+                                "description": "Data em que o marco foi alcançado"
+                              },
+                              "sent_date": {
+                                "type": "string",
+                                "format": "date-time",
+                                "nullable": true,
+                                "example": null,
+                                "description": "Data de envio (null se não enviado)"
+                              },
+                              "created_at": {
+                                "type": "string",
+                                "format": "date-time",
+                                "example": "2025-01-15T10:30:00Z",
+                                "description": "Data de criação"
+                              },
+                              "updated_at": {
+                                "type": "string",
+                                "format": "date-time",
+                                "example": "2025-01-15T10:30:00Z",
+                                "description": "Data de atualização"
+                              }
+                            }
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "producer": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "integer",
+                                    "example": 123,
+                                    "description": "ID do produtor"
+                                  },
+                                  "uuid": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                    "example": "550e8400-e29b-41d4-a716-446655440000",
+                                    "description": "UUID único do produtor"
+                                  },
+                                  "full_name": {
+                                    "type": "string",
+                                    "example": "João Silva",
+                                    "description": "Nome completo do produtor"
+                                  },
+                                  "email": {
+                                    "type": "string",
+                                    "format": "email",
+                                    "example": "joao@email.com",
+                                    "description": "Email do produtor"
+                                  },
+                                  "phone": {
+                                    "type": "string",
+                                    "example": "5511999998888",
+                                    "description": "Telefone/WhatsApp do produtor"
+                                  }
+                                }
+                              },
+                              "user_total_comission": {
+                                "type": "number",
+                                "format": "float",
+                                "example": 15000.5,
+                                "description": "Total de comissões do produtor"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "count": 25,
+                  "rows": [
+                    {
+                      "id": 1,
+                      "producer_id": 123,
+                      "milestone": "10K",
+                      "status": "pending",
+                      "tracking_code": null,
+                      "tracking_link": null,
+                      "achieved_date": "2025-01-15T10:30:00Z",
+                      "sent_date": null,
+                      "created_at": "2025-01-15T10:30:00Z",
+                      "updated_at": "2025-01-15T10:30:00Z",
+                      "producer": {
+                        "id": 123,
+                        "uuid": "550e8400-e29b-41d4-a716-446655440000",
+                        "full_name": "João Silva",
+                        "email": "joao@email.com",
+                        "phone": "5511999998888"
+                      },
+                      "user_total_comission": 15000.5
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dados inválidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ERROR_CODE"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mensagem de erro"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Não autorizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ERROR_CODE"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mensagem de erro"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ERROR_CODE"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mensagem de erro"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Awards"
+        ],
+        "summary": "Criar nova premiação",
+        "description": "Cria uma nova premiação para um produtor. Pelo menos um identificador do produtor é obrigatório (producer_id, producer_uuid ou producer_email)",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "milestone"
+                ],
+                "properties": {
+                  "producer_id": {
+                    "type": "integer",
+                    "example": 123,
+                    "description": "ID do produtor (opcional se producer_uuid ou producer_email for fornecido)"
+                  },
+                  "producer_uuid": {
+                    "type": "string",
+                    "format": "uuid",
+                    "example": "550e8400-e29b-41d4-a716-446655440000",
+                    "description": "UUID do produtor (opcional se producer_id ou producer_email for fornecido)"
+                  },
+                  "producer_email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "joao@email.com",
+                    "description": "Email do produtor (opcional se producer_id ou producer_uuid for fornecido)"
+                  },
+                  "milestone": {
+                    "type": "string",
+                    "enum": [
+                      "10K",
+                      "50K",
+                      "500K",
+                      "1M",
+                      "5M",
+                      "10M"
+                    ],
+                    "example": "10K",
+                    "description": "Marco de vendas alcançado"
+                  },
+                  "achieved_date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2025-01-15T10:30:00Z",
+                    "description": "Data em que o marco foi alcançado (obrigatório na implementação)"
+                  },
+                  "tracking_code": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "nullable": true,
+                    "example": "BR123456789BR",
+                    "description": "Código de rastreamento"
+                  },
+                  "tracking_link": {
+                    "type": "string",
+                    "format": "url",
+                    "maxLength": 300,
+                    "nullable": true,
+                    "example": "https://www.correios.com.br/rastreamento",
+                    "description": "Link de rastreamento"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "pending",
+                      "sent"
+                    ],
+                    "default": "pending",
+                    "example": "pending",
+                    "description": "Status da premiação"
+                  },
+                  "sent_date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "nullable": true,
+                    "example": "2025-01-15T10:30:00Z",
+                    "description": "Data de envio"
+                  }
+                }
+              },
+              "examples": {
+                "com_producer_id": {
+                  "summary": "Criar com ID do produtor",
+                  "value": {
+                    "producer_id": 123,
+                    "milestone": "10K",
+                    "achieved_date": "2025-01-15T10:30:00Z",
+                    "status": "pending"
+                  }
+                },
+                "com_producer_uuid": {
+                  "summary": "Criar com UUID do produtor",
+                  "value": {
+                    "producer_uuid": "550e8400-e29b-41d4-a716-446655440000",
+                    "milestone": "50K",
+                    "achieved_date": "2025-01-15T10:30:00Z"
+                  }
+                },
+                "com_producer_email": {
+                  "summary": "Criar com email do produtor",
+                  "value": {
+                    "producer_email": "joao@email.com",
+                    "milestone": "100K",
+                    "achieved_date": "2025-01-15T10:30:00Z"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Premiação criada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1,
+                      "description": "ID único da premiação"
+                    },
+                    "producer_id": {
+                      "type": "integer",
+                      "example": 123,
+                      "description": "ID do produtor"
+                    },
+                    "milestone": {
+                      "type": "string",
+                      "enum": [
+                        "10K",
+                        "50K",
+                        "500K",
+                        "1M",
+                        "5M",
+                        "10M"
+                      ],
+                      "example": "10K",
+                      "description": "Marco de vendas alcançado"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "pending",
+                        "sent"
+                      ],
+                      "example": "pending",
+                      "description": "Status da premiação"
+                    },
+                    "tracking_code": {
+                      "type": "string",
+                      "maxLength": 100,
+                      "nullable": true,
+                      "example": "BR123456789BR",
+                      "description": "Código de rastreamento"
+                    },
+                    "tracking_link": {
+                      "type": "string",
+                      "format": "url",
+                      "maxLength": 300,
+                      "nullable": true,
+                      "example": "https://www.correios.com.br/rastreamento",
+                      "description": "Link de rastreamento"
+                    },
+                    "achieved_date": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2025-01-15T10:30:00Z",
+                      "description": "Data em que o marco foi alcançado"
+                    },
+                    "sent_date": {
+                      "type": "string",
+                      "format": "date-time",
+                      "nullable": true,
+                      "example": null,
+                      "description": "Data de envio (null se não enviado)"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2025-01-15T10:30:00Z",
+                      "description": "Data de criação"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2025-01-15T10:30:00Z",
+                      "description": "Data de atualização"
+                    }
+                  }
+                },
+                "example": {
+                  "id": 1,
+                  "producer_id": 123,
+                  "milestone": "10K",
+                  "status": "pending",
+                  "tracking_code": null,
+                  "tracking_link": null,
+                  "achieved_date": "2025-01-15T10:30:00Z",
+                  "sent_date": null,
+                  "created_at": "2025-01-15T10:30:00Z",
+                  "updated_at": "2025-01-15T10:30:00Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dados inválidos ou identificador do produtor não fornecido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ERROR_CODE"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mensagem de erro"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "ValidationError",
+                  "message": "UUID ou email do produtor é obrigatório"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Não autorizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ERROR_CODE"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mensagem de erro"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Produtor não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ERROR_CODE"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mensagem de erro"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "NotFoundError",
+                  "message": "Produtor não encontrado para o UUID informado"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Premiação já existe para este produtor e milestone",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ERROR_CODE"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mensagem de erro"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "ConflictError",
+                  "message": "Registro já existe para este produtor e milestone"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ERROR_CODE"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mensagem de erro"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/award-shipments/{id}": {
+      "patch": {
+        "tags": [
+          "Awards"
+        ],
+        "summary": "Atualizar premiação",
+        "description": "Atualiza os dados de uma premiação existente",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID da premiação",
+            "schema": {
+              "type": "integer"
+            },
+            "example": 1
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "producer_id": {
+                    "type": "integer",
+                    "example": 123,
+                    "description": "ID do produtor"
+                  },
+                  "milestone": {
+                    "type": "string",
+                    "enum": [
+                      "10K",
+                      "50K",
+                      "500K",
+                      "1M",
+                      "5M",
+                      "10M"
+                    ],
+                    "example": "10K",
+                    "description": "Marco de vendas alcançado"
+                  },
+                  "achieved_date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2025-01-15T10:30:00Z",
+                    "description": "Data em que o marco foi alcançado"
+                  },
+                  "tracking_code": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "nullable": true,
+                    "example": "BR123456789BR",
+                    "description": "Código de rastreamento"
+                  },
+                  "tracking_link": {
+                    "type": "string",
+                    "format": "url",
+                    "maxLength": 300,
+                    "nullable": true,
+                    "example": "https://www.correios.com.br/rastreamento",
+                    "description": "Link de rastreamento"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "pending",
+                      "sent"
+                    ],
+                    "example": "pending",
+                    "description": "Status da premiação"
+                  },
+                  "sent_date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "nullable": true,
+                    "example": "2025-01-15T10:30:00Z",
+                    "description": "Data de envio"
+                  }
+                }
+              },
+              "example": {
+                "milestone": "50K",
+                "status": "sent",
+                "tracking_code": "BR123456789BR",
+                "tracking_link": "https://www.correios.com.br/rastreamento"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Premiação atualizada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1,
+                      "description": "ID único da premiação"
+                    },
+                    "producer_id": {
+                      "type": "integer",
+                      "example": 123,
+                      "description": "ID do produtor"
+                    },
+                    "milestone": {
+                      "type": "string",
+                      "enum": [
+                        "10K",
+                        "50K",
+                        "500K",
+                        "1M",
+                        "5M",
+                        "10M"
+                      ],
+                      "example": "10K",
+                      "description": "Marco de vendas alcançado"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "pending",
+                        "sent"
+                      ],
+                      "example": "pending",
+                      "description": "Status da premiação"
+                    },
+                    "tracking_code": {
+                      "type": "string",
+                      "maxLength": 100,
+                      "nullable": true,
+                      "example": "BR123456789BR",
+                      "description": "Código de rastreamento"
+                    },
+                    "tracking_link": {
+                      "type": "string",
+                      "format": "url",
+                      "maxLength": 300,
+                      "nullable": true,
+                      "example": "https://www.correios.com.br/rastreamento",
+                      "description": "Link de rastreamento"
+                    },
+                    "achieved_date": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2025-01-15T10:30:00Z",
+                      "description": "Data em que o marco foi alcançado"
+                    },
+                    "sent_date": {
+                      "type": "string",
+                      "format": "date-time",
+                      "nullable": true,
+                      "example": null,
+                      "description": "Data de envio (null se não enviado)"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2025-01-15T10:30:00Z",
+                      "description": "Data de criação"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2025-01-15T10:30:00Z",
+                      "description": "Data de atualização"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dados inválidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ERROR_CODE"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mensagem de erro"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Não autorizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ERROR_CODE"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mensagem de erro"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Premiação não encontrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ERROR_CODE"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mensagem de erro"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "NotFoundError",
+                  "message": "Registro não encontrado"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ERROR_CODE"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mensagem de erro"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Awards"
+        ],
+        "summary": "Deletar premiação",
+        "description": "Remove uma premiação do sistema",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID da premiação",
+            "schema": {
+              "type": "integer"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Premiação deletada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true,
+                      "description": "Indica se a operação foi bem-sucedida"
+                    }
+                  }
+                },
+                "example": {
+                  "success": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dados inválidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ERROR_CODE"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mensagem de erro"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Não autorizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ERROR_CODE"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mensagem de erro"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Premiação não encontrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ERROR_CODE"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mensagem de erro"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "NotFoundError",
+                  "message": "Registro não encontrado"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ERROR_CODE"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mensagem de erro"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/award-shipments/{id}/confirm": {
+      "patch": {
+        "tags": [
+          "Awards"
+        ],
+        "summary": "Confirmar envio da premiação",
+        "description": "Confirma o envio de uma premiação, atualizando o status para 'sent' e dados de rastreamento. Automaticamente define a data de envio como atual se não fornecida.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID da premiação",
+            "schema": {
+              "type": "integer"
+            },
+            "example": 1
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "tracking_code": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "nullable": true,
+                    "example": "BR123456789BR",
+                    "description": "Código de rastreamento"
+                  },
+                  "tracking_link": {
+                    "type": "string",
+                    "format": "url",
+                    "maxLength": 300,
+                    "nullable": true,
+                    "example": "https://www.correios.com.br/rastreamento",
+                    "description": "Link de rastreamento"
+                  },
+                  "sent_date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "nullable": true,
+                    "example": "2025-01-15T10:30:00Z",
+                    "description": "Data de envio (usa data atual se não informado)"
+                  }
+                }
+              },
+              "example": {
+                "tracking_code": "BR123456789BR",
+                "tracking_link": "https://www.correios.com.br/rastreamento",
+                "sent_date": "2025-01-15T10:30:00Z"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Envio confirmado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1,
+                      "description": "ID único da premiação"
+                    },
+                    "producer_id": {
+                      "type": "integer",
+                      "example": 123,
+                      "description": "ID do produtor"
+                    },
+                    "milestone": {
+                      "type": "string",
+                      "enum": [
+                        "10K",
+                        "50K",
+                        "500K",
+                        "1M",
+                        "5M",
+                        "10M"
+                      ],
+                      "example": "10K",
+                      "description": "Marco de vendas alcançado"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "pending",
+                        "sent"
+                      ],
+                      "example": "pending",
+                      "description": "Status da premiação"
+                    },
+                    "tracking_code": {
+                      "type": "string",
+                      "maxLength": 100,
+                      "nullable": true,
+                      "example": "BR123456789BR",
+                      "description": "Código de rastreamento"
+                    },
+                    "tracking_link": {
+                      "type": "string",
+                      "format": "url",
+                      "maxLength": 300,
+                      "nullable": true,
+                      "example": "https://www.correios.com.br/rastreamento",
+                      "description": "Link de rastreamento"
+                    },
+                    "achieved_date": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2025-01-15T10:30:00Z",
+                      "description": "Data em que o marco foi alcançado"
+                    },
+                    "sent_date": {
+                      "type": "string",
+                      "format": "date-time",
+                      "nullable": true,
+                      "example": null,
+                      "description": "Data de envio (null se não enviado)"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2025-01-15T10:30:00Z",
+                      "description": "Data de criação"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2025-01-15T10:30:00Z",
+                      "description": "Data de atualização"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dados inválidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ERROR_CODE"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mensagem de erro"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Não autorizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ERROR_CODE"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mensagem de erro"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Premiação não encontrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ERROR_CODE"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mensagem de erro"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "NotFoundError",
+                  "message": "Registro não encontrado"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ERROR_CODE"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mensagem de erro"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/market": {
+      "get": {
+        "tags": [
+          "Market"
+        ],
+        "summary": "Lista produtos pendentes de aprovação",
+        "description": "Retorna uma lista paginada de produtos que estão pendentes de aprovação para aparecer na vitrine do market",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Índice da página (0-based)",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "minimum": 0
+            },
+            "example": 0
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Quantidade de itens por página",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "minimum": 1,
+              "maximum": 100
+            },
+            "example": 10
+          },
+          {
+            "name": "input",
+            "in": "query",
+            "description": "Busca por nome do produto ou nome do usuário produtor",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "curso de javascript"
+          },
+          {
+            "name": "start_date",
+            "in": "query",
+            "description": "Data inicial para filtro (formato YYYY-MM-DD)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "example": "2024-01-01"
+          },
+          {
+            "name": "end_date",
+            "in": "query",
+            "description": "Data final para filtro (formato YYYY-MM-DD)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "example": "2024-12-31"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de produtos pendentes de aprovação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer",
+                      "example": 25,
+                      "description": "Total de registros encontrados"
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "example": 1,
+                            "description": "ID da solicitação de aprovação"
+                          },
+                          "products": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "integer",
+                                "example": 123,
+                                "description": "ID do produto"
+                              },
+                              "name": {
+                                "type": "string",
+                                "example": "Curso de JavaScript Avançado",
+                                "description": "Nome do produto"
+                              },
+                              "uuid": {
+                                "type": "string",
+                                "example": "abc-123-def-456",
+                                "description": "UUID único do produto"
+                              }
+                            }
+                          },
+                          "users": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "integer",
+                                "example": 456,
+                                "description": "ID do usuário"
+                              },
+                              "full_name": {
+                                "type": "string",
+                                "example": "João Silva",
+                                "description": "Nome completo do usuário"
+                              },
+                              "email": {
+                                "type": "string",
+                                "format": "email",
+                                "example": "joao@email.com",
+                                "description": "E-mail do usuário"
+                              }
+                            }
+                          },
+                          "id_status": {
+                            "type": "integer",
+                            "example": 1,
+                            "description": "ID do status da aprovação"
+                          },
+                          "requested_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "example": "2024-01-15T10:30:00Z",
+                            "description": "Data da solicitação"
+                          },
+                          "accepted_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "nullable": true,
+                            "example": null,
+                            "description": "Data da aprovação (null se não aprovado)"
+                          },
+                          "rejected_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "nullable": true,
+                            "example": null,
+                            "description": "Data da rejeição (null se não rejeitado)"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ERROR_CODE"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mensagem de erro"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metrics/active": {
+      "get": {
+        "tags": [
+          "Métricas Comerciais"
+        ],
+        "summary": "Total de produtos ativos",
+        "description": "Retorna o número de produtos com ao menos uma venda nos últimos X dias",
+        "parameters": [
+          {
+            "name": "days",
+            "in": "query",
+            "description": "Número de dias da janela (ex.: 7, 15, 30). Default: 30",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 30,
+              "minimum": 1
+            },
+            "example": 30
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Objeto com totalActive",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "totalActive": {
+                      "type": "integer",
+                      "example": 42,
+                      "description": "Número total de produtos ativos"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ERROR_CODE"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mensagem de erro"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metrics/new": {
+      "get": {
+        "tags": [
+          "Métricas Comerciais"
+        ],
+        "summary": "Novos produtos por dia",
+        "description": "Retorna quantos produtos foram criados em cada dia dos últimos X dias",
+        "parameters": [
+          {
+            "name": "days",
+            "in": "query",
+            "description": "Número de dias da janela (ex.: 7, 15, 30). Default: 30",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 30,
+              "minimum": 1
+            },
+            "example": 30
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista com data e quantidade de novos produtos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "date": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2025-09-01",
+                        "description": "Data no formato YYYY-MM-DD"
+                      },
+                      "count": {
+                        "type": "integer",
+                        "example": 5,
+                        "description": "Quantidade de novos produtos criados na data"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ERROR_CODE"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mensagem de erro"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metrics/ranking": {
+      "get": {
+        "tags": [
+          "Métricas Comerciais"
+        ],
+        "summary": "Ranking de produtos por vendas",
+        "description": "Retorna página X do ranking de produtos com, no mínimo, *threshold* vendas ou receita",
+        "parameters": [
+          {
+            "name": "threshold",
+            "in": "query",
+            "description": "Filtro mínimo de vendas/receita (default: 0)",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "minimum": 0
+            },
+            "example": 10
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "description": "Data inicial para filtro de vendas (YYYY-MM-DD HH:mm:ss)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "example": "2025-01-01 00:00:00"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "description": "Data final para filtro de vendas (YYYY-MM-DD HH:mm:ss)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "example": "2025-01-31 23:59:59"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Índice da página (0-based)",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "minimum": 0
+            },
+            "example": 0
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Quantidade de itens por página",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "minimum": 1,
+              "maximum": 100
+            },
+            "example": 10
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Objeto com total de itens e lista de produtos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer",
+                      "example": 123,
+                      "description": "Total de produtos no ranking"
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "uuid": {
+                            "type": "string",
+                            "format": "uuid",
+                            "example": "550e8400-e29b-41d4-a716-446655440000",
+                            "description": "UUID único do produto"
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "Curso de JavaScript",
+                            "description": "Nome do produto"
+                          },
+                          "totalSales": {
+                            "type": "integer",
+                            "example": 1500,
+                            "description": "Total de vendas do produto"
+                          },
+                          "totalRevenue": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 12345.67,
+                            "description": "Receita total do produto"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ERROR_CODE"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mensagem de erro"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metrics/producers/paused": {
+      "get": {
+        "tags": [
+          "Análise de Produtores"
+        ],
+        "summary": "PRM – Produtores que pararam neste período",
+        "description": "Lista paginada de produtores que venderam no período anterior mas não no período atual.\n\n- Por padrão, compara **mês anterior × mês atual** (`period=month`) ou **janelas de X dias** (`period=days`, `days=30`).\n- Para mais controle, envie as datas customizadas (`prevStart`, `prevEnd`, `currStart`, `currEnd`) no formato `YYYY-MM-DD HH:mm:ss`.\n\n> **Nota:** Parâmetros de data customizados sobrescrevem `period`/`days`.\n",
+        "parameters": [
+          {
+            "name": "period",
+            "in": "query",
+            "description": "Tipo de comparação de períodos  \n  • **month** – mês anterior × atual  \n  • **days** – usa janela de dias (default)\n",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "month",
+                "days"
+              ],
+              "default": "days"
+            },
+            "example": "days"
+          },
+          {
+            "name": "days",
+            "in": "query",
+            "description": "Número de dias da janela (ex.: 7, 15, 30). Default: 30",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 30,
+              "minimum": 1
+            },
+            "example": 30
+          },
+          {
+            "name": "prevStart",
+            "in": "query",
+            "description": "Data inicial do período anterior (YYYY-MM-DD HH:mm:ss)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "example": "2025-01-01 00:00:00"
+          },
+          {
+            "name": "prevEnd",
+            "in": "query",
+            "description": "Data final do período anterior (YYYY-MM-DD HH:mm:ss)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "example": "2025-01-31 23:59:59"
+          },
+          {
+            "name": "currStart",
+            "in": "query",
+            "description": "Data inicial do período atual (YYYY-MM-DD HH:mm:ss)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "example": "2025-02-01 00:00:00"
+          },
+          {
+            "name": "currEnd",
+            "in": "query",
+            "description": "Data final do período atual (YYYY-MM-DD HH:mm:ss)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "example": "2025-02-28 23:59:59"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Índice da página (0-based)",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "minimum": 0
+            },
+            "example": 0
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Quantidade de itens por página",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "minimum": 1,
+              "maximum": 100
+            },
+            "example": 10
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista paginada de produtores que venderam antes mas não agora",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer",
+                      "example": 150,
+                      "description": "Total de produtores encontrados"
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "uuid": {
+                            "type": "string",
+                            "format": "uuid",
+                            "example": "550e8400-e29b-41d4-a716-446655440000",
+                            "description": "UUID único do produtor"
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "João Silva",
+                            "description": "Nome do produtor"
+                          },
+                          "whatsapp": {
+                            "type": "string",
+                            "example": "5511999998888",
+                            "description": "Número de WhatsApp (somente dígitos)"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ERROR_CODE"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mensagem de erro"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metrics/producers/comparative": {
+      "get": {
+        "tags": [
+          "Análise de Produtores"
+        ],
+        "summary": "PD10K – Comparativo mês-a-mês dos top produtores",
+        "description": "Lista paginada do comparativo de receita entre dois períodos consecutivos, filtrando por receita mínima (`threshold`).\n\n- Envie datas customizadas usando `prevStart`, `prevEnd`, `currStart`, `currEnd` (formato `YYYY-MM-DD HH:mm:ss`).\n- Caso não informe, será assumido mês a mês anterior × atual.\n",
+        "parameters": [
+          {
+            "name": "threshold",
+            "in": "query",
+            "description": "Filtro mínimo de vendas/receita (default: 0)",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "minimum": 0
+            },
+            "example": 10000
+          },
+          {
+            "name": "prevStart",
+            "in": "query",
+            "description": "Data inicial do período anterior (YYYY-MM-DD HH:mm:ss)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "example": "2025-01-01 00:00:00"
+          },
+          {
+            "name": "prevEnd",
+            "in": "query",
+            "description": "Data final do período anterior (YYYY-MM-DD HH:mm:ss)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "example": "2025-01-31 23:59:59"
+          },
+          {
+            "name": "currStart",
+            "in": "query",
+            "description": "Data inicial do período atual (YYYY-MM-DD HH:mm:ss)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "example": "2025-02-01 00:00:00"
+          },
+          {
+            "name": "currEnd",
+            "in": "query",
+            "description": "Data final do período atual (YYYY-MM-DD HH:mm:ss)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "example": "2025-02-28 23:59:59"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Índice da página (0-based)",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "minimum": 0
+            },
+            "example": 0
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Quantidade de itens por página",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "minimum": 1,
+              "maximum": 100
+            },
+            "example": 10
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Receitas mês anterior × mês atual por produtor (paginado)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer",
+                      "example": 75,
+                      "description": "Total de produtores no comparativo"
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "allOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "uuid": {
+                                "type": "string",
+                                "format": "uuid",
+                                "example": "550e8400-e29b-41d4-a716-446655440000",
+                                "description": "UUID único do produtor"
+                              },
+                              "name": {
+                                "type": "string",
+                                "example": "João Silva",
+                                "description": "Nome do produtor"
+                              },
+                              "whatsapp": {
+                                "type": "string",
+                                "example": "5511999998888",
+                                "description": "Número de WhatsApp (somente dígitos)"
+                              }
+                            }
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "prevSales": {
+                                "type": "number",
+                                "format": "double",
+                                "example": 10000.5,
+                                "description": "Vendas no período anterior"
+                              },
+                              "currSales": {
+                                "type": "number",
+                                "format": "double",
+                                "example": 15000.75,
+                                "description": "Vendas no período atual"
+                              },
+                              "diffPct": {
+                                "type": "number",
+                                "format": "double",
+                                "example": 50,
+                                "description": "Variação percentual entre os períodos"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ERROR_CODE"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mensagem de erro"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metrics/producers/intervals": {
+      "get": {
+        "tags": [
+          "Análise de Produtores"
+        ],
+        "summary": "PIN90/60/30 – Produtores ativos nas últimas 3 janelas",
+        "description": "Retorna a quantidade de produtores ativos (com pelo menos 1 venda) nas janelas de 30, 60 e 90 dias anteriores à data de hoje.\n",
+        "responses": {
+          "200": {
+            "description": "Quantidade de produtores ativos nas janelas de 30 / 60 / 90 dias",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pin30": {
+                      "type": "integer",
+                      "example": 45,
+                      "description": "Quantidade de produtores ativos nos últimos 30 dias"
+                    },
+                    "pin60": {
+                      "type": "integer",
+                      "example": 67,
+                      "description": "Quantidade de produtores ativos nos últimos 60 dias"
+                    },
+                    "pin90": {
+                      "type": "integer",
+                      "example": 89,
+                      "description": "Quantidade de produtores ativos nos últimos 90 dias"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ERROR_CODE"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mensagem de erro"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metrics/producers/performance-drop": {
+      "get": {
+        "tags": [
+          "Análise de Produtores"
+        ],
+        "summary": "PP5D – Alerta de queda de performance",
+        "description": "Lista paginada de produtores que tiveram queda de performance entre dois períodos consecutivos de vendas.\n- O percentual mínimo da queda é definido pelo parâmetro `dropPct`.\n- Parâmetros de período aceitos:\n  - `days` (por padrão, compara os últimos X dias com os X dias imediatamente anteriores)\n  - Ou datas customizadas: `prevStart`, `prevEnd`, `currStart`, `currEnd` (formato `YYYY-MM-DD HH:mm:ss`)\n",
+        "parameters": [
+          {
+            "name": "days",
+            "in": "query",
+            "description": "Número de dias da janela (ex.: 7, 15, 30). Default: 30",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 30,
+              "minimum": 1
+            },
+            "example": 30
+          },
+          {
+            "name": "dropPct",
+            "in": "query",
+            "description": "Percentual mínimo de queda de performance (default: 50)",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double",
+              "default": 50,
+              "minimum": 0,
+              "maximum": 100
+            },
+            "example": 50
+          },
+          {
+            "name": "prevStart",
+            "in": "query",
+            "description": "Data inicial do período anterior (YYYY-MM-DD HH:mm:ss)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "example": "2025-01-01 00:00:00"
+          },
+          {
+            "name": "prevEnd",
+            "in": "query",
+            "description": "Data final do período anterior (YYYY-MM-DD HH:mm:ss)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "example": "2025-01-31 23:59:59"
+          },
+          {
+            "name": "currStart",
+            "in": "query",
+            "description": "Data inicial do período atual (YYYY-MM-DD HH:mm:ss)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "example": "2025-02-01 00:00:00"
+          },
+          {
+            "name": "currEnd",
+            "in": "query",
+            "description": "Data final do período atual (YYYY-MM-DD HH:mm:ss)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "example": "2025-02-28 23:59:59"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Índice da página (0-based)",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "minimum": 0
+            },
+            "example": 0
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Quantidade de itens por página",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "minimum": 1,
+              "maximum": 100
+            },
+            "example": 10
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Produtores com queda ≥ *dropPct* entre períodos (paginado)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer",
+                      "example": 25,
+                      "description": "Total de produtores com queda de performance"
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "allOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "uuid": {
+                                "type": "string",
+                                "format": "uuid",
+                                "example": "550e8400-e29b-41d4-a716-446655440000",
+                                "description": "UUID único do produtor"
+                              },
+                              "name": {
+                                "type": "string",
+                                "example": "João Silva",
+                                "description": "Nome do produtor"
+                              },
+                              "whatsapp": {
+                                "type": "string",
+                                "example": "5511999998888",
+                                "description": "Número de WhatsApp (somente dígitos)"
+                              }
+                            }
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "older": {
+                                "type": "number",
+                                "format": "double",
+                                "example": 20000,
+                                "description": "Vendas no período mais antigo"
+                              },
+                              "recent": {
+                                "type": "number",
+                                "format": "double",
+                                "example": 8000,
+                                "description": "Vendas no período mais recente"
+                              },
+                              "dropPct": {
+                                "type": "number",
+                                "format": "double",
+                                "example": 60,
+                                "description": "Percentual de queda de performance"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ERROR_CODE"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mensagem de erro"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/reactivation/producers": {
+      "get": {
+        "tags": [
+          "Reativação de Produtores"
+        ],
+        "summary": "Lista produtores para reativação",
+        "description": "Retorna uma lista paginada de produtores que podem ser candidatos para reativação",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Índice da página (0-based)",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "minimum": 0
+            },
+            "example": 0
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Quantidade de itens por página",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "minimum": 1,
+              "maximum": 100
+            },
+            "example": 10
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Filtra por status de reativação",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "not_contacted",
+                "contacting",
+                "success"
+              ]
+            },
+            "example": "not_contacted"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Filtra por parte do nome",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "João"
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "description": "Filtra por parte do e-mail",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "joao@email.com"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista paginada de produtores",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer",
+                      "example": 150,
+                      "description": "Total de produtores encontrados"
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "uuid": {
+                            "type": "string",
+                            "format": "uuid",
+                            "example": "550e8400-e29b-41d4-a716-446655440000",
+                            "description": "UUID único do produtor"
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "João Silva",
+                            "description": "Nome do produtor"
+                          },
+                          "email": {
+                            "type": "string",
+                            "format": "email",
+                            "example": "joao.silva@email.com",
+                            "description": "Email do produtor"
+                          },
+                          "reactivation_status": {
+                            "type": "string",
+                            "enum": [
+                              "not_contacted",
+                              "contacting",
+                              "success"
+                            ],
+                            "example": "not_contacted",
+                            "description": "Status atual da reativação"
+                          },
+                          "lastMonthSales": {
+                            "type": "integer",
+                            "example": 1500,
+                            "description": "Vendas do último mês"
+                          },
+                          "lastSaleDate": {
+                            "type": "string",
+                            "format": "date-time",
+                            "example": "2025-01-15T10:30:00Z",
+                            "description": "Data da última venda"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ERROR_CODE"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mensagem de erro"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/reactivation/producers/{userUuid}": {
+      "patch": {
+        "tags": [
+          "Reativação de Produtores"
+        ],
+        "summary": "Atualiza manualmente o status de reativação",
+        "description": "Permite atualizar manualmente o status de reativação de um produtor específico",
+        "parameters": [
+          {
+            "name": "userUuid",
+            "in": "path",
+            "required": true,
+            "description": "UUID do usuário/produtor",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          }
+        ],
+        "requestBody": {
+          "description": "Novo status de reativação",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "status"
+                ],
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "not_contacted",
+                      "contacting",
+                      "success"
+                    ],
+                    "example": "contacting",
+                    "description": "Novo status de reativação"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Status atualizado com sucesso (nenhum conteúdo)"
+          },
+          "400": {
+            "description": "Status inválido ou não permitido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ERROR_CODE"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mensagem de erro"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Produtor não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ERROR_CODE"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mensagem de erro"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ERROR_CODE"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mensagem de erro"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/reactivation/producers/reset": {
+      "post": {
+        "tags": [
+          "Reativação de Produtores"
+        ],
+        "summary": "Reset mensal de todos os status",
+        "description": "Executa o reset mensal de todos os status de reativação e atribui novos produtores para reativação",
+        "responses": {
+          "204": {
+            "description": "Reset e atribuição concluídos"
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ERROR_CODE"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mensagem de erro"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/reactivation/producers/report": {
+      "get": {
+        "tags": [
+          "Reativação de Produtores"
+        ],
+        "summary": "Gera relatório .xlsx do mês anterior",
+        "description": "Gera e retorna um relatório em formato Excel (.xlsx) com dados de reativação do mês anterior",
+        "responses": {
+          "200": {
+            "description": "Arquivo XLSX para download",
+            "content": {
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ERROR_CODE"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mensagem de erro"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{userUuid}/manager": {
+      "put": {
+        "tags": [
+          "Usuários"
+        ],
+        "summary": "Atualiza o gerente do usuário",
+        "description": "Atualiza o campo de gerente associado a um usuário específico",
+        "parameters": [
+          {
+            "name": "userUuid",
+            "in": "path",
+            "required": true,
+            "description": "UUID do usuário",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          }
+        ],
+        "requestBody": {
+          "description": "Dados do gerente a ser associado",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "managers"
+                ],
+                "properties": {
+                  "managers": {
+                    "type": "string",
+                    "example": "João Silva",
+                    "description": "Nome do gerente a ser associado ao usuário"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Gerente atualizado com sucesso"
+          },
+          "400": {
+            "description": "Dados inválidos ou gerente não informado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ERROR_CODE"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mensagem de erro"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Usuário não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ERROR_CODE"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mensagem de erro"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ERROR_CODE"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mensagem de erro"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+.wrapper-upsell {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: auto;
+  .wrapper-header-edit {
+    .header-page {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      div {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        h1 {
+          font-size: 1.5rem;
+          color: #475569;
+          font-weight: 600 !important;
+          margin: 0;
+          width: fit-content;
+        }
+      }
+
+      p {
+        width: 100%;
+        color: #475569;
+        font-size: 0.75rem;
+        font-weight: 500 !important;
+      }
+    }
+  }
+  .wrapper-btn-config-style-view {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+}

@@ -1,0 +1,129 @@
+components:
+  parameters:
+    PageParam:
+      name: page
+      in: query
+      schema:
+        type: integer
+        default: 1
+      example: 1
+      description: "Número da página"
+    
+    LimitParam:
+      name: limit
+      in: query
+      schema:
+        type: integer
+        default: 10
+      example: 10
+      description: "Quantidade de itens por página"
+      
+    DaysParam:
+      name: days
+      in: query
+      description: "Número de dias da janela (ex.: 7, 15, 30). Default: 30"
+      required: false
+      schema:
+        type: integer
+        default: 30
+        minimum: 1
+      example: 30
+    
+    PeriodParam:
+      name: period
+      in: query
+      description: |
+        Tipo de comparação de períodos  
+          • **month** – mês anterior × atual  
+          • **days** – usa janela de dias (default)
+      required: false
+      schema:
+        type: string
+        enum: [month, days]
+        default: days
+      example: "days"
+    
+    ThresholdParam:
+      name: threshold
+      in: query
+      description: "Filtro mínimo de vendas/receita (default: 0)"
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+      example: 10
+    
+    DropPctParam:
+      name: dropPct
+      in: query
+      description: "Percentual mínimo de queda de performance (default: 50)"
+      required: false
+      schema:
+        type: number
+        format: double
+        default: 50
+        minimum: 0
+        maximum: 100
+      example: 50.0
+    
+    StartDateParam:
+      name: startDate
+      in: query
+      description: Data inicial para filtro de vendas (YYYY-MM-DD HH:mm:ss)
+      required: false
+      schema:
+        type: string
+        format: date-time
+      example: "2025-01-01 00:00:00"
+    
+    EndDateParam:
+      name: endDate
+      in: query
+      description: Data final para filtro de vendas (YYYY-MM-DD HH:mm:ss)
+      required: false
+      schema:
+        type: string
+        format: date-time
+      example: "2025-01-31 23:59:59"
+    
+    PrevStartParam:
+      name: prevStart
+      in: query
+      description: Data inicial do período anterior (YYYY-MM-DD HH:mm:ss)
+      required: false
+      schema:
+        type: string
+        format: date-time
+      example: "2025-01-01 00:00:00"
+    
+    PrevEndParam:
+      name: prevEnd
+      in: query
+      description: Data final do período anterior (YYYY-MM-DD HH:mm:ss)
+      required: false
+      schema:
+        type: string
+        format: date-time
+      example: "2025-01-31 23:59:59"
+    
+    CurrStartParam:
+      name: currStart
+      in: query
+      description: Data inicial do período atual (YYYY-MM-DD HH:mm:ss)
+      required: false
+      schema:
+        type: string
+        format: date-time
+      example: "2025-02-01 00:00:00"
+    
+    CurrEndParam:
+      name: currEnd
+      in: query
+      description: Data final do período atual (YYYY-MM-DD HH:mm:ss)
+      required: false
+      schema:
+        type: string
+        format: date-time
+      example: "2025-02-28 23:59:59"
+ 

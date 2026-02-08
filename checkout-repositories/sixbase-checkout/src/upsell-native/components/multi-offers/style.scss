@@ -1,0 +1,132 @@
+.multi-offers-container {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 16px;
+  gap: 10px;
+}
+
+.wrapper-item-offer {
+  display: flex;
+  cursor: pointer;
+  position: relative;
+  flex-direction: row;
+  gap: 8px;
+  border-radius: 8px;
+  border: 1px solid #d9d9d9;
+  background-color: white;
+  padding: 12px;
+
+  .icon-offer-selected {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    color: #16a34a;
+  }
+
+  .image-offer-empty {
+    display: flex;
+    height: 56px;
+    border-radius: 4px;
+    justify-content: center;
+    align-items: center;
+    background-color: #e0e0e0;
+    padding: 0px 12px;
+  }
+
+  .wrapper-info-offer {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+
+    .wrapper-offer-title {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      h1 {
+        font-size: 0.85rem;
+
+        @media (min-width: 800px) {
+          font-size: 1rem;
+        }
+      }
+    }
+
+    .wrapper-offer-price {
+      display: flex;
+      height: 100%;
+      align-items: end;
+
+      .offer-price {
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+        font-size: 0.875rem;
+
+        span {
+          display: block;
+          text-align: right;
+          font-size: 0.775rem;
+          font-weight: 500;
+
+          @media (min-width: 800px) {
+            font-size: 0.875rem;
+          }
+        }
+      }
+    }
+
+    .wrapper-installment-offer-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: end;
+      font-size: 0.875rem;
+
+      .installment-offer {
+        display: block;
+        text-align: right;
+        font-size: 0.775rem;
+        font-weight: 500;
+
+        .installment-amount {
+          font-weight: 500;
+          font-size: 0.675rem;
+        }
+
+        @media (min-width: 800px) {
+          font-size: 0.875rem;
+
+          .installment-amount {
+            font-size: 0.775rem;
+          }
+        }
+      }
+
+      .offer-total-price {
+        display: block;
+        font-size: 0.775rem;
+
+        @media (min-width: 800px) {
+          font-size: 0.875rem;
+        }
+      }
+    }
+
+    .total-price {
+      display: flex;
+      flex-direction: column;
+      justify-content: end;
+      font-size: 0.875rem;
+
+      .price {
+        display: block;
+        font-size: 0.875rem;
+      }
+    }
+  }
+}
+
+.wrapper-item-offer:hover {
+  border: 1px solid #0f1b35;
+}

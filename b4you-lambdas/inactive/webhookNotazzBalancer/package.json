@@ -1,0 +1,24 @@
+{
+  "name": "webhooknotazzrouter",
+  "version": "1.0.0",
+  "description": "Lambda para rotear entre webhook e Notazz baseado em chave Redis",
+  "main": "index.mjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "zip": "zip -r webhookNotazzBalancer.zip .",
+    "deploy": "npm run zip && aws lambda update-function-code --function-name b4you-production-webhookNotazzBalancer --zip-file fileb://webhookNotazzBalancer.zip --region sa-east-1",
+    "deploy:sandbox": "npm run zip && aws lambda update-function-code --function-name b4you-sandbox-webhookNotazzBalancer --zip-file fileb://webhookNotazzBalancer.zip --region sa-east-1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-sqs": "^3.391.0",
+    "axios": "^1.12.2",
+    "moment": "^2.30.1",
+    "mysql2": "^3.6.0",
+    "redis": "^4.6.7",
+    "sequelize": "^6.32.1",
+    "uuid": "^9.0.0"
+  }
+}

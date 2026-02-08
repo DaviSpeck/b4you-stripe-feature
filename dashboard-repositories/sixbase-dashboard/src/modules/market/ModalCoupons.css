@@ -1,0 +1,42 @@
+.color-coupon {
+  color: #475569 !important;
+}
+
+.label-coupon {
+  color: #475569;
+  font-weight: 600;
+}
+
+.input-coupon {
+  border-radius: 20px !important;
+}
+
+.info-coupon {
+  width: 100%;
+  background-color: #f4f2e4;
+  border-radius: 20px;
+  padding: 20px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.info-coupon p {
+  margin: 0;
+  font-size: 12px;
+  color: #9e9c8e;
+  text-align: center;
+}
+
+.close-info {
+  position: absolute;
+  top: 10px;
+  right: 30px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  font-size: 14px;
+  font-weight: 700;
+  color: #9e9c8e;
+}

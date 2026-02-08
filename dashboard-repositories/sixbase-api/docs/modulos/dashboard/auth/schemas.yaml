@@ -1,0 +1,166 @@
+components:
+  schemas:
+    LoginRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          example: usuario@email.com
+        password:
+          type: string
+          format: password
+          example: "123456"
+
+    LoginResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        user:
+          $ref: "../../../components/common-schemas.yaml#/components/schemas/User"
+
+    ForgotPasswordRequest:
+      type: object
+      required:
+        - email
+      properties:
+        email:
+          type: string
+          format: email
+          example: usuario@email.com
+
+    ChangePasswordRequest:
+      type: object
+      required:
+        - currentPassword
+        - newPassword
+      properties:
+        currentPassword:
+          type: string
+          format: password
+          example: "123456"
+        newPassword:
+          type: string
+          format: password
+          example: "654321"
+
+    BackofficeAuthResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        user:
+          $ref: "../../../components/common-schemas.yaml#/components/schemas/User"
+
+    LoginMerlinRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          example: usuario@email.com
+        password:
+          type: string
+          format: password
+          example: "123456"
+        device_id:
+          type: string
+          nullable: true
+          example: "device-123"
+
+    LoginMerlinResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        user:
+          $ref: "../../../components/common-schemas.yaml#/components/schemas/User"
+
+    ChangeLoggedUserPasswordRequest:
+      type: object
+      required:
+        - password
+        - new_password
+        - confirm_password
+      properties:
+        password:
+          type: string
+          format: password
+          example: "123456"
+        new_password:
+          type: string
+          format: password
+          example: "654321"
+        confirm_password:
+          type: string
+          format: password
+          example: "654321"
+
+    ChangeAccountRequest:
+      type: object
+      properties:
+        account_id:
+          type: integer
+          example: 1
+
+    ValidateTokenResponse:
+      type: object
+      properties:
+        valid:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: "Token válido"
+
+    ForgotPasswordResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Email de recuperação enviado com sucesso"
+
+    ChangePasswordResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Senha alterada com sucesso"
+
+    LogoutResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Logout realizado com sucesso"
+
+    MeResponse:
+      type: object
+      properties:
+        user:
+          $ref: "../../../components/common-schemas.yaml#/components/schemas/User"
+        isProducer:
+          type: boolean
+          example: true
+
+    StudentSessionResponse:
+      type: object
+      properties:
+        student:
+          $ref: "../../../components/common-schemas.yaml#/components/schemas/User"
+        session:
+          type: object
+          properties:
+            active:
+              type: boolean
+              example: true

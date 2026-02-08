@@ -1,0 +1,154 @@
+.header-page {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  padding-top: 20px;
+  h1 {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #475569;
+    width: 100%;
+    text-align: center;
+    margin: 0px;
+  }
+
+  p {
+    font-size: 0.625rem;
+    margin: 0px;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.wrapper {
+  overflow: hidden;
+  position: absolute;
+  padding: 0px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  max-width: 900px;
+}
+
+.card-wrapper-referral {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.card-main {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 8px;
+
+  .image {
+    display: none;
+  }
+}
+
+.document-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  gap: 16px;
+}
+
+.document-wrapper-action {
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  .document-btn-accept {
+    padding: 16px 0px;
+    border: none;
+    border-radius: 9999px;
+    background-color: #0f1b35;
+    color: white;
+    width: 100%;
+    font-weight: 500;
+    cursor: pointer;
+    gap: 8px;
+    transition: background-color 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .document-btn-accept:hover {
+    background-color: #0f1b35c5;
+    transition: background-color 0.3s ease;
+  }
+  .document-btn-accept:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+  }
+}
+
+.footer {
+  display: flex;
+  padding: 0px;
+  justify-content: center;
+  align-items: end;
+  padding: 32px 0px;
+  background-color: transparent;
+
+  img {
+    width: 80px;
+    height: 28px;
+  }
+}
+
+@media (min-width: 630px) {
+  .header-page {
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    h1 {
+      font-size: 1.5rem;
+      text-align: left;
+    }
+
+    p {
+      font-size: 0.85rem;
+      text-align: left;
+    }
+  }
+
+  .document-wrapper-action {
+    flex-direction: row;
+    justify-content: space-between;
+
+    .document-btn-accept {
+      width: fit-content;
+      padding: 8px 16px;
+    }
+  }
+}
+
+@media (min-width: 800px) {
+  .card-main {
+    flex-direction: row;
+    align-items: center;
+    .image {
+      display: block;
+      padding: 0px 40px;
+      img {
+        width: 250px;
+        height: 250px;
+      }
+    }
+  }
+
+  .document-wrapper-action {
+    .document-btn-accept {
+      font-size: 0.75rem;
+    }
+  }
+
+  .term-text {
+    font-size: 0.85rem;
+  }
+}

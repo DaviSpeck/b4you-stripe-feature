@@ -1,0 +1,41 @@
+{
+    "containerDefinitions": [
+        {
+            "name": "sixbase-api",
+            "image": "493067706051.dkr.ecr.sa-east-1.amazonaws.com/sixbase:2a7ac9442a5ba22c9ac6367ef872204c4643fa34",
+            "cpu": 0,
+            "portMappings": [
+                {
+                    "containerPort": 5500,
+                    "hostPort": 5500,
+                    "protocol": "tcp"
+                }
+            ],
+            "essential": true,
+            "environment": [],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "/ecs/td-mango5-api",
+                    "awslogs-region": "sa-east-1",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            }
+        }
+    ],
+    "family": "td-mango5-api",
+    "executionRoleArn": "arn:aws:iam::493067706051:role/ecsTaskExecutionRole",
+    "networkMode": "awsvpc",
+    "volumes": [],
+    "placementConstraints": [],
+    "runtimePlatform": {
+        "operatingSystemFamily": "LINUX"
+    },
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "1024",
+    "memory": "2048"
+}

@@ -1,0 +1,52 @@
+openapi: 3.0.3
+info:
+  title: API Backoffice Documentation
+  description: Documentação da API do Backoffice
+  version: 1.0.0
+  contact:
+    name: B4YOU Team
+    email: contato@b4you.com
+servers:
+  - url: http://localhost:5501
+    description: Servidor de desenvolvimento
+    variables:
+      port:
+        default: "5501"
+        enum: ["5000", "5501"]
+
+tags:
+  - name: Market
+    description: Endpoints do Market
+  - name: Métricas Comerciais
+    description: Endpoints do Painel 1 – Overview de Produtos
+  - name: Análise de Produtores
+    description: Endpoints do Painel 2 – Análise de Produtores
+  - name: Reativação de Produtores
+    description: Endpoints do Painel 3 – Reativação de Produtores
+  - name: Awards
+    description: Endpoints para gerenciamento de premiações e envios
+  - name: Usuários
+    description: Endpoints do módulo de usuários
+
+components:
+  schemas:
+    $ref: "./schemas.yaml"
+
+  responses:
+    "200":
+      $ref: "./components/common-responses.yaml#/components/responses/Success"
+    "400":
+      $ref: "./components/common-responses.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "./components/common-responses.yaml#/components/responses/UnauthorizedError"
+    "500":
+      $ref: "./components/common-responses.yaml#/components/responses/InternalServerError"
+
+  parameters:
+    $ref: "./components/parameters.yaml#/components/parameters"
+
+  securitySchemes:
+    $ref: "./components/security.yaml#/components/securitySchemes"
+
+paths:
+  $ref: "./paths.yaml"

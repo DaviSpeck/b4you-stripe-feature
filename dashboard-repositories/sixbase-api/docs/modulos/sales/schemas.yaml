@@ -1,0 +1,124 @@
+components:
+  schemas:
+    ClientCodeRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: "cliente@email.com"
+
+    ClientCodeResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Código de segurança enviado com sucesso"
+
+    VerifyCodeRequest:
+      type: object
+      properties:
+        code:
+          type: string
+          example: "ABC123"
+
+    SaleItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        product_name:
+          type: string
+          example: "Curso de JavaScript"
+        price:
+          type: number
+          format: float
+          example: 99.90
+        status:
+          type: string
+          example: "active"
+        purchase_date:
+          type: string
+          format: date-time
+          example: "2023-01-01T00:00:00Z"
+
+    VerifyCodeResponse:
+      type: object
+      properties:
+        sales:
+          type: array
+          items:
+            $ref: "./schemas.yaml#/components/schemas/SaleItem"
+        message:
+          type: string
+          example: "Vendas encontradas com sucesso"
+
+    CancelSubscriptionRequest:
+      type: object
+      properties:
+        id_student:
+          type: integer
+          example: 1
+        uuid_subscription:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+
+    CancelSubscriptionResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: "Assinatura cancelada com sucesso"
+
+    UpdateCardRequest:
+      type: object
+      required:
+        - subscription_uuid
+        - student
+      properties:
+        subscription_uuid:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        student:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+            name:
+              type: string
+              example: "João Silva"
+        card_data:
+          type: object
+          properties:
+            number:
+              type: string
+              example: "4111111111111111"
+            expiry_month:
+              type: string
+              example: "12"
+            expiry_year:
+              type: string
+              example: "2025"
+            cvv:
+              type: string
+              example: "123"
+            holder_name:
+              type: string
+              example: "JOÃO SILVA"
+
+    UpdateCardResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: "Cartão atualizado com sucesso"

@@ -1,0 +1,398 @@
+/metrics/active:
+  get:
+    tags:
+      - Métricas Comerciais
+    summary: Total de produtos ativos
+    description: Retorna o número de produtos com ao menos uma venda nos últimos X dias
+    parameters:
+      - name: days
+        in: query
+        description: "Número de dias da janela (ex.: 7, 15, 30). Default: 30"
+        required: false
+        schema:
+          type: integer
+          default: 30
+          minimum: 1
+        example: 30
+    responses:
+      '200':
+        description: Objeto com totalActive
+        content:
+          application/json:
+            schema:
+              $ref: ./schemas.yaml#/components/schemas/TotalActive
+      '500':
+        $ref: ../../components/common-responses.yaml#/components/responses/InternalServerError
+
+/metrics/new:
+  get:
+    tags:
+      - Métricas Comerciais
+    summary: Novos produtos por dia
+    description: Retorna quantos produtos foram criados em cada dia dos últimos X dias
+    parameters:
+      - name: days
+        in: query
+        description: "Número de dias da janela (ex.: 7, 15, 30). Default: 30"
+        required: false
+        schema:
+          type: integer
+          default: 30
+          minimum: 1
+        example: 30
+    responses:
+      '200':
+        description: Lista com data e quantidade de novos produtos
+        content:
+          application/json:
+            schema:
+              $ref: ./schemas.yaml#/components/schemas/DailyNewProducts
+      '500':
+        $ref: ../../components/common-responses.yaml#/components/responses/InternalServerError
+
+/metrics/ranking:
+  get:
+    tags:
+      - Métricas Comerciais
+    summary: Ranking de produtos por vendas
+    description: Retorna página X do ranking de produtos com, no mínimo, *threshold* vendas ou receita
+    parameters:
+      - name: threshold
+        in: query
+        description: "Filtro mínimo de vendas/receita (default: 0)"
+        required: false
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+        example: 10
+      - name: startDate
+        in: query
+        description: Data inicial para filtro de vendas (YYYY-MM-DD HH:mm:ss)
+        required: false
+        schema:
+          type: string
+          format: date-time
+        example: "2025-01-01 00:00:00"
+      - name: endDate
+        in: query
+        description: Data final para filtro de vendas (YYYY-MM-DD HH:mm:ss)
+        required: false
+        schema:
+          type: string
+          format: date-time
+        example: "2025-01-31 23:59:59"
+      - name: page
+        in: query
+        description: Índice da página (0-based)
+        required: false
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+        example: 0
+      - name: size
+        in: query
+        description: Quantidade de itens por página
+        required: false
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        example: 10
+    responses:
+      '200':
+        description: Objeto com total de itens e lista de produtos
+        content:
+          application/json:
+            schema:
+              $ref: ./schemas.yaml#/components/schemas/ProductRanking
+      '500':
+        $ref: ../../components/common-responses.yaml#/components/responses/InternalServerError
+
+/metrics/producers/paused:
+  get:
+    tags:
+      - Análise de Produtores
+    summary: PRM – Produtores que pararam neste período
+    description: |
+      Lista paginada de produtores que venderam no período anterior mas não no período atual.
+
+      - Por padrão, compara **mês anterior × mês atual** (`period=month`) ou **janelas de X dias** (`period=days`, `days=30`).
+      - Para mais controle, envie as datas customizadas (`prevStart`, `prevEnd`, `currStart`, `currEnd`) no formato `YYYY-MM-DD HH:mm:ss`.
+
+      > **Nota:** Parâmetros de data customizados sobrescrevem `period`/`days`.
+    parameters:
+      - name: period
+        in: query
+        description: |
+          Tipo de comparação de períodos  
+            • **month** – mês anterior × atual  
+            • **days** – usa janela de dias (default)
+        required: false
+        schema:
+          type: string
+          enum: [month, days]
+          default: days
+        example: "days"
+      - name: days
+        in: query
+        description: "Número de dias da janela (ex.: 7, 15, 30). Default: 30"
+        required: false
+        schema:
+          type: integer
+          default: 30
+          minimum: 1
+        example: 30
+      - name: prevStart
+        in: query
+        description: Data inicial do período anterior (YYYY-MM-DD HH:mm:ss)
+        required: false
+        schema:
+          type: string
+          format: date-time
+        example: "2025-01-01 00:00:00"
+      - name: prevEnd
+        in: query
+        description: Data final do período anterior (YYYY-MM-DD HH:mm:ss)
+        required: false
+        schema:
+          type: string
+          format: date-time
+        example: "2025-01-31 23:59:59"
+      - name: currStart
+        in: query
+        description: Data inicial do período atual (YYYY-MM-DD HH:mm:ss)
+        required: false
+        schema:
+          type: string
+          format: date-time
+        example: "2025-02-01 00:00:00"
+      - name: currEnd
+        in: query
+        description: Data final do período atual (YYYY-MM-DD HH:mm:ss)
+        required: false
+        schema:
+          type: string
+          format: date-time
+        example: "2025-02-28 23:59:59"
+      - name: page
+        in: query
+        description: Índice da página (0-based)
+        required: false
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+        example: 0
+      - name: size
+        in: query
+        description: Quantidade de itens por página
+        required: false
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        example: 10
+    responses:
+      '200':
+        description: Lista paginada de produtores que venderam antes mas não agora
+        content:
+          application/json:
+            schema:
+              $ref: ./schemas.yaml#/components/schemas/PagedProducerBasic
+      '500':
+        $ref: ../../components/common-responses.yaml#/components/responses/InternalServerError
+
+/metrics/producers/comparative:
+  get:
+    tags:
+      - Análise de Produtores
+    summary: PD10K – Comparativo mês-a-mês dos top produtores
+    description: |
+      Lista paginada do comparativo de receita entre dois períodos consecutivos, filtrando por receita mínima (`threshold`).
+
+      - Envie datas customizadas usando `prevStart`, `prevEnd`, `currStart`, `currEnd` (formato `YYYY-MM-DD HH:mm:ss`).
+      - Caso não informe, será assumido mês a mês anterior × atual.
+    parameters:
+      - name: threshold
+        in: query
+        description: "Filtro mínimo de vendas/receita (default: 0)"
+        required: false
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+        example: 10000
+      - name: prevStart
+        in: query
+        description: Data inicial do período anterior (YYYY-MM-DD HH:mm:ss)
+        required: false
+        schema:
+          type: string
+          format: date-time
+        example: "2025-01-01 00:00:00"
+      - name: prevEnd
+        in: query
+        description: Data final do período anterior (YYYY-MM-DD HH:mm:ss)
+        required: false
+        schema:
+          type: string
+          format: date-time
+        example: "2025-01-31 23:59:59"
+      - name: currStart
+        in: query
+        description: Data inicial do período atual (YYYY-MM-DD HH:mm:ss)
+        required: false
+        schema:
+          type: string
+          format: date-time
+        example: "2025-02-01 00:00:00"
+      - name: currEnd
+        in: query
+        description: Data final do período atual (YYYY-MM-DD HH:mm:ss)
+        required: false
+        schema:
+          type: string
+          format: date-time
+        example: "2025-02-28 23:59:59"
+      - name: page
+        in: query
+        description: Índice da página (0-based)
+        required: false
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+        example: 0
+      - name: size
+        in: query
+        description: Quantidade de itens por página
+        required: false
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        example: 10
+    responses:
+      '200':
+        description: Receitas mês anterior × mês atual por produtor (paginado)
+        content:
+          application/json:
+            schema:
+              $ref: ./schemas.yaml#/components/schemas/PagedProducerComparative
+      '500':
+        $ref: ../../components/common-responses.yaml#/components/responses/InternalServerError
+
+/metrics/producers/intervals:
+  get:
+    tags:
+      - Análise de Produtores
+    summary: PIN90/60/30 – Produtores ativos nas últimas 3 janelas
+    description: |
+      Retorna a quantidade de produtores ativos (com pelo menos 1 venda) nas janelas de 30, 60 e 90 dias anteriores à data de hoje.
+    responses:
+      '200':
+        description: Quantidade de produtores ativos nas janelas de 30 / 60 / 90 dias
+        content:
+          application/json:
+            schema:
+              $ref: ./schemas.yaml#/components/schemas/ProducerIntervals
+      '500':
+        $ref: ../../components/common-responses.yaml#/components/responses/InternalServerError
+
+/metrics/producers/performance-drop:
+  get:
+    tags:
+      - Análise de Produtores
+    summary: PP5D – Alerta de queda de performance
+    description: |
+      Lista paginada de produtores que tiveram queda de performance entre dois períodos consecutivos de vendas.
+      - O percentual mínimo da queda é definido pelo parâmetro `dropPct`.
+      - Parâmetros de período aceitos:
+        - `days` (por padrão, compara os últimos X dias com os X dias imediatamente anteriores)
+        - Ou datas customizadas: `prevStart`, `prevEnd`, `currStart`, `currEnd` (formato `YYYY-MM-DD HH:mm:ss`)
+    parameters:
+      - name: days
+        in: query
+        description: "Número de dias da janela (ex.: 7, 15, 30). Default: 30"
+        required: false
+        schema:
+          type: integer
+          default: 30
+          minimum: 1
+        example: 30
+      - name: dropPct
+        in: query
+        description: "Percentual mínimo de queda de performance (default: 50)"
+        required: false
+        schema:
+          type: number
+          format: double
+          default: 50
+          minimum: 0
+          maximum: 100
+        example: 50.0
+      - name: prevStart
+        in: query
+        description: Data inicial do período anterior (YYYY-MM-DD HH:mm:ss)
+        required: false
+        schema:
+          type: string
+          format: date-time
+        example: "2025-01-01 00:00:00"
+      - name: prevEnd
+        in: query
+        description: Data final do período anterior (YYYY-MM-DD HH:mm:ss)
+        required: false
+        schema:
+          type: string
+          format: date-time
+        example: "2025-01-31 23:59:59"
+      - name: currStart
+        in: query
+        description: Data inicial do período atual (YYYY-MM-DD HH:mm:ss)
+        required: false
+        schema:
+          type: string
+          format: date-time
+        example: "2025-02-01 00:00:00"
+      - name: currEnd
+        in: query
+        description: Data final do período atual (YYYY-MM-DD HH:mm:ss)
+        required: false
+        schema:
+          type: string
+          format: date-time
+        example: "2025-02-28 23:59:59"
+      - name: page
+        in: query
+        description: Índice da página (0-based)
+        required: false
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+        example: 0
+      - name: size
+        in: query
+        description: Quantidade de itens por página
+        required: false
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        example: 10
+    responses:
+      '200':
+        description: Produtores com queda ≥ *dropPct* entre períodos (paginado)
+        content:
+          application/json:
+            schema:
+              $ref: ./schemas.yaml#/components/schemas/PagedProducerPerformanceDrop
+      '500':
+        $ref: ../../components/common-responses.yaml#/components/responses/InternalServerError

@@ -1,0 +1,29 @@
+@import 'tailwindcss';
+
+/* Configuração do tema */
+@theme {
+  /* Cores customizadas que não conflitam com Bootstrap */
+  --color-primary: #7367f0;
+  --color-secondary: #82868b;
+  --color-success: #28c76f;
+  --color-danger: #ea5455;
+  --color-warning: #ff9f43;
+  --color-info: #00cfe8;
+
+  /* Breakpoints que não conflitam com Bootstrap */
+  --breakpoint-xs: 0;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --breakpoint-xxl: 1400px;
+}
+
+/* Utilitários customizados para não conflitar com Bootstrap */
+@utility btn-tw {
+  @apply px-4 py-2 rounded-md font-medium transition-colors;
+}
+
+@utility card-tw {
+  @apply bg-white rounded-lg shadow-sm border border-gray-200;
+}

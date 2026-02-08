@@ -1,0 +1,63 @@
+section#sectionKYC {
+  .download_link {
+    div {
+      cursor: pointer;
+      display: flex;
+      text-decoration: underline;
+      line-height: 2;
+      align-items: center;
+
+      .first{
+        margin-right: 2px;
+      }
+
+      .last{
+        margin-left: 5px;
+      }
+    }
+  }
+}
+
+div#modalKycActions {
+
+  .details {
+    margin-bottom: 20px;
+  }
+
+  .details-textarea {
+    margin-bottom: 15px;
+  }
+
+  .modal-header {
+    .modal-title {
+      b {
+        text-transform: uppercase;
+      }
+    }
+  }
+
+  .action-buttons {
+    text-align: right; 
+    button:first-child {
+      margin-right: 10px;
+    }
+
+    button {
+      div {
+        display: flex;
+        align-items: center;
+        svg, .spinner-border {
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+
+  .dialog-header {
+    justify-content: center;
+    align-items: center;
+    svg {
+      margin-right: 10px;
+    }
+  }
+}

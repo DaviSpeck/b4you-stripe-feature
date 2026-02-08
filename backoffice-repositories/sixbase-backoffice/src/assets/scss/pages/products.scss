@@ -1,0 +1,12 @@
+section#pageHomeProducts {
+  .view-details {
+    &:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+
+  .filters {
+    margin-bottom: 0.5rem !important;
+  }
+}

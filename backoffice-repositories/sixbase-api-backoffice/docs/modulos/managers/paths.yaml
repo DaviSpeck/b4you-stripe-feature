@@ -1,0 +1,269 @@
+/managers:
+  get:
+    tags:
+      - Gerentes
+    summary: Lista todos os gerentes
+    description: Retorna uma lista de usuários do backoffice com a role COMERCIAL (gerentes)
+    responses:
+      '200':
+        description: Lista de gerentes
+        content:
+          application/json:
+            schema:
+              $ref: ./schemas.yaml#/components/schemas/ManagersList
+      '500':
+        $ref: ../../components/common-responses.yaml#/components/responses/InternalServerError
+
+/managers/revenue:
+  get:
+    tags:
+      - Gerentes
+    summary: Calcula o faturamento acumulado
+    description: |
+      Calcula o faturamento acumulado dos produtores de um gerente em um período específico.
+      
+      **Lógica:**
+      - Calcula o faturamento baseado nas comissões (commissions.amount) dos produtores
+      - Filtra apenas sales_items com status = 2 (pago/convertido)
+      - Compara com período anterior de mesmo intervalo de tempo (MoM - Month over Month)
+      - Se manager_id for fornecido, filtra apenas clientes vinculados ao gerente
+      - Se manager_id NÃO for fornecido, calcula faturamento geral de todos os gerentes
+      - Retorna também a quantidade de clientes que bateram meta no período
+    parameters:
+      - name: start_date
+        in: query
+        description: Data inicial do período (formato YYYY-MM-DD)
+        required: true
+        schema:
+          type: string
+          format: date
+        example: "2025-01-01"
+      - name: end_date
+        in: query
+        description: Data final do período (formato YYYY-MM-DD)
+        required: true
+        schema:
+          type: string
+          format: date
+        example: "2025-01-31"
+      - name: manager_id
+        in: query
+        description: ID do gerente (user_backoffice.id) - opcional
+        required: false
+        schema:
+          type: integer
+        example: 5
+    responses:
+      '200':
+        description: Faturamento calculado com sucesso
+        content:
+          application/json:
+            schema:
+              $ref: ./schemas.yaml#/components/schemas/RevenueResponse
+      '400':
+        description: Parâmetros obrigatórios não fornecidos
+        content:
+          application/json:
+            schema:
+              $ref: ../../components/common-schemas.yaml#/components/schemas/Error
+      '500':
+        $ref: ../../components/common-responses.yaml#/components/responses/InternalServerError
+
+/managers/clients:
+  get:
+    tags:
+      - Gerentes
+    summary: Retorna dados dos clientes
+    description: |
+      Retorna dados dos clientes de um gerente específico ou de todos os gerentes.
+      
+      **Definições:**
+      - Cliente ativo: fez pelo menos 1 venda (status = 2) nos últimos 30 dias
+      - Cliente inativo: NÃO fez vendas nos últimos 30 dias
+      - Cliente novo: created_at está nos últimos 30 dias
+      
+      **Nota:** Os períodos de 30 dias são sempre calculados a partir do dia atual.
+    parameters:
+      - name: manager_id
+        in: query
+        description: ID do gerente (user_backoffice.id) - opcional
+        required: false
+        schema:
+          type: integer
+        example: 5
+    responses:
+      '200':
+        description: Dados dos clientes retornados com sucesso
+        content:
+          application/json:
+            schema:
+              $ref: ./schemas.yaml#/components/schemas/ClientsResponse
+      '500':
+        $ref: ../../components/common-responses.yaml#/components/responses/InternalServerError
+
+/managers/producers:
+  get:
+    tags:
+      - Gerentes
+    summary: Lista produtores destacados
+    description: |
+      Retorna lista paginada de produtores que são aniversariantes no período OU que bateram metas de faturamento.
+      
+      **Metas disponíveis:**
+      - 10K: R$ 10.000
+      - 50K: R$ 50.000
+      - 500K: R$ 500.000
+      - 1M: R$ 1.000.000
+      - 5M: R$ 5.000.000
+      - 10M: R$ 10.000.000
+      
+      **Lógica de metas:**
+      - Um produtor só aparece se bateu uma nova meta DURANTE o período selecionado
+      - O faturamento é calculado com base em commissions.amount (status = 2)
+      - As metas são progressivas e cumulativas
+      
+      **Ordenação:** Produtores ordenados por faturamento do período (maior para menor), depois por nome alfabético.
+    parameters:
+      - name: start_date
+        in: query
+        description: Data inicial do período (formato YYYY-MM-DD)
+        required: true
+        schema:
+          type: string
+          format: date
+        example: "2025-01-01"
+      - name: end_date
+        in: query
+        description: Data final do período (formato YYYY-MM-DD)
+        required: true
+        schema:
+          type: string
+          format: date
+        example: "2025-01-31"
+      - name: manager_id
+        in: query
+        description: ID do gerente (user_backoffice.id) - opcional
+        required: false
+        schema:
+          type: integer
+        example: 5
+      - name: page
+        in: query
+        description: Índice da página (0-based)
+        required: false
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+        example: 0
+      - name: size
+        in: query
+        description: Quantidade de itens por página
+        required: false
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        example: 10
+      - name: search
+        in: query
+        description: Busca por nome, email ou telefone
+        required: false
+        schema:
+          type: string
+        example: "João"
+      - name: award_achieved
+        in: query
+        description: Filtra por produtores que bateram meta
+        required: false
+        schema:
+          type: string
+          enum: [true, false]
+        example: "true"
+      - name: birthday_in_period
+        in: query
+        description: Filtra por aniversariantes no período
+        required: false
+        schema:
+          type: string
+          enum: [true, false]
+        example: "true"
+    responses:
+      '200':
+        description: Lista paginada de produtores
+        content:
+          application/json:
+            schema:
+              $ref: ./schemas.yaml#/components/schemas/ProducersResponse
+      '400':
+        description: Parâmetros obrigatórios não fornecidos
+        content:
+          application/json:
+            schema:
+              $ref: ../../components/common-schemas.yaml#/components/schemas/Error
+      '500':
+        $ref: ../../components/common-responses.yaml#/components/responses/InternalServerError
+
+/managers/calendar:
+  get:
+    tags:
+      - Gerentes
+    summary: Retorna eventos para calendário
+    description: |
+      Retorna eventos de aniversários e metas agrupados por data para preencher um calendário.
+      
+      **Estrutura:**
+      - Eventos agrupados por data (formato YYYY-MM-DD)
+      - Cada data contém arrays de aniversários e metas
+      - Conta total de aniversariantes e metas batidas no mês
+      
+      **Normalização de datas:**
+      - Usa UTC offset -180 (horário de Brasília)
+      - End date é exclusivo (adiciona 1 dia)
+      - Datas normalizadas para início do dia
+    parameters:
+      - name: start_date
+        in: query
+        description: Data inicial do período (formato YYYY-MM-DD)
+        required: true
+        schema:
+          type: string
+          format: date
+        example: "2025-11-01"
+      - name: end_date
+        in: query
+        description: Data final do período (formato YYYY-MM-DD)
+        required: true
+        schema:
+          type: string
+          format: date
+        example: "2025-11-30"
+      - name: milestones
+        in: query
+        description: Array de milestones para filtrar metas específicas
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum: ['10K', '50K', '500K', '1M', '5M', '10M']
+        example: ['10K', '50K']
+        style: form
+        explode: true
+    responses:
+      '200':
+        description: Eventos agrupados por data
+        content:
+          application/json:
+            schema:
+              $ref: ./schemas.yaml#/components/schemas/CalendarResponse
+      '400':
+        description: Parâmetros obrigatórios não fornecidos
+        content:
+          application/json:
+            schema:
+              $ref: ../../components/common-schemas.yaml#/components/schemas/Error
+      '500':
+        $ref: ../../components/common-responses.yaml#/components/responses/InternalServerError
+

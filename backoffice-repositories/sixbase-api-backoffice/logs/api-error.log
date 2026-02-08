@@ -1,0 +1,173 @@
+26/11/2025, 18:36:34 error: Internal Server Error, GET: /api/sales/overall?start_date=2025-11-01&end_date=2025-11-26&page=0&size=10&id_status=all&payment_method=all
+26/11/2025, 18:36:34 error: Unknown column 'sale.state_generated' in 'field list'
+02/12/2025, 02:44:30 error: Internal Server Error, GET: /api/backoffice/forms?page=0&size=50
+02/12/2025, 02:44:30 error: Cannot read properties of undefined (reading 'findAndCountAll')
+02/12/2025, 08:09:50 error: Internal Server Error, GET: /api/onboarding/daily?start_date=2025-12-01+00:00:00&end_date=2025-12-31+23:59:59
+02/12/2025, 08:09:50 error: Unknown column 'created_at' in 'field list'
+02/12/2025, 08:09:50 error: Internal Server Error, GET: /api/onboarding?page=0&size=10&input=&start_date=2025-12-01&end_date=2025-12-31&has_sold=&revenue=&signup_reason=&user_type=
+02/12/2025, 08:09:50 error: Unknown column 'fup.form_version' in 'field list'
+02/12/2025, 08:09:50 error: Internal Server Error, GET: /api/onboarding/version-combinations?start_date=2025-12-01&end_date=2025-12-31
+02/12/2025, 08:09:50 error: Unknown column 'form_version' in 'field list'
+02/12/2025, 08:09:50 error: Internal Server Error, GET: /api/onboarding?page=0&size=10&input=&start_date=2025-12-01&end_date=2025-12-31&has_sold=&revenue=&signup_reason=&user_type=
+02/12/2025, 08:09:50 error: Unknown column 'fup.form_version' in 'field list'
+02/12/2025, 08:10:06 error: Internal Server Error, GET: /api/onboarding?page=0&size=10&input=&start_date=2025-12-01&end_date=2025-12-31&has_sold=&revenue=&signup_reason=&user_type=
+02/12/2025, 08:10:06 error: Unknown column 'fup.form_version' in 'field list'
+02/12/2025, 08:10:06 error: Internal Server Error, GET: /api/onboarding/daily?start_date=2025-12-01+00:00:00&end_date=2025-12-31+23:59:59
+02/12/2025, 08:10:06 error: Unknown column 'created_at' in 'field list'
+02/12/2025, 08:10:06 error: Internal Server Error, GET: /api/onboarding/version-combinations?start_date=2025-12-01&end_date=2025-12-31
+02/12/2025, 08:10:06 error: Unknown column 'form_version' in 'field list'
+02/12/2025, 08:10:06 error: Internal Server Error, GET: /api/onboarding?page=0&size=10&input=&start_date=2025-12-01&end_date=2025-12-31&has_sold=&revenue=&signup_reason=&user_type=
+02/12/2025, 08:10:06 error: Unknown column 'fup.form_version' in 'field list'
+02/12/2025, 08:19:03 error: Unable to connect to the database:
+02/12/2025, 08:21:08 error: Internal Server Error, GET: /api/onboarding/daily?start_date=2025-12-01+00:00:00&end_date=2025-12-31+23:59:59
+02/12/2025, 08:21:08 error: Unknown column 'created_at' in 'field list'
+02/12/2025, 08:21:08 error: Internal Server Error, GET: /api/onboarding?page=0&size=10&input=&start_date=2025-12-01&end_date=2025-12-31&has_sold=&revenue=&signup_reason=&user_type=
+02/12/2025, 08:21:08 error: Unknown column 'fup.created_at' in 'field list'
+02/12/2025, 08:21:08 error: Internal Server Error, GET: /api/onboarding/version-combinations?start_date=2025-12-01&end_date=2025-12-31
+02/12/2025, 08:21:08 error: Unknown column 'created_at' in 'where clause'
+02/12/2025, 08:21:08 error: Internal Server Error, GET: /api/onboarding?page=0&size=10&input=&start_date=2025-12-01&end_date=2025-12-31&has_sold=&revenue=&signup_reason=&user_type=
+02/12/2025, 08:21:08 error: Unknown column 'fup.created_at' in 'field list'
+02/12/2025, 08:21:24 error: Internal Server Error, GET: /api/onboarding?page=0&size=10&input=&start_date=2025-12-01&end_date=2025-12-31&has_sold=&revenue=&signup_reason=&user_type=
+02/12/2025, 08:21:24 error: Unknown column 'fup.created_at' in 'field list'
+02/12/2025, 08:21:24 error: Internal Server Error, GET: /api/onboarding/daily?start_date=2025-12-01+00:00:00&end_date=2025-12-31+23:59:59
+02/12/2025, 08:21:24 error: Unknown column 'created_at' in 'field list'
+02/12/2025, 08:21:24 error: Internal Server Error, GET: /api/onboarding/version-combinations?start_date=2025-12-01&end_date=2025-12-31
+02/12/2025, 08:21:24 error: Unknown column 'created_at' in 'where clause'
+02/12/2025, 08:21:24 error: Internal Server Error, GET: /api/onboarding?page=0&size=10&input=&start_date=2025-12-01&end_date=2025-12-31&has_sold=&revenue=&signup_reason=&user_type=
+02/12/2025, 08:21:24 error: Unknown column 'fup.created_at' in 'field list'
+02/12/2025, 08:30:11 error: Erro interno ao executar creators registered stats: GET: /api/creators/summary/registered?startDate=2025-11-01&endDate=2025-11-30
+02/12/2025, 08:30:11 error: 
+03/12/2025, 14:11:28 error: Unable to connect to the database:
+03/12/2025, 14:11:47 error: Unable to connect to the database:
+03/12/2025, 14:15:28 error: Unable to connect to the database:
+03/12/2025, 16:03:29 error: [REDIS] error Socket closed unexpectedly
+03/12/2025, 16:03:29 error: [REDIS] error connect ECONNREFUSED 172.19.0.2:6379
+03/12/2025, 16:03:29 error: [REDIS] error connect ECONNREFUSED 172.19.0.2:6379
+03/12/2025, 16:03:29 error: [REDIS] error connect ECONNREFUSED 172.19.0.2:6379
+03/12/2025, 16:03:29 error: [REDIS] error getaddrinfo ENOTFOUND redis
+03/12/2025, 16:03:30 error: [REDIS] error getaddrinfo ENOTFOUND redis
+03/12/2025, 16:03:30 error: [REDIS] error getaddrinfo ENOTFOUND redis
+03/12/2025, 16:03:30 error: [REDIS] error getaddrinfo ENOTFOUND redis
+03/12/2025, 16:03:30 error: [REDIS] error getaddrinfo ENOTFOUND redis
+03/12/2025, 16:03:31 error: [REDIS] error getaddrinfo ENOTFOUND redis
+03/12/2025, 16:03:31 error: [REDIS] error getaddrinfo ENOTFOUND redis
+03/12/2025, 16:03:32 error: [REDIS] error getaddrinfo ENOTFOUND redis
+03/12/2025, 16:03:32 error: [REDIS] error getaddrinfo ENOTFOUND redis
+03/12/2025, 16:03:33 error: [REDIS] error getaddrinfo ENOTFOUND redis
+03/12/2025, 16:03:33 error: [REDIS] error getaddrinfo ENOTFOUND redis
+03/12/2025, 16:03:34 error: [REDIS] error getaddrinfo ENOTFOUND redis
+03/12/2025, 16:03:34 error: [REDIS] error getaddrinfo ENOTFOUND redis
+03/12/2025, 16:03:35 error: [REDIS] error getaddrinfo ENOTFOUND redis
+03/12/2025, 16:03:35 error: [REDIS] error getaddrinfo ENOTFOUND redis
+03/12/2025, 16:03:36 error: [REDIS] error getaddrinfo ENOTFOUND redis
+03/12/2025, 16:03:36 error: [REDIS] error getaddrinfo ENOTFOUND redis
+03/12/2025, 16:03:37 error: [REDIS] error getaddrinfo ENOTFOUND redis
+03/12/2025, 16:03:37 error: [REDIS] error getaddrinfo ENOTFOUND redis
+05/12/2025, 08:06:45 error: Unable to connect to the database: getaddrinfo ENOTFOUND sixbase-mango5-db.cqrtxwzx6yv6.sa-east-1.rds.amazonaws.com
+11/12/2025, 00:37:12 error: [REDIS] error Socket closed unexpectedly
+11/12/2025, 00:37:12 error: [REDIS] error connect ECONNREFUSED 172.19.0.2:6379
+11/12/2025, 00:37:12 error: [REDIS] error connect ECONNREFUSED 172.19.0.2:6379
+11/12/2025, 00:37:12 error: [REDIS] error connect ECONNREFUSED 172.19.0.2:6379
+11/12/2025, 00:37:13 error: [REDIS] error getaddrinfo ENOTFOUND redis
+18/12/2025, 09:01:17 error: Erro interno ao executar creators active stats: GET: /api/creators/summary/active?startDate=2025-12-01&endDate=2025-12-18
+18/12/2025, 09:01:17 error: Table 'mango5.form_user_profiles' doesn't exist
+18/12/2025, 09:01:17 error: Erro interno ao executar creators new stats: GET: /api/creators/summary/new-creators?startDate=2025-12-01&endDate=2025-12-18
+18/12/2025, 09:01:17 error: Table 'mango5.form_user_profiles' doesn't exist
+18/12/2025, 09:01:17 error: Erro interno ao executar creators revenue stats: GET: /api/creators/summary/revenue?startDate=2025-12-01&endDate=2025-12-18
+18/12/2025, 09:01:17 error: Table 'mango5.form_user_profiles' doesn't exist
+18/12/2025, 09:01:17 error: Erro interno ao executar creators all time stats: GET: /api/creators/summary/all-time?startDate=2025-12-01&endDate=2025-12-18
+18/12/2025, 09:01:17 error: Table 'mango5.form_user_profiles' doesn't exist
+18/12/2025, 09:01:17 error: Internal Server Error, GET: /api/creators?page=0&size=10&sortBy=totalSalesValue&sortOrder=desc&startDate=2025-12-01&endDate=2025-12-18
+18/12/2025, 09:01:17 error: Erro ao buscar creators com vendas: Table 'mango5.form_user_profiles' doesn't exist
+18/12/2025, 09:01:17 error: Erro interno ao executar creators registered stats: GET: /api/creators/summary/registered?startDate=2025-12-01&endDate=2025-12-18
+18/12/2025, 09:01:17 error: Table 'mango5.form_user_profiles' doesn't exist
+18/12/2025, 09:01:18 error: Erro interno ao executar creators conversion stats: GET: /api/creators/summary/conversion?startDate=2025-12-01&endDate=2025-12-18
+18/12/2025, 09:01:18 error: Table 'mango5.form_user_profiles' doesn't exist
+18/12/2025, 09:01:18 error: Internal Server Error, GET: /api/creators/performance-chart?startDate=2025-12-01&endDate=2025-12-18&period=day
+18/12/2025, 09:01:18 error: Table 'mango5.form_user_profiles' doesn't exist
+18/12/2025, 09:01:18 error: Internal Server Error, GET: /api/creators/producers?startDate=2025-12-01&endDate=2025-12-18
+18/12/2025, 09:01:18 error: Table 'mango5.form_user_profiles' doesn't exist
+18/12/2025, 09:01:18 error: Internal Server Error, GET: /api/creators/products?startDate=2025-12-01&endDate=2025-12-18
+18/12/2025, 09:01:18 error: Table 'mango5.form_user_profiles' doesn't exist
+07/01/2026, 21:36:58 error: Internal Server Error, GET: /api/users/00a7fd91-40f3-47fc-9857-ef5353787974/notes?type=commercial&page=0&size=5
+07/01/2026, 21:36:58 error: Unknown column 'uuid' in 'field list'
+07/01/2026, 21:59:53 error: Internal Server Error, GET: /api/notes?page=0&size=20
+07/01/2026, 21:59:53 error: Column 'created_at' in field list is ambiguous
+18/01/2026, 20:11:17 error: Internal Server Error, GET: /api/logs?event=all&id_user=all&input=&page=0&size=10
+18/01/2026, 20:11:17 error: Cannot read properties of undefined (reading 'label')
+23/01/2026, 17:09:33 error: [object Object]
+23/01/2026, 17:09:33 error: [object Object]
+23/01/2026, 17:09:33 error: [object Object]
+23/01/2026, 17:09:33 error: [object Object]
+23/01/2026, 17:09:33 error: [object Object]
+23/01/2026, 17:09:33 error: [object Object]
+23/01/2026, 17:09:34 error: [object Object]
+23/01/2026, 17:09:34 error: [object Object]
+23/01/2026, 17:09:34 error: [object Object]
+23/01/2026, 17:09:34 error: [object Object]
+23/01/2026, 17:09:34 error: [object Object]
+23/01/2026, 17:09:34 error: [object Object]
+23/01/2026, 17:09:34 error: [object Object]
+23/01/2026, 17:10:01 error: [object Object]
+23/01/2026, 17:10:01 error: [object Object]
+23/01/2026, 17:10:01 error: [object Object]
+23/01/2026, 17:10:01 error: [object Object]
+23/01/2026, 17:10:01 error: [object Object]
+23/01/2026, 17:10:01 error: [object Object]
+23/01/2026, 17:10:01 error: [object Object]
+23/01/2026, 17:10:01 error: [object Object]
+23/01/2026, 17:10:02 error: [object Object]
+23/01/2026, 17:10:02 error: [object Object]
+23/01/2026, 17:10:02 error: [object Object]
+23/01/2026, 17:10:02 error: [object Object]
+23/01/2026, 17:10:02 error: [object Object]
+23/01/2026, 17:17:45 error: [REDIS] error Socket closed unexpectedly
+23/01/2026, 17:17:45 error: [REDIS] error connect ECONNREFUSED 172.18.0.2:6379
+23/01/2026, 17:17:45 error: [REDIS] error connect ECONNREFUSED 172.18.0.2:6379
+23/01/2026, 17:17:45 error: [REDIS] error connect ECONNREFUSED 172.18.0.2:6379
+23/01/2026, 17:17:46 error: [REDIS] error getaddrinfo ENOTFOUND redis
+27/01/2026, 23:05:18 error: Unable to connect to the database: getaddrinfo ENOTFOUND sixbase-mango5-db.cqrtxwzx6yv6.sa-east-1.rds.amazonaws.com
+27/01/2026, 23:29:03 error: Internal Server Error, GET: /api/users/e6a72526-d74f-40f7-b2e9-486fe3e53a9d
+27/01/2026, 23:29:03 error: upsell_native_enabled is not defined
+27/01/2026, 23:29:27 error: Internal Server Error, GET: /api/users/e6a72526-d74f-40f7-b2e9-486fe3e53a9d
+27/01/2026, 23:29:27 error: upsell_native_enabled is not defined
+27/01/2026, 23:29:50 error: Internal Server Error, GET: /api/users/e6a72526-d74f-40f7-b2e9-486fe3e53a9d
+27/01/2026, 23:29:50 error: upsell_native_enabled is not defined
+27/01/2026, 23:29:51 error: Internal Server Error, GET: /api/users/e6a72526-d74f-40f7-b2e9-486fe3e53a9d
+27/01/2026, 23:29:51 error: upsell_native_enabled is not defined
+27/01/2026, 23:30:23 error: Internal Server Error, GET: /api/users/e6a72526-d74f-40f7-b2e9-486fe3e53a9d
+27/01/2026, 23:30:23 error: upsell_native_enabled is not defined
+30/01/2026, 00:29:34 error: Erro interno ao executar creators active stats: GET: /api/creators/summary/active?startDate=2026-01-01&endDate=2026-01-30
+30/01/2026, 00:29:34 error: Named replacement ":waitingStatus" has no entry in the replacement map.
+30/01/2026, 00:29:34 error: Erro interno ao executar creators registered stats: GET: /api/creators/summary/registered?startDate=2026-01-01&endDate=2026-01-30
+30/01/2026, 00:29:34 error: Named replacement ":waitingStatus" has no entry in the replacement map.
+30/01/2026, 00:29:34 error: Erro interno ao executar creators all time stats: GET: /api/creators/summary/all-time?startDate=2026-01-01&endDate=2026-01-30
+30/01/2026, 00:29:34 error: Named replacement ":waitingStatus" has no entry in the replacement map.
+30/01/2026, 00:29:34 error: Erro interno ao executar creators conversion stats: GET: /api/creators/summary/conversion?startDate=2026-01-01&endDate=2026-01-30
+30/01/2026, 00:29:34 error: Named replacement ":waitingStatus" has no entry in the replacement map.
+30/01/2026, 00:29:34 error: Internal Server Error, GET: /api/creators?page=0&size=10&sortBy=totalSalesValue&sortOrder=desc&origin=all&verified=all&startDate=2026-01-01&endDate=2026-01-30
+30/01/2026, 00:29:34 error: Erro ao buscar creators com vendas: Unknown column 'u.id' in 'where clause'
+30/01/2026, 00:29:34 error: Erro interno ao executar creators new stats: GET: /api/creators/summary/new-creators?startDate=2026-01-01&endDate=2026-01-30
+30/01/2026, 00:29:34 error: Named replacement ":waitingStatus" has no entry in the replacement map.
+30/01/2026, 00:29:34 error: Internal Server Error, GET: /api/creators/producers?startDate=2026-01-01&endDate=2026-01-30
+30/01/2026, 00:29:34 error: Named replacement ":waitingStatus" has no entry in the replacement map.
+30/01/2026, 00:29:34 error: Internal Server Error, GET: /api/creators/products?startDate=2026-01-01&endDate=2026-01-30
+30/01/2026, 00:29:34 error: Named replacement ":waitingStatus" has no entry in the replacement map.
+30/01/2026, 00:36:52 error: Internal Server Error, GET: /api/creators/producers?startDate=2026-01-01&endDate=2026-01-30
+30/01/2026, 00:36:52 error: Named replacement ":waitingStatus" has no entry in the replacement map.
+30/01/2026, 00:36:52 error: Internal Server Error, GET: /api/creators?page=0&size=10&sortBy=totalSalesValue&sortOrder=desc&origin=all&verified=all&startDate=2026-01-01&endDate=2026-01-30
+30/01/2026, 00:36:52 error: Erro ao buscar creators com vendas: Unknown column 'u.id' in 'where clause'
+30/01/2026, 00:36:52 error: Erro interno ao executar creators registered stats: GET: /api/creators/summary/registered?startDate=2026-01-01&endDate=2026-01-30
+30/01/2026, 00:36:52 error: Named replacement ":waitingStatus" has no entry in the replacement map.
+30/01/2026, 00:36:52 error: Erro interno ao executar creators conversion stats: GET: /api/creators/summary/conversion?startDate=2026-01-01&endDate=2026-01-30
+30/01/2026, 00:36:52 error: Named replacement ":waitingStatus" has no entry in the replacement map.
+30/01/2026, 00:36:52 error: Erro interno ao executar creators active stats: GET: /api/creators/summary/active?startDate=2026-01-01&endDate=2026-01-30
+30/01/2026, 00:36:52 error: Named replacement ":waitingStatus" has no entry in the replacement map.
+30/01/2026, 00:36:52 error: Internal Server Error, GET: /api/creators/products?startDate=2026-01-01&endDate=2026-01-30
+30/01/2026, 00:36:52 error: Named replacement ":waitingStatus" has no entry in the replacement map.
+30/01/2026, 00:36:52 error: Erro interno ao executar creators new stats: GET: /api/creators/summary/new-creators?startDate=2026-01-01&endDate=2026-01-30
+30/01/2026, 00:36:52 error: Named replacement ":waitingStatus" has no entry in the replacement map.
+30/01/2026, 00:36:52 error: Erro interno ao executar creators all time stats: GET: /api/creators/summary/all-time?startDate=2026-01-01&endDate=2026-01-30
+30/01/2026, 00:36:52 error: Named replacement ":waitingStatus" has no entry in the replacement map.
+30/01/2026, 00:43:18 error: Internal Server Error, GET: /api/creators?page=0&size=10&sortBy=totalSalesValue&sortOrder=desc&origin=all&verified=all&startDate=2026-01-01&endDate=2026-01-30
+30/01/2026, 00:43:18 error: Erro ao buscar creators com vendas: Unknown column 'u.id' in 'where clause'

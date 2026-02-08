@@ -1,0 +1,6 @@
+FROM node:18.16-alpine
+WORKDIR /usr/app
+COPY . .
+RUN ./install.sh
+EXPOSE 5505
+CMD ["node", "index.mjs"]

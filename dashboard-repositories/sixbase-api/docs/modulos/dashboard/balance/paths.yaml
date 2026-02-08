@@ -1,0 +1,79 @@
+/balance:
+  get:
+    tags:
+      - Saldo
+    summary: Obter saldo do usuário
+    description: Retorna informações detalhadas sobre o saldo do usuário, incluindo saldo disponível, bloqueado, configurações de saque e dados bancários
+    security:
+      - BearerAuth: []
+    responses:
+      '200':
+        description: Saldo obtido com sucesso
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas.yaml#/components/schemas/BalanceResponse"
+            example:
+              available_balance: 2500.75
+              referral_balance: 150.00
+              blocked_balance: 500.25
+              pending_balance: 500.25
+              bank_account:
+                id: 123
+                bank_name: "Banco do Brasil"
+                agency: "1234"
+                account: "12345-6"
+                account_type: "checking"
+                holder_name: "João Silva"
+                document: "123.456.789-00"
+                pix_key: "joao@email.com"
+                pix_type: "email"
+              withdrawal_settings:
+                cost: 2.50
+                max_monthly_amount: 10000.00
+                min_amount_per_request: 50.00
+                available_amount: 7500.00
+              withheld_balance: 100.00
+              max_withdrawal_amount: 2000.00
+              blocked: false
+      '401':
+        description: Não autorizado
+        content:
+          application/json:
+            $ref: "../../../components/common-responses.yaml#/components/responses/UnauthorizedError"
+      '500':
+        description: Erro interno do servidor
+        content:
+          application/json:
+            $ref: "../../../components/common-responses.yaml#/components/responses/InternalServerError"
+
+/balance/total:
+  get:
+    tags:
+      - Saldo
+    summary: Obter total de comissões por tipo
+    description: Retorna o total de comissões do usuário separado por tipo (produtor, afiliado, outros) nos últimos 30 dias
+    security:
+      - BearerAuth: []
+    responses:
+      '200':
+        description: Total de comissões obtido com sucesso
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas.yaml#/components/schemas/TotalBalanceResponse"
+            example:
+              producer: 1500.00
+              affiliate: 800.00
+              others: 200.00
+              createdAt: "2024-01-15T10:30:00Z"
+      '401':
+        description: Não autorizado
+        content:
+          application/json:
+            $ref: "../../../components/common-responses.yaml#/components/responses/UnauthorizedError"
+      '500':
+        description: Erro interno do servidor
+        content:
+          application/json:
+            $ref: "../../../components/common-responses.yaml#/components/responses/InternalServerError"

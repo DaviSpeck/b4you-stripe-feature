@@ -1,0 +1,33 @@
+#modal-rule-zoppy {
+  .form-check {
+    input,
+    label {
+      cursor: pointer;
+    }
+
+    label:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .form-check-all {
+    input {
+      margin-left: 15px;
+      margin-right: 5px;
+    }
+
+    label {
+      font-size: 14px;
+    }
+  }
+}
+
+.api-key {
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  width: 100%;
+  max-width: 60ch;
+}

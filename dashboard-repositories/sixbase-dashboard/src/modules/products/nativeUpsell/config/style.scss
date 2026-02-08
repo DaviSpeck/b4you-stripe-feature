@@ -1,0 +1,62 @@
+.loading-upsell-product {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 250px;
+  background-color: #fff;
+}
+
+.wrapper-form-upsell-native {
+  background-color: white;
+  padding: 32px;
+  border-radius: 8px;
+}
+
+.wrapper-active-upsell {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background-color: #e8e8e8e5;
+  padding: 24px;
+  border-radius: 8px;
+
+  h1 {
+    font-size: 1.2rem;
+    width: 100%;
+    text-align: center;
+    margin: 0px;
+    color: #0f1b35;
+  }
+
+  .wrapper-text {
+    p {
+      width: 100%;
+      text-align: center;
+      margin: 0px;
+    }
+
+    .second-text {
+      padding-top: 16px;
+      font-weight: 600;
+    }
+  }
+
+  button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    max-width: 200px;
+    margin: auto;
+    font-size: 0.85rem;
+    border: none;
+    background-color: #0f1b35;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease-in-out;
+  }
+
+  button:hover {
+    background-color: #0f1b35ba;
+  }
+}

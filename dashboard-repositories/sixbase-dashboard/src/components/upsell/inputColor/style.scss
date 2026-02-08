@@ -1,0 +1,45 @@
+.wrapper-input-color-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  label {
+    display: block;
+    margin: 0;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #475569;
+  }
+  .input-color {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid #e0e0e0;
+    width: fit-content;
+    padding: 4px;
+    border-radius: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
+    input:first-child {
+      border: none;
+      background-color: transparent;
+      width: 25px;
+      height: 27px;
+    }
+
+    input {
+      width: 80px;
+      border: none;
+      color: #475569;
+      background-color: transparent;
+    }
+  }
+
+  .input-color.input-color-disabled {
+    background-color: #8d8d8d27;
+    cursor: not-allowed;
+
+    input {
+      cursor: not-allowed;
+    }
+  }
+}

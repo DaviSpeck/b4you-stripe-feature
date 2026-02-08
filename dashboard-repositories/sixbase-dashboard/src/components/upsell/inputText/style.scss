@@ -1,0 +1,13 @@
+.input-text:disabled {
+  background-color: #eeeeee;
+  color: black !important;
+}
+
+.input-text:disabled::placeholder {
+  color: black !important;
+  opacity: 1;
+}
+
+.input-text {
+  color: black !important;
+}

@@ -1,0 +1,66 @@
+/*================================================================================
+	Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
+	Version: 2.0
+	Author: PIXINVENT
+	Author URL: http://www.themeforest.net/user/pixinvent
+================================================================================
+
+NOTE:
+------
+PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
+WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
+body > iframe[style*='2147483647'] {
+  display: none;
+}
+a {
+  &:hover {
+    text-decoration: underline;
+  }
+}
+.bg-light {
+  color: #c2c2c2 !important;
+  color: #6d6d6d !important;
+}
+.search-group {
+  display: flex;
+  .form-group {
+    position: relative;
+    width: 100%;
+    i {
+      left: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      position: absolute;
+      font-size: 21px;
+      color: #a9a8ad;
+    }
+    input {
+      display: flex;
+      padding-left: 37px;
+      border-radius: 6px 0 0 6px;
+    }
+  }
+  Button {
+    border-radius: 0 6px 6px 0;
+  }
+}
+.filter-sales {
+  .form-title {
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  input[type='checkbox'] {
+    background-color: red;
+    margin-right: 8px;
+  }
+}
+
+// Customização da cor do texto B4you no tema claro (apenas no menu principal)
+body:not(.dark-layout) .navbar-header .brand-text {
+  color: #4dd0bb !important;
+}
+
+@import './pages/kyc.scss';
+@import './pages/students.scss';
+@import './pages/payment-method.scss';
+@import './pages/product-types.scss';

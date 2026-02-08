@@ -1,0 +1,21 @@
+@import '../../../../../scss/components/design-system/ui_colors.scss';
+
+.page-anchor {
+  .column-header {
+  }
+  .anchor-pencil {
+    cursor: pointer !important;
+    &:hover {
+      color: $primary;
+    }
+  }
+  .custom-card {
+    cursor: grab !important;
+  }
+  .anchor-trash {
+    cursor: pointer !important;
+    &:hover {
+      color: $danger;
+    }
+  }
+}

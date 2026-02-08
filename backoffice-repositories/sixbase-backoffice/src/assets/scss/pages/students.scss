@@ -1,0 +1,34 @@
+section#pageHomeStudents {
+  .view-details {
+    &:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+
+  .filters {
+    margin-bottom: 0.5rem !important;
+  }
+}
+
+div#modalViewStudentSales,
+div#modalViewStudentProducts {
+  .view-ss-header {
+    font-weight: bold;
+  }
+
+  .view-ss-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .view-ss-item {
+    display: flex;
+    justify-content: space-between;
+  }
+  a {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

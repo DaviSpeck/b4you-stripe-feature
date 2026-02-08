@@ -1,0 +1,84 @@
+@import './ui_colors.scss';
+
+.alertDS {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 16px;
+  border-radius: 8px;
+  row-gap: 8px;
+  a {
+    margin-left: 24px;
+  }
+  .alertDS-wrap-icon {
+    display: flex;
+    align-items: center;
+    margin-right: 6px;
+    i {
+      font-size: 28px;
+    }
+    .alertDS-heading {
+      font-weight: 600;
+    }
+  }
+  .alertDS-text {
+    font-weight: 400;
+  }
+  i {
+    margin-right: 4px;
+    font-size: 28px;
+  }
+}
+
+.alertDS-size-xs {
+  padding: 5px 16px;
+}
+.alertDS-size-sm {
+  padding: 7px 16px;
+  .alertDS-text {
+    font-size: 14px;
+  }
+}
+.alertDS-size-md {
+  padding: 15px 16px;
+}
+.alertDS-size-lg {
+  padding: 17px 24px;
+}
+
+.alertDS-primary {
+  background-color: $primary-50;
+  color: $primary-700;
+}
+.alertDS-danger {
+  background-color: $danger-75;
+  color: $danger;
+}
+.alertDS-warning {
+  background-color: $warning-100;
+  color: $warning-900;
+}
+.alertDS-success {
+  background-color: $success-100;
+  color: $success;
+}
+.alertDS-light {
+  background-color: $light-200;
+  color: $light-600;
+}
+
+@media (max-width: 11685px) {
+  .alertDS {
+    flex-direction: column;
+    .alertDS-wrap-icon {
+      flex-direction: column;
+    }
+    .alertDS-text {
+      text-align: center;
+    }
+    & > *,
+    & > * > * {
+      margin: 0 !important;
+    }
+  }
+}

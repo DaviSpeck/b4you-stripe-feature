@@ -1,0 +1,10 @@
+/* Aumenta o espaçamento da última coluna (Status de contato) */
+.rdt_TableCell:last-child {
+    padding-right: 24px !important;
+}
+
+/* Opcional: melhora o espaçamento geral */
+.rdt_TableCell {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+}

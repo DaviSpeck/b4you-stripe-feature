@@ -1,0 +1,20 @@
+section#pageHomeProducers {
+  .view-details {
+    &:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+
+  .filters {
+    margin-bottom: 0.5rem !important;
+  }
+}
+.bg-orange {
+  background-color: #e4750e;
+}
+#changeTariff {
+  .btn-close {
+    display: none;
+  }
+}

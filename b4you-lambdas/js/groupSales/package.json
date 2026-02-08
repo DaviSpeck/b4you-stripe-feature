@@ -1,0 +1,17 @@
+{
+  "name": "groupsales",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "moment": "^2.30.1",
+    "mysql2": "^3.10.2",
+    "sequelize": "^6.37.3"
+  }
+}

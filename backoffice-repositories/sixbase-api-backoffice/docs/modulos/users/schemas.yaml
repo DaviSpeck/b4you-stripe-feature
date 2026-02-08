@@ -1,0 +1,66 @@
+components:
+  schemas:
+    ReactivationProducer:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+          example: "550e8400-e29b-41d4-a716-446655440000"
+          description: "UUID único do produtor"
+        name:
+          type: string
+          example: "João Silva"
+          description: "Nome do produtor"
+        email:
+          type: string
+          format: email
+          example: "joao.silva@email.com"
+          description: "Email do produtor"
+        reactivation_status:
+          type: string
+          enum: [not_contacted, contacting, success]
+          example: "not_contacted"
+          description: "Status atual da reativação"
+        lastMonthSales:
+          type: integer
+          example: 1500
+          description: "Vendas do último mês"
+        lastSaleDate:
+          type: string
+          format: date-time
+          example: "2025-01-15T10:30:00Z"
+          description: "Data da última venda"
+
+    PagedReactivationProducer:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 150
+          description: "Total de produtores encontrados"
+        rows:
+          type: array
+          items:
+            $ref: "#/components/schemas/ReactivationProducer"
+
+    UpdateReactivationStatus:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
+          enum: [not_contacted, contacting, success]
+          example: "contacting"
+          description: "Novo status de reativação"
+
+    UpdateManager:
+      type: object
+      required:
+        - managers
+      properties:
+        managers:
+          type: string
+          example: "João Silva"
+          description: "Nome do gerente a ser associado ao usuário"

@@ -1,0 +1,22 @@
+{
+  "name": "api-hsds",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.115"
+  },
+  "dependencies": {
+    "moment": "^2.29.4",
+    "mysql2": "^3.3.2",
+    "sequelize": "^6.31.1",
+    "yup": "^1.2.0",
+    "node-mailjet": "^6.0.2"
+  }
+}

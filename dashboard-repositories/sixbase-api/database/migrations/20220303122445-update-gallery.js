@@ -1,0 +1,15 @@
+module.exports = {
+  up: async (queryInterface, Sequelize) => {
+    await Promise.all([
+      queryInterface.addColumn('product_gallery', 'thumbnail', {
+        type: Sequelize.STRING,
+      }),
+    ]);
+  },
+
+  down: async (queryInterface) => {
+    await Promise.all([
+      queryInterface.removeColumn('product_gallery', 'thumbnail'),
+    ]);
+  },
+};

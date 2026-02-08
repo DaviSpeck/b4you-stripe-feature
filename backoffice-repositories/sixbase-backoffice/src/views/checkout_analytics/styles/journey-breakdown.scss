@@ -1,0 +1,14 @@
+.breakdown-table {
+    tbody tr:not(:last-child) {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    td:last-child {
+        color: #3dd598;
+        font-weight: 600;
+    }
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}

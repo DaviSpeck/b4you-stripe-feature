@@ -1,0 +1,248 @@
+.data-table {
+  background-color: #fff !important;
+  input {
+    font-size: 16px;
+    text-indent: 5px;
+  }
+
+  .my-calendar {
+    position: relative;
+    overflow: visible;
+    white-space: nowrap;
+
+    .calendar-inline {
+      background: #f3f3f3;
+      padding: 7px 12px 7px 7px;
+      border-radius: 5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      margin-left: 25px;
+      font-size: 14px;
+
+      span {
+        display: flex;
+        align-items: center;
+        margin-left: 5px;
+      }
+
+      &:hover {
+        background: #eee;
+      }
+
+      i {
+        margin-right: 5px;
+        font-size: 20px;
+      }
+
+      .arrow {
+        font-size: 12px;
+        margin-left: 5px;
+        transform: translateY(0px);
+      }
+    }
+
+    .react-calendar {
+      position: absolute;
+      right: 0;
+      width: 300px !important;
+      border: 1px solid blue;
+      min-width: 350px;
+      background: #f6f6f6;
+      padding: 0 !important;
+    }
+  }
+  .comands {
+    display: flex;
+    align-items: center;
+
+    .export-excel {
+      background: #f3f3f3;
+      padding: 7px 12px 7px 7px;
+      border-radius: 5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      margin-left: 25px;
+      font-size: 14px;
+
+      &:hover {
+        background: #eee;
+      }
+
+      i {
+        font-size: 18px;
+        margin-right: 5px;
+      }
+    }
+  }
+}
+
+#page-sales {
+  .col-search {
+    order: 0;
+    @media only screen and (max-width: 1045px) {
+      max-width: 80% !important;
+      flex: 0 0 80% !important;
+    }
+    @media only screen and (max-width: 695px) {
+      max-width: 65% !important;
+      flex: 0 0 65% !important;
+    }
+  }
+  .col-calendar {
+    order: 1;
+    @media only screen and (max-width: 1045px) {
+      margin-top: 8px;
+      order: 2;
+      max-width: 100% !important;
+      flex: 0 0 100% !important;
+      justify-content: flex-start !important;
+    }
+    @media only screen and (max-width: 695px) {
+      justify-content: flex-end !important;
+    }
+  }
+  .col-data-filter {
+    order: 2;
+    @media only screen and (max-width: 1045px) {
+      order: 1;
+      justify-content: flex-end !important;
+      max-width: 20% !important;
+      flex: 0 0 20% !important;
+    }
+    @media only screen and (max-width: 695px) {
+      max-width: 35% !important;
+      flex: 0 0 35% !important;
+    }
+  }
+}
+#page-abandoned-cart {
+  .col-search {
+    order: 0;
+    @media only screen and (max-width: 1045px) {
+      max-width: 80% !important;
+      flex: 0 0 80% !important;
+    }
+    @media only screen and (max-width: 695px) {
+      max-width: 65% !important;
+      flex: 0 0 65% !important;
+    }
+  }
+  .col-calendar {
+    order: 1;
+    @media only screen and (max-width: 1045px) {
+      margin-top: 8px;
+      order: 2;
+      max-width: 100% !important;
+      flex: 0 0 100% !important;
+      justify-content: flex-start !important;
+    }
+    @media only screen and (max-width: 695px) {
+      justify-content: flex-end !important;
+    }
+  }
+  .col-data-filter {
+    order: 2;
+    @media only screen and (max-width: 1045px) {
+      order: 1;
+      justify-content: flex-end !important;
+      max-width: 20% !important;
+      flex: 0 0 20% !important;
+    }
+    @media only screen and (max-width: 695px) {
+      max-width: 35% !important;
+      flex: 0 0 35% !important;
+    }
+  }
+}
+#page-invoices {
+  .col-search {
+    order: 0;
+    @media only screen and (max-width: 1045px) {
+      max-width: 80% !important;
+      flex: 0 0 80% !important;
+    }
+    @media only screen and (max-width: 695px) {
+      max-width: 65% !important;
+      flex: 0 0 65% !important;
+    }
+  }
+  .col-export {
+    order: 1;
+    @media only screen and (max-width: 1045px) {
+      margin-top: 8px;
+      order: 2;
+      max-width: 100% !important;
+      flex: 0 0 100% !important;
+    }
+    @media only screen and (max-width: 695px) {
+      justify-content: flex-end !important;
+    }
+  }
+  .col-data-filter {
+    order: 2;
+    @media only screen and (max-width: 1045px) {
+      order: 1;
+      justify-content: flex-end !important;
+      max-width: 20% !important;
+      flex: 0 0 20% !important;
+    }
+    @media only screen and (max-width: 695px) {
+      max-width: 35% !important;
+      flex: 0 0 35% !important;
+    }
+  }
+}
+
+.filter-sales-header {
+  font-weight: 600 !important;
+  color: #475569 !important;
+}
+
+.filter-sales-footer {
+  background: transparent !important;
+
+  .buttonDS-light {
+    color: #475569 !important;
+    background: #e0e0e0 !important;
+    font-weight: 500 !important;
+  }
+
+  .buttonDS-success {
+    background: #23a426 !important;
+    font-weight: 500 !important;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.loading-pulse-icon-b4y {
+  width: 30px;
+  height: auto;
+  display: inline-block;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Definindo a animação de rotação */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,167 @@
+.header-style-view-offer {
+  margin: 0;
+  padding: 0;
+  .wrapper-name-offer {
+    display: flex;
+    gap: 5px;
+    color: #475569;
+
+    h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #475569;
+      margin: 0;
+      padding: 0;
+    }
+  }
+}
+
+.style-view-offer {
+  border: 1px solid #d3d5d8;
+  border-radius: 8px;
+  overflow: hidden;
+
+  header {
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    padding: 20px;
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 600 !important;
+      color: #23a426;
+      margin: 0;
+    }
+  }
+  .style-view-main-offer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 0px;
+    padding-top: 0px;
+    .wrapper-custom-offer {
+      width: 100%;
+      padding: 20px 80px 40px 80px;
+      h3 {
+        font-weight: 600 !important;
+        font-size: 1.5rem;
+        text-align: center;
+        color: #475569;
+      }
+      p {
+        width: 100%;
+        max-width: 550px;
+        word-wrap: break-word;
+        text-align: center;
+        margin: 0 auto;
+      }
+      .image-preview-offer {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        background-color: #e0e0e0;
+        margin: 16px 0px 0px 0px;
+        padding: 100px;
+        border-radius: 8px;
+        gap: 5px;
+        span {
+          display: block;
+          font-size: 1rem;
+          font-size: 500;
+        }
+      }
+      .wrapper-actions-offer {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        margin: 0 auto;
+        padding-top: 16px;
+        .select-installment {
+          padding: 40px 0px 10px 0px;
+        }
+        .wrapper-btn-offer {
+          display: flex;
+          width: 100%;
+          flex-direction: column;
+          gap: 8px;
+
+          .btn-accept-offer {
+            width: 100%;
+            animation: pulse-btn 1.5s infinite;
+            border: none;
+            @keyframes pulse-btn {
+              0% {
+                transform: scale(0.95);
+              }
+              50% {
+                transform: scale(1);
+              }
+              100% {
+                transform: scale(0.95);
+              }
+            }
+          }
+
+          .btn-refuse-offer {
+            padding: 0px;
+            background-color: transparent;
+            color: #0f1b35;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+          }
+        }
+      }
+      button {
+        width: 100%;
+        border: none;
+        padding: 10px;
+        font-size: 1rem;
+        color: #ffffff;
+        background-color: #23a426;
+        border-radius: 8px;
+      }
+    }
+  }
+}
+
+.wrapper-offers-upsell-offer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 16px;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  background-color: #ffffff;
+  gap: 70px;
+  padding: 40px;
+  .icon-footer-offer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    p {
+      margin: 0;
+      line-height: 16px;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: 'Roboto', sans-serif;
+      color: #0f1b35;
+    }
+    img {
+      width: 40px;
+      height: 40px;
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .wrapper-custom-offer {
+    padding: 10px !important;
+  }
+}

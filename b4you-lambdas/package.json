@@ -1,0 +1,54 @@
+{
+  "name": "b4you-lambdas",
+  "version": "1.0.0",
+  "description": "",
+  "sourceType": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:lambda": "vitest run --project",
+    "dev": "env NODE_ENV=dev nodemon index.mjs",
+    "format": "biome format --write .",
+    "lint": "biome lint .",
+    "check": "biome check --apply .",
+    "prepare": "husky install"
+  },
+  "repository": "git+https://github.com/sixbasebr/b4you-lambdas.git",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "private": true,
+  "bugs": {
+    "url": "https://github.com/sixbasebr/b4you-lambdas/issues"
+  },
+  "homepage": "https://github.com/sixbasebr/b4you-lambdas#readme",
+  "devDependencies": {
+    "@biomejs/biome": "1.5.3",
+    "@vitest/coverage-v8": "^1.6.1",
+    "git-list-updated": "^1.2.1",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.2",
+    "nodemon": "^2.0.22",
+    "vitest": "^1.6.1"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "moment": "^2.30.1",
+    "morgan": "^1.10.0",
+    "mysql2": "^3.9.1",
+    "sequelize": "^6.37.5",
+    "xml-js": "^1.6.11"
+  },
+  "lint-staged": {
+    "./js/**/*.{js,mjs,json}": [
+      "npx biome format --write"
+    ],
+    "./go/**/*.go": [
+      "gofmt -w",
+      "golangci-lint run"
+    ]
+  }
+}

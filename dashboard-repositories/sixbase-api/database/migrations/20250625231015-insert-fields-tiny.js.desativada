@@ -1,0 +1,38 @@
+
+'use strict';
+
+/** @type {import('sequelize-cli').Migration} */
+module.exports = {
+  async up (queryInterface, Sequelize) {
+
+    await queryInterface.addColumn('sales', 'id_order_tiny', {
+      type: Sequelize.BIGINT,
+      allowNull: true,
+    });
+
+    await queryInterface.addColumn('sales_items', 'id_product_tiny', {
+      type: Sequelize.BIGINT,
+      allowNull: true,
+    });
+
+    await queryInterface.addColumn('products', 'tiny_sku', {
+      type: Sequelize.STRING,
+      defaultValue: null,
+    });
+
+    await queryInterface.addColumn('product_offer', 'tiny_sku', {
+      type: Sequelize.STRING,
+      defaultValue: null,
+    });
+
+  },
+
+  async down (queryInterface, Sequelize) {
+
+    await queryInterface.removeColumn('sales', 'id_order_tiny');
+    await queryInterface.removeColumn('sales_items', 'id_product_tiny');
+    await queryInterface.removeColumn('products', 'tiny_sku');
+    await queryInterface.removeColumn('product_offer', 'tiny_sku');
+
+  }
+};

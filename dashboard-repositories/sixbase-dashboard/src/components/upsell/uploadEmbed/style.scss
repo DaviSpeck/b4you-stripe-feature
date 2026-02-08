@@ -1,0 +1,28 @@
+.removing-media {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  width: 370px;
+  height: 200px;
+  background-color: #dedede63;
+}
+
+.input-embed {
+  border: 1px solid #e0e0e0 !important;
+  border-radius: 4px 0px 0px 4px !important;
+  border-right: none;
+  width: 280px;
+  font-size: 0.85rem;
+  padding-left: 16px;
+}
+
+.invalid-embed {
+  display: 'flex';
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  width: 370px;
+  height: 200px;
+  background-color: #dedede63;
+}

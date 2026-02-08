@@ -1,0 +1,16 @@
+.multi-select-affiliations {
+  max-width: 300px;
+  width: 100%;
+}
+
+.multi-select-affiliations .dropdown-container {
+  border-radius: 16px !important;
+  background-color: #fafafa !important;
+  z-index: 3;
+}
+
+@media (max-width: 768px) {
+  .multi-select-affiliations {
+    max-width: 100%;
+  }
+}

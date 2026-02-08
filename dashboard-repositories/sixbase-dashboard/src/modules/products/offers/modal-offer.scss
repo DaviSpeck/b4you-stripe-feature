@@ -1,0 +1,56 @@
+.upsell-generator-disabled-alert {
+  font-size: 12px;
+  color: #e9453a !important;
+  text-decoration: underline;
+}
+#modal-offer {
+  max-width: 750px !important;
+}
+
+@media only screen and (max-width: 768px) {
+  .col-text-copy {
+    margin-top: 24px;
+  }
+}
+.wrap-content-insertion {
+  position: relative;
+  background-color: black;
+  min-width: 100%;
+  min-height: 315px;
+  .isntembed {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 24px;
+    text-align: center;
+  }
+  .content-insertion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #000;
+    iframe {
+      position: absolute !important;
+      top: 50% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) !important;
+      max-width: 100%;
+      width: 100% !important;
+      height: 100% !important;
+      #video-container {
+        margin-top: 0 !important;
+      }
+    }
+  }
+}
+.wrap-content-insertion-2 {
+  min-height: 553px !important;
+  @media (max-width: 730px) {
+    min-height: 219px !important;
+  }
+}
+.wrap-content-insertion-3 {
+  min-height: 219px !important;
+}

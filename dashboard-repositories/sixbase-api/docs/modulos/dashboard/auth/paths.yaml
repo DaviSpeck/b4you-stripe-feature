@@ -1,0 +1,261 @@
+/auth/login:
+  post:
+    tags:
+      - "Autenticação"
+    summary: Login do usuário
+    description: Autentica um usuário no sistema
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "./schemas.yaml#/components/schemas/LoginRequest"
+    responses:
+      200:
+        description: Login realizado com sucesso
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas.yaml#/components/schemas/LoginResponse"
+      401:
+        $ref: "../../../components/common-responses.yaml#/components/responses/UnauthorizedError"
+      429:
+        $ref: "../../../components/common-responses.yaml#/components/responses/TooManyRequestsError"
+      500:
+        $ref: "../../../components/common-responses.yaml#/components/responses/InternalServerError"
+
+/auth/login-merlin:
+  post:
+    tags:
+      - "Autenticação"
+    summary: Login Merlin
+    description: Autentica um usuário no sistema Merlin
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "./schemas.yaml#/components/schemas/LoginMerlinRequest"
+    responses:
+      200:
+        description: Login realizado com sucesso
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas.yaml#/components/schemas/LoginMerlinResponse"
+      401:
+        $ref: "../../../components/common-responses.yaml#/components/responses/UnauthorizedError"
+      429:
+        $ref: "../../../components/common-responses.yaml#/components/responses/TooManyRequestsError"
+      500:
+        $ref: "../../../components/common-responses.yaml#/components/responses/InternalServerError"
+
+/auth/backoffice:
+  get:
+    tags:
+      - "Autenticação"
+    summary: Gerar autenticação do backoffice
+    description: Gera token de autenticação para o backoffice
+    responses:
+      200:
+        description: Token gerado com sucesso
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas.yaml#/components/schemas/BackofficeAuthResponse"
+      500:
+        $ref: "../../../components/common-responses.yaml#/components/responses/InternalServerError"
+
+/auth/logout:
+  get:
+    tags:
+      - "Autenticação"
+    summary: Logout do usuário
+    description: Realiza logout do usuário logado
+    security:
+      - BearerAuth: []
+    responses:
+      200:
+        description: Logout realizado com sucesso
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas.yaml#/components/schemas/LogoutResponse"
+      401:
+        $ref: "../../../components/common-responses.yaml#/components/responses/UnauthorizedError"
+      500:
+        $ref: "../../../components/common-responses.yaml#/components/responses/InternalServerError"
+
+/auth/me:
+  get:
+    tags:
+      - "Autenticação"
+    summary: Informações do usuário logado
+    description: Retorna informações do usuário atualmente logado
+    security:
+      - BearerAuth: []
+    responses:
+      200:
+        description: Informações do usuário
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas.yaml#/components/schemas/MeResponse"
+      401:
+        $ref: "../../../components/common-responses.yaml#/components/responses/UnauthorizedError"
+      500:
+        $ref: "../../../components/common-responses.yaml#/components/responses/InternalServerError"
+
+/auth/change-password:
+  post:
+    tags:
+      - "Autenticação"
+    summary: Alterar senha do usuário logado
+    description: Altera a senha do usuário atualmente logado
+    security:
+      - BearerAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "./schemas.yaml#/components/schemas/ChangeLoggedUserPasswordRequest"
+    responses:
+      200:
+        description: Senha alterada com sucesso
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas.yaml#/components/schemas/ChangePasswordResponse"
+      400:
+        $ref: "../../../components/common-responses.yaml#/components/responses/BadRequest"
+      401:
+        $ref: "../../../components/common-responses.yaml#/components/responses/UnauthorizedError"
+      500:
+        $ref: "../../../components/common-responses.yaml#/components/responses/InternalServerError"
+
+/auth/change-account/{account_id}:
+  put:
+    tags:
+      - "Autenticação"
+    summary: Alterar conta do usuário
+    description: Altera a conta ativa do usuário logado
+    security:
+      - BearerAuth: []
+    parameters:
+      - name: account_id
+        in: path
+        required: true
+        description: ID da conta para alterar
+        schema:
+          type: integer
+          example: 1
+    responses:
+      200:
+        description: Conta alterada com sucesso
+        content:
+          application/json:
+            schema:
+              $ref: "../../../components/common-schemas.yaml#/components/schemas/SuccessResponse"
+      400:
+        $ref: "../../../components/common-responses.yaml#/components/responses/BadRequest"
+      401:
+        $ref: "../../../components/common-responses.yaml#/components/responses/UnauthorizedError"
+      403:
+        $ref: "../../../components/common-responses.yaml#/components/responses/Forbidden"
+      500:
+        $ref: "../../../components/common-responses.yaml#/components/responses/InternalServerError"
+
+/auth/validate/token/{token}:
+  get:
+    tags:
+      - "Autenticação"
+    summary: Validar token
+    description: Valida se um token é válido
+    parameters:
+      - name: token
+        in: path
+        required: true
+        description: Token a ser validado
+        schema:
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+    responses:
+      200:
+        description: Token validado
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas.yaml#/components/schemas/ValidateTokenResponse"
+      400:
+        $ref: "../../../components/common-responses.yaml#/components/responses/BadRequest"
+      500:
+        $ref: "../../../components/common-responses.yaml#/components/responses/InternalServerError"
+
+/auth/forgotpassword:
+  post:
+    tags:
+      - "Autenticação"
+    summary: Esqueci minha senha
+    description: Envia email de recuperação de senha
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "./schemas.yaml#/components/schemas/ForgotPasswordRequest"
+    responses:
+      200:
+        description: Email de recuperação enviado
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas.yaml#/components/schemas/ForgotPasswordResponse"
+      400:
+        $ref: "../../../components/common-responses.yaml#/components/responses/BadRequest"
+      500:
+        $ref: "../../../components/common-responses.yaml#/components/responses/InternalServerError"
+
+/auth/change/password:
+  post:
+    tags:
+      - "Autenticação"
+    summary: Alterar senha com token
+    description: Altera a senha usando token de recuperação
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "./schemas.yaml#/components/schemas/ChangePasswordRequest"
+    responses:
+      200:
+        description: Senha alterada com sucesso
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas.yaml#/components/schemas/ChangePasswordResponse"
+      400:
+        $ref: "../../../components/common-responses.yaml#/components/responses/BadRequest"
+      500:
+        $ref: "../../../components/common-responses.yaml#/components/responses/InternalServerError"
+
+/auth/student:
+  get:
+    tags:
+      - "Autenticação"
+    summary: Sessão do estudante
+    description: Retorna informações da sessão do estudante
+    security:
+      - BearerAuth: []
+    responses:
+      200:
+        description: Sessão do estudante
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas.yaml#/components/schemas/StudentSessionResponse"
+      401:
+        $ref: "../../../components/common-responses.yaml#/components/responses/UnauthorizedError"
+      500:
+        $ref: "../../../components/common-responses.yaml#/components/responses/InternalServerError"

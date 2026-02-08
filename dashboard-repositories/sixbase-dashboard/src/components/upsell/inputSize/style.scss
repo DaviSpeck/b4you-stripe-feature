@@ -1,0 +1,40 @@
+.wrapper-input-font-size {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  label {
+    display: block;
+    margin: 0;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #475569;
+  }
+  .input-font-size {
+    display: flex;
+    input {
+      height: 30px;
+      width: 50px;
+      text-align: center;
+      font-size: 0.875rem;
+      border: 2px solid #e0e0e0;
+      border-radius: 4px 0px 0px 4px;
+    }
+
+    input:disabled {
+      cursor: not-allowed;
+      background-color: #8d8d8d27;
+    }
+
+    span {
+      display: flex;
+      align-items: center;
+      padding-left: 8px;
+      padding-right: 8px;
+      font-size: 0.775rem;
+      font-weight: 500;
+      background-color: #e0e0e0;
+      border: 1px solid #e0e0e0;
+      border-radius: 0px 4px 4px 0px;
+    }
+  }
+}

@@ -1,0 +1,51 @@
+#costs {
+  .row-balance {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 16px;
+    column-gap: 120px;
+    flex-direction: column;
+    .balance-pending {
+      display: flex;
+      .item-content {
+        .label {
+          color: #4dd0bb;
+          display: flex;
+          align-items: center;
+          .icon {
+            margin-left: 8px;
+            cursor: pointer;
+            svg {
+              width: 18px;
+            }
+          }
+        }
+        .value {
+          font-size: 18px;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+  .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    padding: 1px;
+    margin-top: 5px;
+    cursor: pointer;
+    &:hover {
+      i {
+        color: #26776e;
+      }
+    }
+    i {
+      color: #45aa9f;
+      font-size: 16px;
+      padding: 0;
+    }
+  }
+}

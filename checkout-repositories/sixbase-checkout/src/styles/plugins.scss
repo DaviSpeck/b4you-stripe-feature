@@ -1,0 +1,76 @@
+:root {
+  // --primary-color: #f6f6f6;
+  --counter-color: #df2424;
+  --counter-shade: #f35454;
+}
+
+
+#plugin-counter {
+  background : color-mix(in srgb, var(--counter-color) 60%, white);;
+  color: white;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 8px 14px;
+  position: relative;
+  .all-text {
+    z-index: 3;
+    overflow: hidden;
+    .col {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .progress {
+    background: var(--counter-color);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+
+    height: 100%;
+    width: 0;
+    transition: all 1s linear;
+  }
+
+  i {
+    font-size: 40px;
+    margin-right: 10px;
+
+    @media (max-width: 768px) {
+      font-size: 34px;
+    }
+  }
+
+  .c-text {
+    display: flex;
+    flex-direction: column;
+
+    span {
+      font-size: 20px;
+      line-height: 20px;
+
+      @media (max-width: 768px) {
+        font-size: 14px;
+        line-height: 18px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      small {
+        display: none;
+      }
+    }
+  }
+
+  .timer {
+    margin-left: auto;
+    font-size: 28px;
+
+    @media (max-width: 768px) {
+      font-size: 20px;
+    }
+  }
+}

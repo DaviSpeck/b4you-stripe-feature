@@ -1,0 +1,39 @@
+/* Tabs scrolláveis no mobile */
+.tabs-scroll-mobile {
+  overflow-x: auto;
+  white-space: nowrap;
+  flex-wrap: nowrap !important;
+  gap: 0.5rem;
+}
+.tabs-scroll-mobile > .btn {
+  display: inline-block;
+  margin-right: 0.25rem;
+}
+
+/* Responsividade para tabela */
+.datatable-responsive-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+/* Tabela: fonte menor e menos padding em telas pequenas */
+@media (max-width: 576px) {
+  .datatable-mobile .rdt_Table {
+    font-size: 0.92rem !important;
+  }
+  .datatable-mobile .rdt_TableCell {
+    padding: 0.25rem 0.5rem !important;
+    white-space: nowrap;
+  }
+  .rdt_TableCol {
+    padding: 0.25rem 0.5rem !important;
+  }
+}
+
+/* Cards PIN um por linha */
+@media (max-width: 767.98px) {
+  .card {
+    margin-bottom: 1rem;
+  }
+}

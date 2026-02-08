@@ -1,0 +1,34 @@
+version: '3.9'
+name: 'sixbase-checkout'
+
+services:
+  api:
+    build:
+      context: ../..
+      dockerfile: docker/local/Dockerfile.dev
+    container_name: sixbase-api-checkout
+    env_file:
+      - .env
+    command: yarn dev
+    volumes:
+      - ../..:/usr/app
+      - /usr/app/node_modules
+    ports:
+      - '5501:5501'
+    depends_on:
+      redis:
+        condition: service_started
+    environment:
+      NODE_ENV: development
+      DEV_ALLOW_DOCS: 'true'
+      REDIS_HOST: redis
+      REDIS_PORT: "6381"
+      CHOKIDAR_USEPOLLING: "true"
+      CHOKIDAR_INTERVAL: "500"
+
+  redis:
+    image: redis:7-alpine
+    container_name: sixbase-redis-checkout
+    command: redis-server --port 6381
+    ports:
+      - "6381:6381"

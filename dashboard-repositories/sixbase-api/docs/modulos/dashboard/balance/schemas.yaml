@@ -1,0 +1,118 @@
+components:
+  schemas:
+    BankAccount:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 123
+        bank_name:
+          type: string
+          example: "Banco do Brasil"
+        agency:
+          type: string
+          example: "1234"
+        account:
+          type: string
+          example: "12345-6"
+        account_type:
+          type: string
+          example: "checking"
+        holder_name:
+          type: string
+          example: "João Silva"
+        document:
+          type: string
+          example: "123.456.789-00"
+        pix_key:
+          type: string
+          example: "joao@email.com"
+        pix_type:
+          type: string
+          example: "email"
+
+    WithdrawalSettings:
+      type: object
+      properties:
+        cost:
+          type: number
+          format: float
+          example: 2.50
+        max_monthly_amount:
+          type: number
+          format: float
+          example: 10000.00
+        min_amount_per_request:
+          type: number
+          format: float
+          example: 50.00
+        available_amount:
+          type: number
+          format: float
+          example: 7500.00
+
+    BalanceResponse:
+      type: object
+      properties:
+        available_balance:
+          type: number
+          format: float
+          example: 2500.75
+          description: "Saldo disponível para saque"
+        referral_balance:
+          type: number
+          format: float
+          example: 150.00
+          description: "Saldo de indicações"
+        blocked_balance:
+          type: number
+          format: float
+          example: 500.25
+          description: "Saldo bloqueado"
+        pending_balance:
+          type: number
+          format: float
+          example: 500.25
+          description: "Saldo pendente"
+        bank_account:
+          $ref: "#/components/schemas/BankAccount"
+        withdrawal_settings:
+          $ref: "#/components/schemas/WithdrawalSettings"
+        withheld_balance:
+          type: number
+          format: float
+          example: 100.00
+          description: "Saldo retido"
+        max_withdrawal_amount:
+          type: number
+          format: float
+          example: 2000.00
+          description: "Valor máximo que pode ser sacado"
+        blocked:
+          type: boolean
+          example: false
+          description: "Se o usuário está bloqueado para saques"
+
+    TotalBalanceResponse:
+      type: object
+      properties:
+        producer:
+          type: number
+          format: float
+          example: 1500.00
+          description: "Total de comissões como produtor"
+        affiliate:
+          type: number
+          format: float
+          example: 800.00
+          description: "Total de comissões como afiliado"
+        others:
+          type: number
+          format: float
+          example: 200.00
+          description: "Total de outras comissões"
+        createdAt:
+          type: string
+          format: date-time
+          example: "2024-01-15T10:30:00Z"
+          description: "Data de criação do relatório"

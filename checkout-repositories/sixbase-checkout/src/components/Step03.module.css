@@ -1,0 +1,181 @@
+.div01 {
+    gap: 16px;
+    display: flex;
+    padding: 24px;
+    align-self: stretch;
+    box-shadow: 0px 4px 66.5999984741211px 0px rgba(0, 0, 0, 0.15000000596046448) ;
+    align-items: flex-start;
+    border-radius: 16px;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 1);
+  }
+  .frame37254 {
+    gap: 12px;
+    display: flex;
+    align-items: center;
+  }
+  .frame37253 {
+    gap: 10px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 500px;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--hex-color, rgba(248, 107, 134, 1));
+  }
+  .text08 {
+    color: rgba(255, 255, 255, 1);
+    height: auto;
+    font-size: 18px;
+    font-style: SemiBold;
+    text-align: left;
+    font-family: Poppins;
+    font-weight: 600;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+  }
+  .text09 {
+    color: var(--hex-color, rgba(248, 107, 134, 1));
+    height: auto;
+    font-size: 19px;
+    font-style: SemiBold;
+    text-align: left;
+    font-family: Poppins;
+    font-weight: 600;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+  }
+
+  .text{
+    height: auto;
+    flex-grow: 1;
+    font-size: 12px;
+    font-style: Regular;
+    text-align: left;
+    font-family: Poppins;
+    font-weight: 400;
+    line-height: 24px;
+    font-stretch: normal;
+    text-decoration: none;
+  }
+  .text::placeholder{
+    color: rgba(122, 122, 122, 1);
+    height: auto;
+    opacity: 0.50;
+    flex-grow: 1;
+    font-size: 12px;
+    font-style: Regular;
+    text-align: left;
+    font-family: Poppins;
+    font-weight: 400;
+    line-height: 24px;
+    font-stretch: normal;
+    text-decoration: none;
+  }
+  .frame6 {
+    gap: 23px;
+    display: flex;
+    padding: 0 31px;
+    align-self: stretch;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 8px;
+    justify-content: center;
+    
+    background-color: rgba(32, 195, 116, 1);
+  }
+  .text35 {
+    color: rgba(255, 255, 255, 1);
+    height: auto;
+    font-size: 14px;
+    font-style: Medium;
+    text-align: left;
+    font-family: Poppins;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+  }
+  .arrowright {
+    width: 24px;
+    height: 24px;
+  }
+
+.checkboxbaseicon {
+    width: 15.5px;
+    position: relative;
+    border-radius: 7.77px;
+    height: 15.5px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+.checkbox1 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 1.6px 0px 0px;
+}
+.text {
+    align-self: stretch;
+    position: relative;
+    line-height: 18.65px;
+    font-weight: 500;
+}
+.supportingtext {
+    align-self: stretch;
+    position: relative;
+    line-height: 18.65px;
+    color: #939393;
+}
+.textandsupportingtext {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 1.6px;
+}
+.text1 {
+    position: relative;
+    font-size: 14px;
+    line-height: 18.65px;
+    font-weight: 600;
+}
+.checkbox {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 9.3px;
+}
+.checkboxgroupitem {
+    width: 100%;
+    position: relative;
+    border-radius: 6.22px;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 12.4px;
+    box-sizing: border-box;
+    text-align: left;
+    font-size: 12.43px;
+    color: #202020;
+    font-family: Poppins;
+}
+

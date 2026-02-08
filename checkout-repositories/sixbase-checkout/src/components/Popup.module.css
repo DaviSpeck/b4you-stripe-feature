@@ -1,0 +1,103 @@
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+.bg {
+  padding: 2rem;
+  position: relative;
+  margin: 20px;
+}
+
+.buttonClose {
+  position: absolute;
+  top: -25px;
+  right: 0;
+  background: transparent;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.bgDashed {
+  border: 4px dashed white;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 600px;
+  min-height: 400px;
+  padding: 2rem;
+  box-sizing: border-box;
+  text-align: center;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+}
+
+.title {
+  font-size: 28px;
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
+  font-weight: bold;
+}
+
+.coupon {
+  background-color: black;
+  color: white;
+  font-size: 64px;
+  padding: 0.5rem 0;
+  margin-bottom: 1rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.discountText {
+  font-size: 28px;
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
+}
+
+.secondaryText {
+  font-size: 16px;
+  margin-bottom: 2rem;
+  letter-spacing: 1px;
+}
+
+.buttonAccept {
+  font-weight: bold;
+  font-size: 16px;
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  text-transform: uppercase;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(0, 128, 0, 0.7);
+  }
+  70% {
+    transform: scale(1.01);
+    box-shadow: 0 0 0 8px rgba(0, 128, 0, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(0, 128, 0, 0);
+  }
+}
+
+@media (min-width: 768px) {
+  .bgDashed {
+    width: 600px;
+  }
+}

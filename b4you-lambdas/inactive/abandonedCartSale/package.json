@@ -1,0 +1,22 @@
+{
+  "name": "abandonedcart-cart-sale",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "zip": "zip -r splitcommissions.zip .",
+    "deploy": "npm run zip && aws lambda update-function-code --function-name b4you-production-splitCommissions --zip-file fileb://splitcommissions.zip --region sa-east-1",
+    "deploy:sandbox": "npm run zip && aws lambda update-function-code --function-name b4you-sandbox-abandoned-cart --zip-file fileb://splitcommissions.zip --region sa-east-1 --profile vinixp"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-sqs": "^3.391.0",
+    "moment": "^2.29.4",
+    "mysql2": "^3.6.0",
+    "sequelize": "^6.32.1",
+    "uuid": "^9.0.0"
+  }
+}

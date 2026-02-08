@@ -1,0 +1,50 @@
+components:
+  responses:
+    Success:
+      description: Operação realizada com sucesso
+      content:
+        application/json:
+          schema:
+            $ref: "./common-schemas.yaml#/components/schemas/SuccessResponse"
+
+    BadRequest:
+      description: Requisição inválida
+      content:
+        application/json:
+          schema:
+            $ref: "./common-schemas.yaml#/components/schemas/Error"
+
+    UnauthorizedError:
+      description: Usuário não autorizado
+      content:
+        application/json:
+          schema:
+            $ref: "./common-schemas.yaml#/components/schemas/Error"
+
+    Forbidden:
+      description: Acesso negado
+      content:
+        application/json:
+          schema:
+            $ref: "./common-schemas.yaml#/components/schemas/Error"
+
+    NotFound:
+      description: Recurso não encontrado
+      content:
+        application/json:
+          schema:
+            $ref: "./common-schemas.yaml#/components/schemas/Error"
+
+    TooManyRequestsError:
+      description: Muitas requisições
+      content:
+        application/json:
+          schema:
+            $ref: "./common-schemas.yaml#/components/schemas/Error"
+
+    InternalServerError:
+      description: Erro interno do servidor
+      content:
+        application/json:
+          schema:
+            $ref: "./common-schemas.yaml#/components/schemas/Error"

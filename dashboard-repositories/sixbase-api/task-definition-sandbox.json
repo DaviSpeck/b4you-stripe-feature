@@ -1,0 +1,41 @@
+{
+    "containerDefinitions": [
+        {
+            "name": "sixbase-api-sandbox",
+            "image": "493067706051.dkr.ecr.sa-east-1.amazonaws.com/sixbase-sandbox:bb49d6ac89e977eb7ed63a30a4122cfc00b48a84",
+            "cpu": 0,
+            "portMappings": [
+                {
+                    "containerPort": 5500,
+                    "hostPort": 5500,
+                    "protocol": "tcp"
+                }
+            ],
+            "essential": true,
+            "environment": [],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "/ecs/td-sixbase-api-sandbox",
+                    "awslogs-region": "sa-east-1",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            }
+        }
+    ],
+    "family": "td-sixbase-api-sandbox",
+    "executionRoleArn": "arn:aws:iam::493067706051:role/ecsTaskExecutionRole",
+    "networkMode": "awsvpc",
+    "volumes": [],
+    "placementConstraints": [],
+    "runtimePlatform": {
+        "operatingSystemFamily": "LINUX"
+    },
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "256",
+    "memory": "1024"
+}

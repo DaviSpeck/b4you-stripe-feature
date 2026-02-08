@@ -1,0 +1,6 @@
+components:
+  schemas:
+  # Schemas do módulo sales
+  sales:
+    $ref: "./modulos/sales/schemas.yaml#/components/schemas"
+

@@ -1,0 +1,50 @@
+openapi: 3.0.3
+info:
+  title: Sixbase-api
+  version: 1.0.0
+  description: Documentação da Sixbase-api
+
+servers:
+  - url: http://localhost:{port}/api
+    description: Local dev
+    variables:
+      port:
+        default: "5501"
+        enum: ["5000", "5501"]
+
+tags:
+  - name: Autenticação
+    description: Endpoints para autenticação, login, logout e gerenciamento de senhas
+  - name: Vendas
+    description: Endpoints para gerenciamento de vendas, assinaturas e códigos de cliente
+  - name: Saldo
+    description: Endpoints para consulta de saldo, comissões e informações bancárias
+
+components:
+  schemas:
+    $ref: "./schemas.yaml"
+
+  responses:
+    "200":
+      $ref: "./components/common-responses.yaml#/components/responses/Success"
+    "400":
+      $ref: "./components/common-responses.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "./components/common-responses.yaml#/components/responses/UnauthorizedError"
+    "403":
+      $ref: "./components/common-responses.yaml#/components/responses/Forbidden"
+    "404":
+      $ref: "./components/common-responses.yaml#/components/responses/NotFound"
+    "429":
+      $ref: "./components/common-responses.yaml#/components/responses/TooManyRequestsError"
+    "500":
+      $ref: "./components/common-responses.yaml#/components/responses/InternalServerError"
+
+  parameters:
+    $ref: "./components/parameters.yaml#/components/parameters"
+
+  securitySchemes:
+    $ref: "./components/security.yaml#/components/securitySchemes"
+
+paths:
+  $ref: "./paths.yaml"

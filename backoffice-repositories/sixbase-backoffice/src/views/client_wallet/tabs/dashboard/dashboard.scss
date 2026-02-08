@@ -1,0 +1,136 @@
+.rdt_Table {
+    overflow: visible !important;
+}
+
+.rdt_Row {
+    transition: background-color 0.25s ease, box-shadow 0.25s ease;
+    height: 96px !important;
+    align-items: center !important;
+    border-radius: 6px;
+    position: relative;
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.04) !important;
+    }
+}
+
+/* Destaques automáticos por cor de borda (goal / birthday) */
+.rdt_Row[style*='#28c76f'] {
+    background-color: rgba(40, 199, 111, 0.18) !important;
+}
+
+[data-theme='dark'] .rdt_Row[style*='#28c76f'] {
+    background-color: rgba(40, 199, 111, 0.25) !important;
+}
+
+.rdt_Row[style*='#ffc107'] {
+    background-color: rgba(255, 193, 7, 0.18) !important;
+}
+
+[data-theme='dark'] .rdt_Row[style*='#ffc107'] {
+    background-color: rgba(255, 193, 7, 0.25) !important;
+}
+
+/* Estrutura das células */
+.rdt_TableRow {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.rdt_TableCell {
+    vertical-align: middle !important;
+    padding: 0.75rem 0 !important;
+}
+
+.rdt_TableRow:hover,
+.rdt_Row:hover {
+    box-shadow: none !important;
+}
+
+/* Bloco de status de meta */
+.meta-status {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 220px;
+
+    .meta-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        small {
+            font-weight: 500;
+            color: #cfcfcf;
+        }
+    }
+
+    .meta-progress {
+        position: relative;
+        height: 6px;
+        border-radius: 3px;
+        background-color: rgba(255, 255, 255, 0.08);
+        overflow: hidden;
+
+        .meta-bar {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.4s ease-in-out;
+        }
+    }
+}
+
+/* ============================
+   🎨 Badges com contraste fixo
+   ============================ */
+.badge-success {
+    background-color: #28c76f !important;
+    color: #fff !important;
+    font-weight: 600;
+}
+
+.badge-warning {
+    background-color: #ffc107 !important;
+    color: #1a1a1a !important;
+    font-weight: 600;
+}
+
+/* “Light” badges refinadas (para dashboards escuros) */
+.badge-light-success {
+    background-color: rgba(40, 199, 111, 0.2) !important;
+    color: #28c76f !important;
+    font-weight: 600;
+}
+
+.badge-light-danger {
+    background-color: rgba(234, 84, 85, 0.2) !important;
+    color: #ea5455 !important;
+    font-weight: 600;
+}
+
+.badge-light-warning {
+    background-color: rgba(255, 193, 7, 0.25) !important;
+    color: #ffca2c !important;
+    font-weight: 600;
+}
+
+/* Ajuste de contraste global no dark */
+[data-theme='dark'] {
+    .meta-status .meta-progress {
+        background-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .badge-light-success {
+        background-color: rgba(40, 199, 111, 0.25) !important;
+        color: #a0ffcc !important;
+    }
+
+    .badge-light-danger {
+        background-color: rgba(234, 84, 85, 0.25) !important;
+        color: #ff9e9e !important;
+    }
+
+    .badge-light-warning {
+        background-color: rgba(255, 193, 7, 0.28) !important;
+        color: #ffe082 !important;
+    }
+}

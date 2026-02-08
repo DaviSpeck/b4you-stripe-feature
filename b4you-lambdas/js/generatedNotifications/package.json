@@ -1,0 +1,22 @@
+{
+  "name": "generatednotifications",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-sqs": "^3.344.0",
+    "axios": "^1.3.4",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.4",
+    "mysql2": "^3.2.0",
+    "node-mailjet": "^6.0.2",
+    "sequelize": "^6.30.0",
+    "uuid": "^9.0.0"
+  }
+}

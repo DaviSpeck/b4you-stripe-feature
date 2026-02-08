@@ -1,0 +1,60 @@
+.skeleton-shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-pulse {
+  background: #e5e7eb;
+  border-radius: 4px;
+}
+
+.skeleton-progress {
+  background: #e5e7eb;
+  border-radius: 4px;
+}
+
+.skeleton-rounded {
+  border-radius: 8px;
+}
+
+.skeleton-pill {
+  border-radius: 20px;
+}
+
+.skeleton-circle {
+  border-radius: 50%;
+  aspect-ratio: 1;
+}
+
+.skeleton-chart {
+  background: #e5e7eb;
+  border-radius: 8px;
+}
+
+.skeleton-button {
+  background: #e5e7eb;
+  border-radius: 6px;
+}
+
+.dark-layout .skeleton-shimmer {
+  background: linear-gradient(90deg, #404040 25%, #505050 50%, #404040 75%);
+  background-size: 200% 100%;
+}
+
+.dark-layout .skeleton-pulse,
+.dark-layout .skeleton-progress,
+.dark-layout .skeleton-chart,
+.dark-layout .skeleton-button {
+  background: #374151;
+}

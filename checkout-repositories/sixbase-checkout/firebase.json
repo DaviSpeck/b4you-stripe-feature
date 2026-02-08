@@ -1,0 +1,14 @@
+{
+  "hosting": {
+    "predeploy": "yarn build",
+    "target": "checkout",
+    "public": "build",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

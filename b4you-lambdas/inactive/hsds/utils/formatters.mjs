@@ -1,0 +1,20 @@
+export const capitalizeName = (name) => {
+  if (!name) return '';
+  name = name.toLowerCase().replace(/(?:^|\s)\S/g, (capitalize) => capitalize.toUpperCase());
+
+  const PreposM = ['Da', 'De', 'Do', 'Das', 'Dos', 'A', 'E'];
+  const prepos = ['da', 'de', 'do', 'das', 'dos', 'a', 'e'];
+
+  for (let i = PreposM.length - 1; i >= 0; i -= 1) {
+    name = name.replace(
+      RegExp(`\\b${PreposM[i].replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')}\\b`, 'g'),
+      prepos[i]
+    );
+  }
+
+  return name;
+};
+
+export const formatUrl = (url) => {
+  return url.indexOf('://') === -1 ? 'http://' + url : url;
+};

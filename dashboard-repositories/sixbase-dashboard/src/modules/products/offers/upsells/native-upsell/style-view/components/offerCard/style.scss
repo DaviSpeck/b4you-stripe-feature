@@ -1,0 +1,136 @@
+.wrapper-card-offer-upsell {
+  display: flex;
+  gap: 8px;
+  flex-direction: row;
+  position: relative;
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  padding: 12px;
+  background: white;
+  cursor: pointer;
+
+  .check-color {
+    color: green;
+    position: absolute;
+    top: 8px;
+    right: 12px;
+  }
+
+  .wrapper-img-empty-offer-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e0e0e0;
+    padding: 0px 14px;
+    height: 60px;
+    border-radius: 4px;
+  }
+
+  .wrapper-offer-upsell-text {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .offer-upsell-text-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      h1 {
+        font-size: 0.875rem;
+        margin: 0px;
+        padding-bottom: 2px;
+        max-width: 260px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+      p {
+        margin: 0px;
+        padding: 0px;
+        text-align: left;
+        font-size: 0.775rem;
+        padding-top: 8px;
+      }
+    }
+
+    .offer-upsell-text {
+      display: flex;
+      align-items: flex-end;
+      height: 100%;
+      .wrapper-prices-offer-upsell {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: flex-end;
+
+        .price-installment {
+          display: 'block';
+          font-weight: 600;
+          font-size: 0.875rem;
+
+          span {
+            font-weight: 400;
+            font-size: 0.775rem;
+          }
+        }
+
+        .wrapper-prices-offer-upsell-total {
+          display: block;
+          font-size: 0.875rem;
+
+          span {
+            font-size: 0.775rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+.wrapper-card-offer-upsell.plan {
+  flex-direction: column;
+  gap: 0px;
+
+  .wrapper-card-headder-plan {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+
+    h1 {
+      font-size: 0.875rem;
+      margin: 0px;
+      padding: 0px;
+    }
+
+    .wrapper-price {
+      display: flex;
+      gap: 4px;
+
+      .check-color {
+        display: block;
+      }
+
+      span {
+        display: block;
+        font-size: 0.875rem;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .wrapper-plan-description {
+    .frequency {
+      display: block;
+      font-size: 0.775rem;
+    }
+
+    .subscription-fee {
+      display: block;
+      font-size: 0.775rem;
+      font-weight: 600;
+    }
+  }
+}

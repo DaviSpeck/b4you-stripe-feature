@@ -1,0 +1,79 @@
+components:
+  schemas:
+    MarketPendingItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+          description: "ID da solicitação de aprovação"
+        products:
+          $ref: "#/components/schemas/ProductBasic"
+        users:
+          $ref: "#/components/schemas/UserBasic"
+        id_status:
+          type: integer
+          example: 1
+          description: "ID do status da aprovação"
+        requested_at:
+          type: string
+          format: date-time
+          example: "2024-01-15T10:30:00Z"
+          description: "Data da solicitação"
+        accepted_at:
+          type: string
+          format: date-time
+          nullable: true
+          example: null
+          description: "Data da aprovação (null se não aprovado)"
+        rejected_at:
+          type: string
+          format: date-time
+          nullable: true
+          example: null
+          description: "Data da rejeição (null se não rejeitado)"
+
+    ProductBasic:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 123
+          description: "ID do produto"
+        name:
+          type: string
+          example: "Curso de JavaScript Avançado"
+          description: "Nome do produto"
+        uuid:
+          type: string
+          example: "abc-123-def-456"
+          description: "UUID único do produto"
+
+    UserBasic:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 456
+          description: "ID do usuário"
+        full_name:
+          type: string
+          example: "João Silva"
+          description: "Nome completo do usuário"
+        email:
+          type: string
+          format: email
+          example: "joao@email.com"
+          description: "E-mail do usuário"
+
+    PagedMarketPending:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 25
+          description: "Total de registros encontrados"
+        rows:
+          type: array
+          items:
+            $ref: "#/components/schemas/MarketPendingItem"

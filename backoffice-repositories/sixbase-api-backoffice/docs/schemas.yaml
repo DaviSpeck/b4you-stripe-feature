@@ -1,0 +1,17 @@
+components:
+  schemas:
+  # Schemas do módulo awards
+  awards:
+    $ref: './modulos/awards/schemas.yaml#/components/schemas'
+
+  # Schemas do módulo market
+  market:
+    $ref: './modulos/market/schemas.yaml#/components/schemas'
+
+  # Schemas do módulo metrics
+  metrics:
+    $ref: './modulos/metrics/schemas.yaml#/components/schemas'
+
+  # Schemas do módulo users
+  users:
+    $ref: './modulos/users/schemas.yaml#/components/schemas'

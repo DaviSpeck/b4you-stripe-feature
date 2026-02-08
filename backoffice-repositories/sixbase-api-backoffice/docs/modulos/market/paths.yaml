@@ -1,0 +1,58 @@
+/market:
+  get:
+    tags:
+      - Market
+    summary: Lista produtos pendentes de aprovação
+    description: Retorna uma lista paginada de produtos que estão pendentes de aprovação para aparecer na vitrine do market
+    parameters:
+      - name: page
+        in: query
+        description: Índice da página (0-based)
+        required: false
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+        example: 0
+      - name: size
+        in: query
+        description: Quantidade de itens por página
+        required: false
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        example: 10
+      - name: input
+        in: query
+        description: Busca por nome do produto ou nome do usuário produtor
+        required: false
+        schema:
+          type: string
+        example: "curso de javascript"
+      - name: start_date
+        in: query
+        description: Data inicial para filtro (formato YYYY-MM-DD)
+        required: false
+        schema:
+          type: string
+          format: date
+        example: "2024-01-01"
+      - name: end_date
+        in: query
+        description: Data final para filtro (formato YYYY-MM-DD)
+        required: false
+        schema:
+          type: string
+          format: date
+        example: "2024-12-31"
+    responses:
+      '200':
+        description: Lista de produtos pendentes de aprovação
+        content:
+          application/json:
+            schema:
+              $ref: ./schemas.yaml#/components/schemas/PagedMarketPending
+      '500':
+        $ref: ../../components/common-responses.yaml#/components/responses/InternalServerError

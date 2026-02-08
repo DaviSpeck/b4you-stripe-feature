@@ -1,0 +1,41 @@
+version: '3.9'
+name: 'sixbase-backoffice'
+
+services:
+  api:
+    build:
+      context: ../..
+      dockerfile: docker/local/Dockerfile.dev
+    container_name: sixbase-api-backoffice
+    env_file:
+      - .env.local
+    command: yarn dev:debug
+    volumes:
+      - ../../:/usr/app
+    ports:
+      - '5001:5001'
+      - '9229:9229'
+    depends_on:
+      redis:
+        condition: service_started
+    environment:
+      NODE_ENV: development
+      DEV_ALLOW_DOCS: 'true'
+      REDIS_HOST: redis
+      REDIS_PORT: '6379'
+      CHOKIDAR_USEPOLLING: 'true'
+      CHOKIDAR_INTERVAL: '500'
+    healthcheck:
+      test: ['CMD', 'wget', '-qO-', 'http://localhost:5001/healthcheck']
+      interval: 10s
+      timeout: 3s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    container_name: sixbase-redis-backoffice
+    ports:
+      - '6379:6379'
+
+volumes:
+  api_node_modules:

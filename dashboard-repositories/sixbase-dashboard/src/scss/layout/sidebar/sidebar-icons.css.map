@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AACE,cADY,CACZ,CAAC,CAAC;EACA,SAAS,EAAE,eAAe;CAC3B",
+    "sources": [
+        "sidebar-icons.scss"
+    ],
+    "names": [],
+    "file": "sidebar-icons.css"
+}

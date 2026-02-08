@@ -1,0 +1,13 @@
+{
+  "name": "botmaker-events-lambda",
+  "version": "1.0.0",
+  "description": "Scheduled emitter for Botmaker automation events.",
+  "main": "index.mjs",
+  "dependencies": {
+    "axios": "^1.7.7",
+    "dotenv": "^16.0.3",
+    "minimist": "^1.2.8",
+    "mysql2": "^3.9.1",
+    "sequelize": "^6.37.5"
+  }
+}

@@ -1,0 +1,133 @@
+.footer {
+  gap: 12px;
+  display: flex;
+  padding: 2rem;
+  align-self: stretch;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 1);
+  box-shadow: 0px 2px 3px 2px rgba(0, 0, 0, 0.1);
+}
+
+.text88 {
+  color: var(--hex-color, rgba(248, 107, 134, 1));
+  height: auto;
+  font-size: 16px;
+  font-style: Medium;
+  text-align: left;
+  font-family: Poppins;
+  font-weight: 500;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.cartoes {
+  gap: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.paymentmethodslightvisa {
+  width: 45px;
+  height: 30px;
+}
+.paymentmethodslightmastercard {
+  width: 45px;
+  height: 30px;
+}
+.paymentmethodslightmaestro {
+  width: 45px;
+  height: 30px;
+}
+.paymentmethodslightjcb {
+  width: 45px;
+  height: 30px;
+}
+.paymentmethodslighthipercard {
+  width: 45px;
+  height: 30px;
+}
+.paymentmethodslightelo {
+  width: 45px;
+  height: 30px;
+}
+.paymentmethodslightdiscover {
+  width: 45px;
+  height: 30px;
+}
+.paymentmethodslightdinersclub {
+  width: 45px;
+  height: 30px;
+}
+.paymentmethodslightamericanexpress {
+  width: 45px;
+  height: 30px;
+}
+
+@media (max-width: 768px) {
+  .footer {
+    gap: 16px;
+    display: flex;
+    padding: 40px 31px;
+    align-self: stretch;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 1);
+  }
+  .text88 {
+    color: var(--hex-color, rgba(248, 107, 134, 1));
+    height: auto;
+    font-size: 16px;
+    font-style: Medium;
+    text-align: left;
+    font-family: Poppins;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+  }
+  .cartoes {
+    gap: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .paymentmethodslightvisa {
+    width: 22px;
+    height: 15px;
+  }
+  .paymentmethodslightmastercard {
+    width: 22px;
+    height: 15px;
+  }
+  .paymentmethodslightmaestro {
+    width: 22px;
+    height: 15px;
+  }
+  .paymentmethodslightjcb {
+    width: 22px;
+    height: 15px;
+  }
+  .paymentmethodslighthipercard {
+    width: 22px;
+    height: 15px;
+  }
+  .paymentmethodslightelo {
+    width: 22px;
+    height: 15px;
+  }
+  .paymentmethodslightdiscover {
+    width: 22px;
+    height: 15px;
+  }
+  .paymentmethodslightdinersclub {
+    width: 22px;
+    height: 15px;
+  }
+  .paymentmethodslightamericanexpress {
+    width: 22px;
+    height: 15px;
+  }
+}

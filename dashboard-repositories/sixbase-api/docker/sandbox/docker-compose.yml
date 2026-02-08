@@ -1,0 +1,20 @@
+services:
+  api:
+    build:
+      context: ../..
+      dockerfile: docker/sandbox/Dockerfile.sandbox
+    container_name: sixbase-api-${BRANCH_NAME:-default}
+    env_file:
+      - ../.env.sandbox
+    command: yarn start
+    ports:
+      - '${PORT:-5500}:5500'
+    environment:
+      NODE_ENV: sandbox
+      REDIS_HOST: sixbase-redis
+      REDIS_PORT: ${REDIS_PORT:-6380}
+
+networks:
+  default:
+    external: true
+    name: sixbase-net

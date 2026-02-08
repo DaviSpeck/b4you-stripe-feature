@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunksixbase_backoffice=self.webpackChunksixbase_backoffice||[]).push([[710],{32885:(e,a,s)=>{s.d(a,{A:()=>c});s(9950);const c=s.p+"static/media/error.efb5d07d4a44fe217b7f9924cb2ff921.svg"},69015:()=>{},93886:(e,a,s)=>{s.d(a,{A:()=>c});s(9950);const c=s.p+"static/media/error-dark.505a1412eef4179290165ac2475765fa.svg"}}]);

@@ -1,0 +1,86 @@
+{
+  "name": "api-checkout",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean:workspace": "rm -rf node_modules/ && rm -rf yarn.lock && rm -rf package-lock.json && yarn",
+    "debug": "env NODE_ENV=dev nodemon --inspect server.js",
+    "dev": "nodemon -L --watch . --ext js,json --ignore node_modules --ignore .git --ignore logs server.js",
+    "lint-staged": "lint-staged",
+    "prod": "env NODE_ENV=prod node server.js",
+    "start": "env NODE_ENV=dev nodemon server.js",
+    "test": "jest",
+    "deploy:ecr": "docker build -t api-checkout . && docker tag api-checkout:latest 493067706051.dkr.ecr.sa-east-1.amazonaws.com/api-checkout:latest && docker push 493067706051.dkr.ecr.sa-east-1.amazonaws.com/api-checkout:latest"
+  },
+  "pre-commit": [
+    "lint-staged"
+  ],
+  "engines": {
+    "node": ">=22.0.0",
+    "yarn": ">=1.22.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sixbasebr/api-checkout.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sixbasebr/api-checkout/issues"
+  },
+  "homepage": "https://github.com/sixbasebr/api-checkout#readme",
+  "devDependencies": {
+    "@babel/core": "^7.21.4",
+    "@babel/eslint-parser": "^7.21.3",
+    "@babel/plugin-transform-runtime": "^7.21.4",
+    "@babel/preset-env": "^7.21.4",
+    "@types/jest": "^30.0.0",
+    "eslint": "^8.38.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-import": "^2.27.5",
+    "git-commit-msg-linter": "^4.9.4",
+    "jest": "^30.2.0",
+    "lint-staged": "^13.2.1",
+    "nodemon": "^2.0.22",
+    "pre-commit": "^1.2.2",
+    "prettier": "^2.8.7"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.405.0",
+    "aws-sdk": "^2.1354.0",
+    "axios": "^1.3.5",
+    "bcryptjs": "^3.0.3",
+    "body-parser": "^1.20.2",
+    "connect-redis": "^6.1.3",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "cpf-cnpj-validator": "^1.0.3",
+    "creditcard.js": "^3.0.30",
+    "dotenv": "^16.0.3",
+    "error-serializer": "^8.0.1",
+    "express": "^4.18.2",
+    "express-rate-limit": "^6.7.0",
+    "express-session": "^1.17.3",
+    "geoip-lite": "^1.4.10",
+    "helmet": "^6.1.4",
+    "ip": "^2.0.1",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.4",
+    "morgan": "^1.10.0",
+    "mysql2": "^3.2.0",
+    "nanoid": "3.3.4",
+    "node-mailjet": "^5.1.1",
+    "prom-client": "^15.1.3",
+    "redis": "^4.6.5",
+    "sequelize": "^6.31.0",
+    "serialize-error": "^12.0.0",
+    "shopify-api-node": "^3.13.1",
+    "ua-parser-js": "^2.0.4",
+    "uuid": "^9.0.0",
+    "winston": "^3.8.2",
+    "yup": "^1.0.2"
+  }
+}

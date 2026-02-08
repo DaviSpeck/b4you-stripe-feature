@@ -1,0 +1,79 @@
+.wrapper-new-card {
+  // rounded-[10px] border-[1.5px] border-[#e4e7ec] p-4
+  border-radius: 10px;
+  border: 1.5px solid #e4e7ec;
+  padding: 16px 16px;
+  width: 100%;
+
+  .wrapper-information {
+    display: flex;
+    gap: 16px;
+
+    .wrapper-text {
+      // flex flex-col gap-1
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      h3 {
+        // text-[1rem] font-normal text-[#344054]
+        width: 100%;
+        font-size: 1rem;
+        font-weight: 500;
+        color: #344054;
+        margin: 0px !important;
+        text-align: left !important;
+      }
+
+      p {
+        // text-[0.875rem] font-normal text-[#667085]
+        font-size: 0.875rem;
+        font-weight: 400;
+        color: #667085;
+        margin: 0px;
+      }
+    }
+  }
+}
+
+.btn-select-card {
+  margin-top: 4px;
+  max-width: 20px;
+  min-width: 20px;
+  height: 20px;
+  cursor: pointer;
+  border-radius: 999px;
+  border: 1px solid #b8b8b8 !important;
+  background-color: transparent !important;
+}
+
+.label-input-new-card {
+  color: rgba(63, 63, 63, 1);
+  height: auto;
+  font-size: 13px;
+  font-style: Medium;
+  text-align: left;
+  font-family: Poppins;
+  font-weight: 500;
+  line-height: 20px;
+  font-stretch: normal;
+  text-decoration: none;
+}
+
+.wrapper-input-buy-new-card {
+  .upsell-native-inputs-btn {
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    background-color: #36b90e;
+    font-size: 1.12rem;
+    font-weight: 500;
+    color: white;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 8px;
+  }
+  .upsell-native-inputs-btn:hover {
+    background-color: #2e9d0c;
+  }
+}

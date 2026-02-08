@@ -1,0 +1,118 @@
+#plans {
+  width: 100%;
+  max-width: 100%;
+  background-color: #f7faf9;
+  border-radius: 10px;
+  color: #535353;
+  margin-bottom: 10px;
+
+  .card-head {
+    text-align: center;
+    background-color: #edf2f5;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10px 0;
+  }
+
+  .plans-list {
+    display: flex;
+    padding: 15px;
+    overflow: auto;
+    @media (max-width: 740px) {
+      overflow: initial;
+    }
+    .plan {
+      border-radius: 8px;
+      min-width: 249px;
+      // padding: 15px;
+      text-align: center;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.8);
+      font-weight: 500;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
+      margin-right: 15px;
+      border: 1px dashed var(--primary-color);
+
+      &.active {
+        background: var(--primary-color);
+        color: white;
+      }
+
+      .header {
+        padding: 5px;
+        border-bottom: 0.1px solid;
+      }
+
+      .content {
+        padding: 5px;
+        // box-shadow: 2px 2px 5px rgb(0 0 0 / 5%);
+      }
+
+      .content-box-shadow {
+        padding: 5px;
+        box-shadow: 2px 2px 5px rgb(0 0 0 / 5%);
+      }
+
+      .list-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        span,
+        .price {
+          margin-right: 10px;
+          font-size: 18px;
+          font-weight: 500;
+        }
+      }
+
+      .description {
+        font-size: 13px;
+      }
+
+      .description-sub {
+        font-size: 11px;
+      }
+
+      .price-sub {
+        font-size: 18px;
+      }
+
+      .price {
+        font-size: 22px;
+      }
+
+      .frequency {
+        font-size: 12px;
+        display: inline-block;
+      }
+    }
+  }
+
+  @media (max-width: 767px) {
+    .plans-list {
+      display: flex;
+      flex-direction: column;
+
+      .plan {
+        width: 100%;
+        margin-bottom: 15px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+  @media (max-width: 575px) {
+    .order-bump .bump::before {
+      display: none;
+    }
+    .order-bump .bump label {
+      font-size: 0.75rem;
+    }
+    .order-bump h1 {
+      font-size: 1rem;
+    }
+  }
+}

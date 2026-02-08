@@ -1,0 +1,166 @@
+/users/reactivation/producers:
+  get:
+    tags:
+      - Reativação de Produtores
+    summary: Lista produtores para reativação
+    description: Retorna uma lista paginada de produtores que podem ser candidatos para reativação
+    parameters:
+      - name: page
+        in: query
+        description: Índice da página (0-based)
+        required: false
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+        example: 0
+      - name: size
+        in: query
+        description: Quantidade de itens por página
+        required: false
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        example: 10
+      - name: status
+        in: query
+        description: Filtra por status de reativação
+        required: false
+        schema:
+          type: string
+          enum: [not_contacted, contacting, success]
+        example: "not_contacted"
+      - name: name
+        in: query
+        description: Filtra por parte do nome
+        required: false
+        schema:
+          type: string
+        example: "João"
+      - name: email
+        in: query
+        description: Filtra por parte do e-mail
+        required: false
+        schema:
+          type: string
+        example: "joao@email.com"
+    responses:
+      '200':
+        description: Lista paginada de produtores
+        content:
+          application/json:
+            schema:
+              $ref: ./schemas.yaml#/components/schemas/PagedReactivationProducer
+      '500':
+        $ref: ../../components/common-responses.yaml#/components/responses/InternalServerError
+
+/users/reactivation/producers/{userUuid}:
+  patch:
+    tags:
+      - Reativação de Produtores
+    summary: Atualiza manualmente o status de reativação
+    description: Permite atualizar manualmente o status de reativação de um produtor específico
+    parameters:
+      - name: userUuid
+        in: path
+        required: true
+        description: UUID do usuário/produtor
+        schema:
+          type: string
+          format: uuid
+        example: "550e8400-e29b-41d4-a716-446655440000"
+    requestBody:
+      description: Novo status de reativação
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas.yaml#/components/schemas/UpdateReactivationStatus
+    responses:
+      '204':
+        description: Status atualizado com sucesso (nenhum conteúdo)
+      '400':
+        description: Status inválido ou não permitido
+        content:
+          application/json:
+            schema:
+              $ref: ../../components/common-schemas.yaml#/components/schemas/Error
+      '404':
+        description: Produtor não encontrado
+        content:
+          application/json:
+            schema:
+              $ref: ../../components/common-schemas.yaml#/components/schemas/Error
+      '500':
+        $ref: ../../components/common-responses.yaml#/components/responses/InternalServerError
+
+/users/reactivation/producers/reset:
+  post:
+    tags:
+      - Reativação de Produtores
+    summary: Reset mensal de todos os status
+    description: Executa o reset mensal de todos os status de reativação e atribui novos produtores para reativação
+    responses:
+      '204':
+        description: Reset e atribuição concluídos
+      '500':
+        $ref: ../../components/common-responses.yaml#/components/responses/InternalServerError
+
+/users/reactivation/producers/report:
+  get:
+    tags:
+      - Reativação de Produtores
+    summary: Gera relatório .xlsx do mês anterior
+    description: Gera e retorna um relatório em formato Excel (.xlsx) com dados de reativação do mês anterior
+    responses:
+      '200':
+        description: Arquivo XLSX para download
+        content:
+          application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+            schema:
+              type: string
+              format: binary
+      '500':
+        $ref: ../../components/common-responses.yaml#/components/responses/InternalServerError
+
+/users/{userUuid}/manager:
+  put:
+    tags:
+      - Usuários
+    summary: Atualiza o gerente do usuário
+    description: Atualiza o campo de gerente associado a um usuário específico
+    parameters:
+      - name: userUuid
+        in: path
+        required: true
+        description: UUID do usuário
+        schema:
+          type: string
+          format: uuid
+        example: "550e8400-e29b-41d4-a716-446655440000"
+    requestBody:
+      description: Dados do gerente a ser associado
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas.yaml#/components/schemas/UpdateManager
+    responses:
+      '200':
+        description: Gerente atualizado com sucesso
+      '400':
+        description: Dados inválidos ou gerente não informado
+        content:
+          application/json:
+            schema:
+              $ref: ../../components/common-schemas.yaml#/components/schemas/Error
+      '404':
+        description: Usuário não encontrado
+        content:
+          application/json:
+            schema:
+              $ref: ../../components/common-schemas.yaml#/components/schemas/Error
+      '500':
+        $ref: ../../components/common-responses.yaml#/components/responses/InternalServerError

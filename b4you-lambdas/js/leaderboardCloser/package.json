@@ -1,0 +1,19 @@
+{
+    "name": "leaderboard-closer-lambda",
+    "version": "1.0.0",
+    "description": "Scheduled lambda to close weekly and monthly leaderboards.",
+    "type": "module",
+    "main": "index.mjs",
+    "scripts": {
+        "test": "node test.mjs",
+        "test:weekly": "node test.mjs --scope weekly",
+        "test:monthly": "node test.mjs --scope monthly"
+    },
+    "dependencies": {
+        "dotenv": "^16.0.3",
+        "moment": "^2.30.1",
+        "minimist": "^1.2.8",
+        "mysql2": "^3.9.1",
+        "sequelize": "^6.37.5"
+    }
+}

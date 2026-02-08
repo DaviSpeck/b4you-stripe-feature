@@ -1,0 +1,22 @@
+{
+  "name": "api-merlin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "zip": "zip -r merlin.zip .",
+    "deploy": "npm run zip && aws lambda update-function-code --function-name b4you-production-merlin --zip-file fileb://merlin.zip --region sa-east-1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.115"
+  },
+  "dependencies": {
+    "moment": "^2.29.4",
+    "mysql2": "^3.3.2",
+    "sequelize": "^6.31.1"
+  }
+}

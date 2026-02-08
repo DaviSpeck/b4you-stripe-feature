@@ -1,0 +1,33 @@
+.datePicker {
+  width: 100%;
+}
+
+.percentual-symbol {
+  position: absolute;
+  top: 8.5px;
+  left: 55px;
+  color: #828689;
+}
+
+.color-coupon {
+  color: #475569;
+}
+
+.label-coupon {
+  color: #475569;
+  font-weight: 600;
+}
+
+.input-coupon {
+  border-radius: 20px !important;
+}
+
+.more-options-coupon {
+  color: #9b9da1;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.more-options-coupon:hover {
+  color: #475569;
+}

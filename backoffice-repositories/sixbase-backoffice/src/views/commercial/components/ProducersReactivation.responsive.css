@@ -1,0 +1,45 @@
+/* Responsividade dos filtros */
+.filter-row-responsive > .col,
+.filter-row-responsive > [class*="col-"] {
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 767.98px) {
+  .filter-row-responsive > .col,
+  .filter-row-responsive > [class*="col-"] {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+  }
+  .filter-row-responsive .btn,
+  .filter-row-responsive input,
+  .filter-row-responsive select {
+    width: 100%;
+  }
+  .text-md-right {
+    text-align: left !important;
+  }
+}
+
+/* Tabela responsiva */
+.datatable-responsive-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+@media (max-width: 576px) {
+  .datatable-mobile .rdt_Table {
+    font-size: 0.94rem !important;
+  }
+  .datatable-mobile .rdt_TableCell {
+    padding: 0.25rem 0.5rem !important;
+    white-space: nowrap;
+  }
+  .rdt_TableCol {
+    padding: 0.25rem 0.5rem !important;
+  }
+  .rdt_Pagination {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

@@ -1,0 +1,289 @@
+components:
+  schemas:
+    AwardShipment:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+          description: ID único da premiação
+        producer_id:
+          type: integer
+          example: 123
+          description: ID do produtor
+        milestone:
+          type: string
+          enum: ['10K', '50K', '500K', '1M', '5M', '10M']
+          example: '10K'
+          description: Marco de vendas alcançado
+        status:
+          type: string
+          enum: ['pending', 'sent']
+          example: 'pending'
+          description: Status da premiação
+        tracking_code:
+          type: string
+          maxLength: 100
+          nullable: true
+          example: 'BR123456789BR'
+          description: Código de rastreamento
+        tracking_link:
+          type: string
+          format: url
+          maxLength: 300
+          nullable: true
+          example: 'https://www.correios.com.br/rastreamento'
+          description: Link de rastreamento
+        achieved_date:
+          type: string
+          format: date-time
+          example: '2025-01-15T10:30:00Z'
+          description: Data em que o marco foi alcançado
+        sent_date:
+          type: string
+          format: date-time
+          nullable: true
+          example: null
+          description: Data de envio (null se não enviado)
+        created_at:
+          type: string
+          format: date-time
+          example: '2025-01-15T10:30:00Z'
+          description: Data de criação
+        updated_at:
+          type: string
+          format: date-time
+          example: '2025-01-15T10:30:00Z'
+          description: Data de atualização
+
+    ProducerInfo:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 123
+          description: ID do produtor
+        uuid:
+          type: string
+          format: uuid
+          example: '550e8400-e29b-41d4-a716-446655440000'
+          description: UUID único do produtor
+        full_name:
+          type: string
+          example: 'João Silva'
+          description: Nome completo do produtor
+        email:
+          type: string
+          format: email
+          example: 'joao@email.com'
+          description: Email do produtor
+        phone:
+          type: string
+          example: '5511999998888'
+          description: Telefone/WhatsApp do produtor
+
+    AwardShipmentWithProducer:
+      allOf:
+        - $ref: '#/components/schemas/AwardShipment'
+        - type: object
+          properties:
+            producer:
+              $ref: '#/components/schemas/ProducerInfo'
+            user_total_comission:
+              type: number
+              format: float
+              example: 15000.50
+              description: Total de comissões do produtor
+
+    CreateAwardShipmentRequest:
+      type: object
+      required:
+        - milestone
+      properties:
+        producer_id:
+          type: integer
+          example: 123
+          description: ID do produtor (opcional se producer_uuid ou producer_email for fornecido)
+        producer_uuid:
+          type: string
+          format: uuid
+          example: '550e8400-e29b-41d4-a716-446655440000'
+          description: UUID do produtor (opcional se producer_id ou producer_email for fornecido)
+        producer_email:
+          type: string
+          format: email
+          example: 'joao@email.com'
+          description: Email do produtor (opcional se producer_id ou producer_uuid for fornecido)
+        milestone:
+          type: string
+          enum: ['10K', '50K', '500K', '1M', '5M', '10M']
+          example: '10K'
+          description: Marco de vendas alcançado
+        achieved_date:
+          type: string
+          format: date-time
+          example: '2025-01-15T10:30:00Z'
+          description: Data em que o marco foi alcançado (obrigatório na implementação)
+        tracking_code:
+          type: string
+          maxLength: 100
+          nullable: true
+          example: 'BR123456789BR'
+          description: Código de rastreamento
+        tracking_link:
+          type: string
+          format: url
+          maxLength: 300
+          nullable: true
+          example: 'https://www.correios.com.br/rastreamento'
+          description: Link de rastreamento
+        status:
+          type: string
+          enum: ['pending', 'sent']
+          default: 'pending'
+          example: 'pending'
+          description: Status da premiação
+        sent_date:
+          type: string
+          format: date-time
+          nullable: true
+          example: '2025-01-15T10:30:00Z'
+          description: Data de envio
+
+    ConfirmAwardShipmentRequest:
+      type: object
+      properties:
+        tracking_code:
+          type: string
+          maxLength: 100
+          nullable: true
+          example: 'BR123456789BR'
+          description: Código de rastreamento
+        tracking_link:
+          type: string
+          format: url
+          maxLength: 300
+          nullable: true
+          example: 'https://www.correios.com.br/rastreamento'
+          description: Link de rastreamento
+        sent_date:
+          type: string
+          format: date-time
+          nullable: true
+          example: '2025-01-15T10:30:00Z'
+          description: Data de envio (usa data atual se não informado)
+
+    UpdateAwardShipmentRequest:
+      type: object
+      properties:
+        producer_id:
+          type: integer
+          example: 123
+          description: ID do produtor
+        milestone:
+          type: string
+          enum: ['10K', '50K', '500K', '1M', '5M', '10M']
+          example: '10K'
+          description: Marco de vendas alcançado
+        achieved_date:
+          type: string
+          format: date-time
+          example: '2025-01-15T10:30:00Z'
+          description: Data em que o marco foi alcançado
+        tracking_code:
+          type: string
+          maxLength: 100
+          nullable: true
+          example: 'BR123456789BR'
+          description: Código de rastreamento
+        tracking_link:
+          type: string
+          format: url
+          maxLength: 300
+          nullable: true
+          example: 'https://www.correios.com.br/rastreamento'
+          description: Link de rastreamento
+        status:
+          type: string
+          enum: ['pending', 'sent']
+          example: 'pending'
+          description: Status da premiação
+        sent_date:
+          type: string
+          format: date-time
+          nullable: true
+          example: '2025-01-15T10:30:00Z'
+          description: Data de envio
+
+    ListAwardShipmentsRequest:
+      type: object
+      properties:
+        producer_id:
+          type: integer
+          example: 123
+          description: ID do produtor
+        producer_uuid:
+          type: string
+          format: uuid
+          example: '550e8400-e29b-41d4-a716-446655440000'
+          description: UUID do produtor
+        milestone:
+          type: string
+          enum: ['10K', '50K', '500K', '1M', '5M', '10M']
+          example: '10K'
+          description: Marco de vendas alcançado
+        status:
+          type: string
+          enum: ['pending', 'sent']
+          example: 'pending'
+          description: Status da premiação
+        input:
+          type: string
+          example: 'João Silva'
+          description: Busca por nome, email ou WhatsApp do produtor
+        start_date:
+          type: string
+          format: date
+          example: '2025-01-01'
+          description: Data inicial para filtro (formato YYYY-MM-DD)
+        end_date:
+          type: string
+          format: date
+          example: '2025-01-31'
+          description: Data final para filtro (formato YYYY-MM-DD)
+        page:
+          type: integer
+          minimum: 0
+          default: 0
+          example: 0
+          description: Índice da página (0-based)
+        size:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 20
+          example: 20
+          description: Quantidade de itens por página
+
+    PagedAwardShipmentsResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 25
+          description: Total de premiações encontradas
+        rows:
+          type: array
+          items:
+            $ref: '#/components/schemas/AwardShipmentWithProducer'
+
+    AwardShipmentResponse:
+      $ref: '#/components/schemas/AwardShipmentWithProducer'
+
+    DeleteResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+          description: Indica se a operação foi bem-sucedida

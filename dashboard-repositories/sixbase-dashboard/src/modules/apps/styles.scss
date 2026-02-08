@@ -1,0 +1,26 @@
+#page-apps {
+  .card.gallery {
+    cursor: pointer;
+    height: 200px;
+    width: 100%;
+
+    .card-body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    img {
+      width: 220px;
+      max-width: 100%;
+      margin: 10px 10px;
+
+      &.logo-small {
+        width: 150px;
+      }
+    }
+  }
+
+  img.logo-app {
+    width: 200px;
+  }
+}

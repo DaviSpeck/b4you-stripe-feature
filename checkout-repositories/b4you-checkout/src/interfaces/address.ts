@@ -1,0 +1,21 @@
+export interface iAddressInformationByZipcodeTypeViaCep {
+  cep: string;
+  logradouro: string;
+  complemento: string;
+  unidade: string;
+  bairro: string;
+  localidade: string;
+  uf: string;
+  estado: string;
+  regiao: string;
+  ibge: string;
+  gia: string;
+  ddd: string;
+  siafi: string;
+}
+
+export type frenetBodyRequestType = {
+  cep: string;
+  offer_id: string;
+  order_bumps: string[];
+};

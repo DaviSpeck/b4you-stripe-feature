@@ -1,0 +1,252 @@
+@import './ui_colors.scss';
+
+.buttonDS {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0;
+  border-radius: 10px;
+  padding: 7px 16px;
+  cursor: pointer;
+  font-weight: 600;
+  color: $light-600;
+  &:disabled {
+    opacity: 0.65;
+    cursor: not-allowed !important;
+    user-select: none !important;
+  }
+  &.outline {
+    background-color: transparent;
+  }
+}
+
+.buttonDS-iconLeft {
+  font-size: 16px;
+  margin-right: 10px;
+}
+.buttonDS-iconRight {
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+.buttonDS-size-icon {
+  font-size: 18px;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 100px;
+}
+.buttonDS-size-xs {
+  padding: 5px 16px;
+  font-size: 12px;
+  
+  @media only screen and (max-width: 575px) {
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    padding: 5px 12px;
+  }
+}
+.buttonDS-size-sm {
+  padding: 7px 16px;
+  font-size: 14px;
+}
+.buttonDS-size-md {
+  padding: 9.5px 16px;
+  font-size: 14px;
+}
+.buttonDS-size-lg {
+  padding: 17px 24px;
+  font-size: 14px;
+}
+
+.buttonDS-primary {
+  background-color: $primary;
+  color: #ffffff;
+  &:hover:enabled {
+    background-color: $primary-600;
+  }
+  &.outline {
+    background-color: transparent;
+    color: $primary;
+    border: 2px solid $primary;
+    &:hover:enabled {
+      color: #fff;
+      background-color: $primary;
+    }
+  }
+  &.white {
+    background-color: #fff;
+    color: $primary;
+    &:hover:enabled {
+      background-color: $light-200;
+      color: $primary-600;
+    }
+  }
+}
+
+.buttonDS-secondary {
+  background-color: $secondary;
+  color: #ffffff;
+  &:hover:enabled {
+    background-color: $secondary-600;
+  }
+  &.outline {
+    background-color: transparent;
+    color: $secondary;
+    border: 2px solid $secondary;
+    &:hover:enabled {
+      color: #fff;
+      background-color: $secondary;
+    }
+  }
+  &.white {
+    background-color: #fff;
+    color: $primary;
+    &:hover:enabled {
+      background-color: $light-200;
+      color: $primary-600;
+    }
+  }
+}
+
+.buttonDS-link {
+  display: flex;
+  background-color: transparent;
+  color: $primary;
+  a {
+    color: $primary;
+  }
+  padding: 0;
+  &:hover:enabled {
+    color: $primary-700;
+    text-decoration: underline;
+  }
+  &.iconRight {
+    i {
+      margin-left: 2px !important;
+    }
+  }
+  &.iconLeft {
+    i {
+      margin-right: 2px !important;
+    }
+  }
+  &.outline {
+    background-color: transparent;
+    color: $primary;
+    border: 2px solid $primary;
+    &:hover:enabled {
+      color: #fff;
+      background-color: $primary;
+    }
+  }
+
+  &.white {
+    background-color: #fff;
+    color: $primary;
+    &:hover:enabled {
+      background-color: $light-200;
+      color: $primary-600;
+    }
+  }
+}
+.buttonDS-light {
+  background-color: $light-200;
+  color: $light-600;
+  &:hover:enabled {
+    color: $light-600;
+    background-color: $light-400;
+  }
+  &.outline {
+    background-color: transparent;
+    color: $light;
+    border: 2px solid $light;
+    &:hover:enabled {
+      color: #fff;
+      background-color: $light;
+    }
+  }
+  &.white {
+    background-color: #fff;
+    color: $light;
+    &:hover:enabled {
+      background-color: $light-100;
+      color: $light-600;
+    }
+  }
+}
+.buttonDS-success {
+  background-color: $success;
+  color: #ffffff;
+  &:hover:enabled {
+    background-color: $success-600;
+  }
+  &.outline {
+    background-color: transparent;
+    color: $success;
+    border: 2px solid $success;
+    &:hover:enabled {
+      color: #fff;
+      background-color: $success;
+    }
+  }
+  &.white {
+    background-color: #fff;
+    color: $success;
+    &:hover:enabled {
+      background-color: $light-100;
+      color: $success-600;
+    }
+  }
+}
+.buttonDS-danger {
+  background-color: $danger;
+  color: #ffffff;
+  &:hover:enabled {
+    background-color: $danger-600;
+  }
+  &.outline {
+    background-color: transparent;
+    color: $danger;
+    border: 2px solid $danger;
+    &:hover:enabled {
+      color: #fff;
+      background-color: $danger;
+    }
+  }
+  &.white {
+    background-color: #fff;
+    color: $danger;
+    &:hover:enabled {
+      background-color: $light-100;
+      color: $danger-600;
+    }
+  }
+}
+.buttonDS-warning {
+  background-color: $warning;
+  color: #ffffff;
+  &:hover:enabled {
+    background-color: $warning-600;
+  }
+  &.outline {
+    background-color: transparent;
+    color: $warning;
+    border: 2px solid $warning;
+    &:hover:enabled {
+      color: #fff;
+      background-color: $warning;
+    }
+  }
+  &.white {
+    background-color: #fff;
+    color: $warning;
+    &:hover:enabled {
+      background-color: $light-100;
+      color: $warning-600;
+    }
+  }
+}

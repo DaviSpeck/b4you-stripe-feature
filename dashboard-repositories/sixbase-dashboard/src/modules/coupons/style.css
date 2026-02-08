@@ -1,0 +1,50 @@
+.btn-export {
+  background-color: #5bebd4;
+  color: #475569;
+}
+
+.btn-export:hover {
+  filter: brightness(0.9) !important;
+  background: #5bebd4 !important;
+  transition: 0.2s ease;
+}
+
+.coupons-ranking-title {
+  font-size: 1.2rem;
+  font-weight: 600 !important;
+  color: #475569;
+  margin-bottom: 1rem;
+}
+
+.card-list-ranking {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 0 1rem;
+  margin-bottom: 1rem;
+}
+
+.div-btns-filter {
+  gap: 10px;
+}
+
+@media (max-width: 768px) {
+  .card-list-ranking {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 576px) {
+  .card-list-ranking {
+    gap: 1rem;
+  }
+
+  .div-btns-filter {
+    width: 100%;
+  }
+}
+
+@media (max-width: 400px) {
+  .card-body-small {
+    flex-direction: column !important;
+  }
+}

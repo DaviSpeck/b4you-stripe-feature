@@ -1,0 +1,71 @@
+import { SQS } from '../config/sqs.mjs';
+import { SendMessageCommand } from '@aws-sdk/client-sqs';
+const { SQS_PREFIX, ENVIRONMENT } = process.env;
+import { v4 } from 'uuid';
+
+const queues = [
+  {
+    name: 'webhookEvent',
+    suffix: 'webhookEvent.fifo',
+  },
+  {
+    name: 'invision',
+    suffix: 'invision.fifo',
+  },
+  {
+    name: 'blingShipping',
+    suffix: 'blingShipping.fifo',
+  },
+  {
+    name: 'integrations',
+    suffix: 'integrations.fifo',
+  },
+  {
+    name: 'confirmSplits',
+    suffix: 'confirmSplits.fifo',
+  },
+  {
+    name: 'generateNotifications',
+    suffix: 'generateNotifications.fifo',
+    deduplication: true,
+  },
+  {
+    name: 'studentApprovedPaymentEmails',
+    suffix: 'studentApprovedPaymentEmails.fifo',
+  },
+  {
+    name: 'tinyShipping',
+    suffix: 'tinyShipping.fifo',
+  },
+  {
+    name: 'zoppy',
+    suffix: 'zoppy.fifo',
+  },
+  {
+    name: 'woocommerce',
+    suffix: 'woocommerce.fifo',
+  },
+  {
+    name: 'shopify',
+    suffix: 'shopify.fifo',
+  },
+];
+
+export default {
+  queues,
+  add: async (name, data) => {
+    console.log('queue', name, data);
+    const selectedQueue = queues.find((q) => q.name === name);
+    const params = {
+      MessageBody: JSON.stringify(data),
+      QueueUrl: `${SQS_PREFIX}/b4you-${ENVIRONMENT === 'PRODUCTION' ? 'production' : 'sandbox'}-${
+        selectedQueue.suffix
+      }`,
+      MessageGroupId: selectedQueue.name,
+      MessageDeduplicationId: v4(),
+    };
+
+    const message = await SQS.send(new SendMessageCommand(params));
+    console.log(`data sent -> ${message.MessageId}`);
+  },
+};

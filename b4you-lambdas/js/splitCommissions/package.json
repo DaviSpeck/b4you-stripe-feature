@@ -1,0 +1,26 @@
+{
+  "name": "splitcommissions",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "zip": "zip -r splitcommissions.zip .",
+    "deploy": "npm run zip && aws lambda update-function-code --function-name b4you-production-splitCommissions --zip-file fileb://splitcommissions.zip --region sa-east-1",
+    "test": "vitest",
+    "deploy:sandbox": "npm run zip && aws lambda update-function-code --function-name b4you-sandbox-splitCommissions --zip-file fileb://splitcommissions.zip --region sa-east-1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-sqs": "^3.344.0",
+    "moment": "^2.29.4",
+    "mysql2": "^3.2.0",
+    "sequelize": "^6.30.0",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "vitest": "^4.0.18"
+  }
+}

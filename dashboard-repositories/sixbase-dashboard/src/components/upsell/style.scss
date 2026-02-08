@@ -1,0 +1,43 @@
+.loading-upsell-product {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 250px;
+  background-color: #fff;
+}
+
+.container-fields {
+  background-color: white;
+
+  .input-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .wrapper-btn-html-copy {
+    display: flex;
+    justify-content: end;
+
+    button {
+      display: flex;
+      align-items: center;
+      font-size: 0.875rem;
+      padding: 8px 16px;
+      border-radius: 10px;
+      border: none;
+      background-color: #0f1b35;
+      color: #ffffff;
+      gap: 10px;
+
+      span {
+        display: block;
+      }
+    }
+
+    button:disabled {
+      background-color: gray;
+      cursor: not-allowed;
+    }
+  }
+}

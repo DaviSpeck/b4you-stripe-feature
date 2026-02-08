@@ -1,0 +1,166 @@
+components:
+  schemas:
+    TotalActive:
+      type: object
+      properties:
+        totalActive:
+          type: integer
+          example: 42
+          description: "Número total de produtos ativos"
+
+    DailyNewProducts:
+      type: array
+      items:
+        type: object
+        properties:
+          date:
+            type: string
+            format: date
+            example: "2025-09-01"
+            description: "Data no formato YYYY-MM-DD"
+          count:
+            type: integer
+            example: 5
+            description: "Quantidade de novos produtos criados na data"
+
+    ProductRanking:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+          description: "Total de produtos no ranking"
+        rows:
+          type: array
+          items:
+            type: object
+            properties:
+              uuid:
+                type: string
+                format: uuid
+                example: "550e8400-e29b-41d4-a716-446655440000"
+                description: "UUID único do produto"
+              name:
+                type: string
+                example: "Curso de JavaScript"
+                description: "Nome do produto"
+              totalSales:
+                type: integer
+                example: 1500
+                description: "Total de vendas do produto"
+              totalRevenue:
+                type: number
+                format: float
+                example: 12345.67
+                description: "Receita total do produto"
+
+    ProducerBasic:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+          example: "550e8400-e29b-41d4-a716-446655440000"
+          description: "UUID único do produtor"
+        name:
+          type: string
+          example: "João Silva"
+          description: "Nome do produtor"
+        whatsapp:
+          type: string
+          example: "5511999998888"
+          description: "Número de WhatsApp (somente dígitos)"
+
+    ProducerComparative:
+      allOf:
+        - $ref: "#/components/schemas/ProducerBasic"
+        - type: object
+          properties:
+            prevSales:
+              type: number
+              format: double
+              example: 10000.50
+              description: "Vendas no período anterior"
+            currSales:
+              type: number
+              format: double
+              example: 15000.75
+              description: "Vendas no período atual"
+            diffPct:
+              type: number
+              format: double
+              example: 50.0
+              description: "Variação percentual entre os períodos"
+
+    ProducerPerformanceDrop:
+      allOf:
+        - $ref: "#/components/schemas/ProducerBasic"
+        - type: object
+          properties:
+            older:
+              type: number
+              format: double
+              example: 20000.00
+              description: "Vendas no período mais antigo"
+            recent:
+              type: number
+              format: double
+              example: 8000.00
+              description: "Vendas no período mais recente"
+            dropPct:
+              type: number
+              format: double
+              example: 60.0
+              description: "Percentual de queda de performance"
+
+    ProducerIntervals:
+      type: object
+      properties:
+        pin30:
+          type: integer
+          example: 45
+          description: "Quantidade de produtores ativos nos últimos 30 dias"
+        pin60:
+          type: integer
+          example: 67
+          description: "Quantidade de produtores ativos nos últimos 60 dias"
+        pin90:
+          type: integer
+          example: 89
+          description: "Quantidade de produtores ativos nos últimos 90 dias"
+
+    PagedProducerBasic:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 150
+          description: "Total de produtores encontrados"
+        rows:
+          type: array
+          items:
+            $ref: "#/components/schemas/ProducerBasic"
+
+    PagedProducerComparative:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 75
+          description: "Total de produtores no comparativo"
+        rows:
+          type: array
+          items:
+            $ref: "#/components/schemas/ProducerComparative"
+
+    PagedProducerPerformanceDrop:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 25
+          description: "Total de produtores com queda de performance"
+        rows:
+          type: array
+          items:
+            $ref: "#/components/schemas/ProducerPerformanceDrop"

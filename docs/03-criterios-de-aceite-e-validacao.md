@@ -42,6 +42,9 @@
 - Visualização de disputes e reembolsos.
 - Histórico básico de eventos Stripe por transação.
 - Status de habilitação internacional visível ao produtor.
+- Separação clara entre produtos nacionais e internacionais.
+- Métricas e filtros segmentados por provedor.
+- Fluxo nacional não depende de dados Stripe.
 
 ### sixbase-api-backoffice
 - Cadastro e edição de produtos/ofertas internacionais.

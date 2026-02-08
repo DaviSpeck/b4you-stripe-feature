@@ -146,6 +146,9 @@
 4. Aplicar feature flag nas visualizações.
 5. Exibir histórico básico de eventos Stripe por transação.
 6. Exibir status de habilitação internacional para o produtor.
+7. Separar listagens e filtros por nacional vs internacional.
+8. Implementar métricas segmentadas por provedor (Pagar.me vs Stripe).
+9. Garantir que telas nacionais não dependam de dados Stripe.
 
 ### Checklist do MVP
 - [ ] Visualização de pagamentos internacionais.
@@ -154,6 +157,9 @@
 - [ ] Feature flag aplicada.
 - [ ] Histórico de eventos Stripe acessível.
 - [ ] Status de habilitação internacional visível ao produtor.
+- [ ] Listagens separadas por nacional/internacional.
+- [ ] Métricas segmentadas por provedor.
+- [ ] Fluxo nacional independente de dados Stripe.
 
 ### Ordem sugerida
 1. Modelos de dados e endpoints.

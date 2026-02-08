@@ -113,15 +113,22 @@
   - Exposição de `provider_*` IDs para reconciliação.
   - Controle operacional pelo produtor após liberação (feature em uso).
   - Visualização do status internacional do produto/oferta.
+  - Separar visualmente produtos nacionais vs internacionais.
+  - Permitir filtros e métricas segmentadas por provedor (Pagar.me vs Stripe).
+  - Garantir que operações internacionais não impactem a experiência nacional.
 - **Módulos/camadas impactadas**:
   - UI de operações internacionais.
   - API de dados de pagamento.
   - Telas de detalhe de transação e histórico.
   - Módulos de configuração do produtor (quando liberado).
+  - Listagens de produtos/ofertas com segmentação nacional/internacional.
+  - Camadas de filtros e relatórios por provedor.
 - **Visão geral das mudanças esperadas**:
   - Campos para `provider_*` IDs e status de webhook.
   - Componentes de linha do tempo de eventos Stripe.
   - Seções de habilitação/estado da feature visíveis ao produtor.
+  - Separação clara de jornadas nacionais vs internacionais no dashboard.
+  - Métricas e visões de performance isoladas por provedor.
 
 ## sixbase-api-backoffice
 - **Objetivo no Stripe**: controlar a liberação da feature flag e gerenciar produtos internacionais.

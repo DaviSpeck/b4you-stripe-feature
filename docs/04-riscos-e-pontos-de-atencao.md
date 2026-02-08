@@ -8,6 +8,7 @@
 - Eventos fora de ordem podem causar estado final incorreto.
 - Falhas de identificação do provedor podem gerar conciliação incorreta.
 - Divergência entre UI e i18n nos checkouts pode gerar duplicação de manutenção.
+- Acoplamento excessivo no dashboard pode expor problemas de escalabilidade no fluxo nacional.
 
 ## Riscos operacionais
 - Atraso no processamento de webhooks em picos de tráfego.

@@ -20,10 +20,16 @@ O planejamento técnico já define separação de adquirência (Pagar.me naciona
 - **Impacto**: aumento esperado de chargebacks e fraudes em internacional, especialmente no início.
 - **Recomendação operacional**: limitar exposição inicial por governança (ex.: grupos controlados de produtores) e monitorar chargebacks com thresholds de bloqueio manual.
 
+### 4) PIX e recorrência
+- **PIX**: como o MVP internacional usa Stripe e o nacional usa Pagar.me, há risco de expectativa indevida de PIX em internacional (inexistente no escopo) e de inconsistência na comunicação com o produtor/consumidor.
+- **Recorrência**: ausência de definição explícita sobre recorrência internacional pode gerar conflitos operacionais (ex.: tentativas de vendas recorrentes em produtos internacionais sem suporte adequado no fluxo atual).
+- **Recomendação operacional**: explicitar a indisponibilidade de PIX e recorrência no internacional durante o MVP para evitar promessas comerciais e suporte corretivo.
+
 ## Riscos moderados
 - **Convergência operacional parcial**: separação de visões nacionais e internacionais pode levar a dois processos internos paralelos se não houver alinhamento de atendimento e reporting.
 - **Suporte**: necessidade de padronização de linguagem para que suporte e operação atuem sem depender de conhecimento profundo de Stripe.
 - **Observabilidade operacional**: dependência de webhooks e rastreabilidade exige disciplina de processos internos para investigação fim-a-fim.
+- **Expectativa de meios de pagamento**: risco de comunicação inconsistente sobre disponibilidade de PIX e recorrência entre nacional e internacional.
 
 ## Riscos aceitos
 - **Ausência de reconciliação financeira avançada**: aceitável no MVP, desde que o risco de divergências pontuais seja assumido pela operação.
@@ -36,6 +42,7 @@ O planejamento técnico já define separação de adquirência (Pagar.me naciona
 - **Limites operacionais de exposição**: iniciar com grupos controlados de produtores e thresholds para revisão manual de chargebacks.
 - **Padronização de linguagem de suporte**: glossário único de estados e processos para nacional e internacional.
 - **Plano de monitoramento**: alertas internos para disputa/chargeback acima de limites e para falhas de webhook.
+- **Comunicação de meios de pagamento**: deixar explícito para times internos e produtores que PIX e recorrência não estão disponíveis no fluxo internacional do MVP.
 
 ## Parecer final de viabilidade do MVP
 **VIÁVEL COM RESTRIÇÕES**. O MVP pode seguir para execução **desde que** sejam aceitos conscientemente os riscos regulatórios e de antifraude, e que haja bloqueio de produtos físicos internacionais no MVP para evitar ruptura operacional. Sem essas restrições e alinhamento operacional, o risco de fragmentação e passivo de suporte é alto o suficiente para bloquear o go-live.

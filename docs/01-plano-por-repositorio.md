@@ -10,17 +10,21 @@
   - Deduplicação e idempotência por evento Stripe.
   - Enfileiramento de eventos críticos para processamento assíncrono controlado.
   - Registro de falhas de processamento com rastreabilidade e motivo.
+  - Marcação explícita de `provider` no registro interno do evento.
+  - Conciliação de estados (ex.: pagamento aprovado vs. disputa aberta).
 - **Módulos/camadas impactadas**:
   - Handlers de webhook.
   - Camadas de validação/assinatura.
   - Integrações com observabilidade.
   - Camada de persistência de eventos/processamento.
   - Integração com filas/tópicos internos existentes.
+  - Camada de persistência de “event ledger” (quando existir).
 - **Visão geral das mudanças esperadas**:
   - Novos handlers e rotas para webhooks Stripe.
   - Persistência de `provider_*` IDs.
   - Contratos de status internos alinhados aos eventos Stripe.
   - Processamento robusto de replays e eventos fora de ordem.
+  - Capacidade de diferenciar claramente Stripe vs Pagar.me no histórico de eventos.
 
 ## api-checkout
 - **Objetivo no Stripe**: orquestrar criação de pagamentos internacionais e expor endpoints necessários para o checkout.
@@ -32,6 +36,8 @@
   - Consolidar status internos com base em webhooks.
   - Garantir compatibilidade com modelos de venda existentes (order/sale/transaction).
   - Definir contratos de falha e expiração do pagamento internacional.
+  - Manter consistência com o fluxo nacional (interfaces e estados internos equivalentes).
+  - Separar claramente a origem do pagamento pelo `provider` (Pagar.me vs Stripe).
 - **Módulos/camadas impactadas**:
   - Camada de pagamentos.
   - Feature flags.
@@ -39,12 +45,16 @@
   - Contratos públicos de API (request/response) do checkout internacional.
   - Mapeamento de estados internos de pagamento.
   - Integração com serviços de catálogo (produto/oferta).
+  - Camada de roteamento por provedor (gateway selection).
+  - Camada de antifraude existente (quando aplicável).
 - **Visão geral das mudanças esperadas**:
   - Inclusão de gateway Stripe para produtos internacionais.
   - Contratos de API com metadata para rastreamento.
   - Separação explícita de fluxo internacional vs. nacional.
   - Tratamento de idempotência em criação de intents.
   - Exposição de status consolidado e timestamps relevantes.
+  - Observabilidade por provedor (dashboards e métricas segmentadas).
+  - Garantia de que o fluxo “plug-in” não altera regras nacionais.
 
 ## b4you-checkout (novo checkout)
 - **Objetivo no Stripe**: oferecer experiência internacional em EN com Stripe como gateway.

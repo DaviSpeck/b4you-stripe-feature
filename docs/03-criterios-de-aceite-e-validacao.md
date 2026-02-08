@@ -7,6 +7,7 @@
 - Logs e métricas para cada tipo de evento.
 - Idempotência validada para eventos repetidos.
 - Eventos fora de ordem não causam regressão de status.
+- `provider` registrado em todo evento processado.
 
 ### api-checkout
 - Criação de pagamento internacional com Stripe operacional.
@@ -15,6 +16,8 @@
 - Metadata obrigatória enviada ao Stripe e recuperável nos webhooks.
 - Idempotência garantida em retries do checkout.
 - Timestamps críticos disponíveis para conciliação.
+- `provider` persistido na transação e exposto nas respostas de API.
+- Fluxo nacional preservado sem regressões.
 
 ### b4you-checkout (novo checkout)
 - Fluxo internacional em EN funcional.
@@ -57,6 +60,7 @@
 - Idempotência de webhooks validada em cenários de replay.
 - Endpoints de backoffice expostos e consumidos pelos frontends.
 - Governança: dashboard controla uso operacional; backoffice controla habilitação interna.
+- Provedor identificável em todo o ciclo de vida (checkout → webhook → dashboard).
 
 ## Regras de go/no-go
 ### Go

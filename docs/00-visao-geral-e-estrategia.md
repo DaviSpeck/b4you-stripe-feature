@@ -18,6 +18,8 @@ O ecossistema B4You possui múltiplos serviços e frontends, com responsabilidad
 - **Feature flag obrigatória**: nenhuma funcionalidade Stripe aparece sem liberação explícita.
 - **Manutenção do Pagar.me**: fluxo nacional permanece intacto e isolado da nova entrada.
 - **Separação de governança**: backoffice controla habilitação e cadastro; dashboard controla uso operacional pelos produtores.
+- **Arquitetura plugável**: Stripe entra como “plug-in” na estrutura atual, sem reescrever fluxos existentes.
+- **Separação por provedor**: toda transação deve expor claramente o `provider` (Pagar.me vs Stripe) ao longo do ciclo de vida.
 
 ## Justificativas técnicas
 - **Redução de risco operacional**: feature flag e separação explícita reduzem impacto no fluxo nacional.

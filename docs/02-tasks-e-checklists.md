@@ -10,6 +10,8 @@
 6. Implementar idempotência por `event_id` e janela de reprocessamento.
 7. Definir política de rejeição de eventos inválidos e rastrear falhas.
 8. Garantir tratamento de eventos fora de ordem (status conflitantes).
+9. Persistir e expor `provider` em cada evento (Stripe vs Pagar.me).
+10. Garantir reconciliação de estados críticos (paid, refunded, dispute).
 
 ### Checklist do MVP
 - [ ] Webhook criado para eventos de pagamento.
@@ -20,6 +22,8 @@
 - [ ] Idempotência validada para reprocessamento de eventos.
 - [ ] Rejeição de eventos inválidos auditável.
 - [ ] Tratamento de eventos fora de ordem validado.
+- [ ] `provider` registrado e auditável nos eventos processados.
+- [ ] Regras de reconciliação de estados aplicadas.
 
 ### Ordem sugerida
 1. Webhooks e validação.
@@ -43,6 +47,9 @@
 7. Garantir separação explícita de rotas nacionais vs. internacionais.
 8. Implementar idempotência na criação de intentos (retries do checkout).
 9. Definir timestamps relevantes (criação, autorização, captura, falha).
+10. Garantir `provider` persistido na transação desde a criação.
+11. Definir contrato de resposta que permita identificar provedor no checkout.
+12. Validar compatibilidade com o fluxo nacional (sem regressões).
 
 ### Checklist do MVP
 - [ ] Fluxo internacional definido e isolado.
@@ -53,6 +60,8 @@
 - [ ] Rotas nacionais preservadas sem regressão.
 - [ ] Idempotência de criação validada.
 - [ ] Status do pagamento possui timestamps críticos.
+- [ ] `provider` persistido e exposto no contrato.
+- [ ] Compatibilidade confirmada com o fluxo nacional.
 
 ### Ordem sugerida
 1. Contrato do fluxo internacional.

@@ -6,6 +6,7 @@
 - Dependências cruzadas entre serviços com feature flag inconsistente.
 - Falha de idempotência pode duplicar eventos e gerar estados inválidos.
 - Eventos fora de ordem podem causar estado final incorreto.
+- Falhas de identificação do provedor podem gerar conciliação incorreta.
 
 ## Riscos operacionais
 - Atraso no processamento de webhooks em picos de tráfego.
@@ -13,6 +14,7 @@
 - Processos de suporte sem visibilidade de `provider_*` IDs.
 - Configuração incorreta no backoffice pode expor Stripe indevidamente.
 - Confusão de governança entre dashboard e backoffice pode gerar operações indevidas.
+- Falta de consistência na separação Pagar.me vs Stripe pode impactar suporte.
 
 ## Riscos de negócio
 - Experiência internacional inconsistente se fluxo EN não estiver completo.

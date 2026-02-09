@@ -32,7 +32,7 @@ export default defineConfig({
   trashAssetsBeforeRuns: true,
   e2e: {
     supportFile: false,
-    baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
+    baseUrl: process.env.NEXT_PUBLIC_REACT_APP_BASE_URL_INTERNAL,
     screenshotOnRunFailure: false,
     waitForAnimations: true,
     animationDistanceThreshold: 1000,

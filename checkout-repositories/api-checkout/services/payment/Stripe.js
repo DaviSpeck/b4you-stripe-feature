@@ -26,4 +26,8 @@ module.exports = class StripeService {
   async retrievePaymentIntent(paymentIntentId) {
     return this.#client.paymentIntents.retrieve(paymentIntentId);
   }
+
+  constructEvent(rawBody, signature, webhookSecret) {
+    return this.#client.webhooks.constructEvent(rawBody, signature, webhookSecret);
+  }
 };

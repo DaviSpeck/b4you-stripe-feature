@@ -1,4 +1,9 @@
 import { WebhooksEvents } from './useCases/WebhookEvents.mjs';
+import { processStripeWebhookEvent } from './useCases/StripeWebhookProcessor.mjs';
+import { Stripe_payment_intents } from './database/models/Stripe_payment_intents.mjs';
+import { Stripe_webhook_events } from './database/models/Stripe_webhook_events.mjs';
+import { Sales_items } from './database/models/Sales_items.mjs';
+import { Products } from './database/models/Products.mjs';
 import { Database } from './database/sequelize.mjs';
 
 /**
@@ -27,6 +32,15 @@ export function createDatabaseConfig(env = process.env) {
 export function parseEventMessage(event) {
   const { Records } = event;
   const [message] = Records;
+  const body = JSON.parse(message.body);
+
+  if (body?.provider === 'stripe') {
+    return {
+      type: 'stripe',
+      payload: body,
+    };
+  }
+
   const {
     id_product,
     id_user,
@@ -34,15 +48,18 @@ export function parseEventMessage(event) {
     id_event,
     id_cart = null,
     id_affiliate = null,
-  } = JSON.parse(message.body);
+  } = body;
 
   return {
-    id_product,
-    id_user,
-    id_sale_item,
-    id_event,
-    id_cart,
-    id_affiliate,
+    type: 'webhook',
+    payload: {
+      id_product,
+      id_user,
+      id_sale_item,
+      id_event,
+      id_cart,
+      id_affiliate,
+    },
   };
 }
 
@@ -80,7 +97,17 @@ export const handler = async (event) => {
     const eventData = parseEventMessage(event);
     const webhooksEvents = new WebhooksEvents();
 
-    await processWebhookEvent(eventData, webhooksEvents);
+    if (eventData.type === 'stripe') {
+      await processStripeWebhookEvent(eventData.payload, {
+        StripeWebhookEvents: Stripe_webhook_events,
+        StripePaymentIntents: Stripe_payment_intents,
+        Sales_items,
+        Products,
+        webhooksEvents,
+      });
+    } else {
+      await processWebhookEvent(eventData.payload, webhooksEvents);
+    }
 
     return {
       statusCode: 200,

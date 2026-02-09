@@ -1,4 +1,5 @@
 const CreateStripePaymentIntent = require('../../useCases/checkout/international/CreateStripePaymentIntent');
+const HandleStripeWebhook = require('../../useCases/checkout/international/HandleStripeWebhook');
 const logger = require('../../utils/logger');
 
 const createStripePaymentIntentController = async (req, res) => {
@@ -27,4 +28,24 @@ const createStripePaymentIntentController = async (req, res) => {
 
 module.exports = {
   createStripePaymentIntentController,
+  stripeWebhookController: async (req, res) => {
+    try {
+      const result = await new HandleStripeWebhook().execute({
+        rawBody: req.rawBody,
+        signature: req.headers['stripe-signature'],
+      });
+      if (!result.ok) {
+        return res.sendStatus(result.status || 400);
+      }
+      return res.sendStatus(204);
+    } catch (error) {
+      logger.error(
+        JSON.stringify({
+          message: 'stripe_webhook_failed',
+          error: error?.message,
+        }),
+      );
+      return res.sendStatus(500);
+    }
+  },
 };

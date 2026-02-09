@@ -50,6 +50,8 @@
 10. Garantir `provider` persistido na transação desde a criação.
 11. Definir contrato de resposta que permita identificar provedor no checkout.
 12. Validar compatibilidade com o fluxo nacional (sem regressões).
+13. Criar grafo transacional no checkout internacional (sales, sales_items, charges, transactions e relacionamentos) com status pendente.
+14. Aplicar `provider` e `provider_id` nas entidades corretas (principalmente charges).
 
 ### Checklist — FASE 1 (api-checkout) ✅
 - [x] Fluxo internacional definido e isolado. **(validado por testes)**
@@ -66,6 +68,15 @@
 - [ ] Status do pagamento possui timestamps críticos. **(FASE 3)**
 - [ ] Exposição de status consolidado conforme eventos recebidos. **(FASE 2/3)**
 - [ ] Compatibilidade confirmada com o fluxo nacional (sem regressões). **(revalidação contínua)**
+- [x] Grafo transacional Stripe criado no checkout (sales, sales_items, charges, transactions). **(FASE 2A)**
+- [x] `provider`/`provider_id` aplicados nas entidades de pagamento. **(FASE 2A)**
+- [x] Gate de testes FASE 2A (pendente + relacionamentos + múltiplos itens). **(FASE 2A)**
+
+### Checklist — FASE 2 (webhooks + consolidação de estado) ✅
+- [x] Assinatura Stripe validada e eventos suportados enfileirados. **(FASE 2B)**
+- [x] Idempotência por `event_id` (duplicados sem efeitos colaterais). **(FASE 2B)**
+- [x] Eventos fora de ordem ignoram regressão de estado consolidado. **(FASE 2B)**
+- [x] Gate de testes FASE 2 (2A + 2B) satisfeito. **(FASE 2)**
 
 ### Ordem sugerida
 1. Contrato do fluxo internacional.

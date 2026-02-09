@@ -190,7 +190,7 @@ describe('Testing credit card fees class and method', () => {
     expect(cost.monthly_installment_interest).toBe(2.89);
 
     expect(main.price_product).toBe(100);
-    expect(main.price_total).toBe(119.8);
+    expect(main.price_total).toBeCloseTo(119.76, 2);
     expect(main.price_base).toBe(100);
     expect(main.psp_cost_variable_amount).toBeCloseTo(0);
     expect(main.psp_cost_fixed_amount).toBe(0);

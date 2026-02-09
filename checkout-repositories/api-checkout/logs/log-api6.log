@@ -2558,3 +2558,277 @@ OFFER -> {"id":114224,"id_product":27301,"price":147,"discount_pix":0,"discount_
 08/02/2026, 11:58:46 info: {"message":"stripe_payment_intent_created","transaction_id":"58c0b82d-1d39-4d9a-9d70-6e0c3c7f4a01","order_id":"order-123","sale_id":"sale-456","provider":"stripe","provider_payment_intent_id":"pi_race"}
 08/02/2026, 11:58:46 info: {"message":"stripe_international_disabled","transaction_id":"58c0b82d-1d39-4d9a-9d70-6e0c3c7f4a01","order_id":"order-123","sale_id":"sale-456","provider":"stripe"}
 08/02/2026, 11:58:46 error: {"message":"stripe_payment_intent_failed","transaction_id":"58c0b82d-1d39-4d9a-9d70-6e0c3c7f4a01","order_id":"order-123","sale_id":"sale-456","provider":"stripe","error":"db failure"}
+08/02/2026, 23:44:06 info: {"message":"stripe_webhook_queued","eventId":"evt_123","eventType":"payment_intent.succeeded","transactionId":"transaction-123"}
+08/02/2026, 23:44:07 info: {"message":"stripe_payment_intent_created","transaction_id":"58c0b82d-1d39-4d9a-9d70-6e0c3c7f4a01","order_id":"order-123","sale_id":"sale-456","provider":"stripe","provider_payment_intent_id":"pi_123"}
+08/02/2026, 23:44:06 info: {"message":"stripe_webhook_invalid_signature","error":"Invalid signature"}
+08/02/2026, 23:44:06 info: {"message":"stripe_webhook_duplicate","eventId":"evt_123","eventType":"payment_intent.succeeded"}
+08/02/2026, 23:44:06 info: {"message":"stripe_webhook_queued","eventId":"evt_123","eventType":"payment_intent.payment_failed","transactionId":"transaction-123"}
+08/02/2026, 23:44:06 info: {"message":"stripe_webhook_queued","eventId":"evt_123","eventType":"charge.refunded","transactionId":null}
+08/02/2026, 23:44:06 info: {"message":"stripe_webhook_invalid_payload","eventId":"evt_456","eventType":"payment_intent.succeeded","reason":"missing_payment_intent_identifier"}
+08/02/2026, 23:44:07 info: {"message":"stripe_international_disabled","transaction_id":"58c0b82d-1d39-4d9a-9d70-6e0c3c7f4a01","order_id":"order-123","sale_id":"sale-456","provider":"stripe"}
+08/02/2026, 23:44:07 info: {"message":"stripe_payment_intent_reused","transaction_id":"58c0b82d-1d39-4d9a-9d70-6e0c3c7f4a01","order_id":"order-123","sale_id":"sale-456","provider":"stripe","provider_payment_intent_id":"pi_existing"}
+08/02/2026, 23:44:07 error: {"message":"stripe_payment_intent_failed","transaction_id":"58c0b82d-1d39-4d9a-9d70-6e0c3c7f4a01","order_id":"order-123","sale_id":"sale-456","provider":"stripe","error":"Stripe error"}
+08/02/2026, 23:44:07 info: {"message":"stripe_payment_intent_created","transaction_id":"58c0b82d-1d39-4d9a-9d70-6e0c3c7f4a01","order_id":"order-123","sale_id":"sale-456","provider":"stripe","provider_payment_intent_id":"pi_123"}
+08/02/2026, 23:44:07 info: {"message":"stripe_payment_intent_created","transaction_id":"58c0b82d-1d39-4d9a-9d70-6e0c3c7f4a01","order_id":"order-123","sale_id":"sale-456","provider":"stripe","provider_payment_intent_id":"pi_123"}
+08/02/2026, 23:44:07 info: {"message":"stripe_payment_intent_created","transaction_id":"58c0b82d-1d39-4d9a-9d70-6e0c3c7f4a01","order_id":"order-123","sale_id":"sale-456","provider":"stripe","provider_payment_intent_id":"pi_123"}
+08/02/2026, 23:44:07 info: {"message":"stripe_payment_intent_reused","transaction_id":"58c0b82d-1d39-4d9a-9d70-6e0c3c7f4a01","order_id":"order-123","sale_id":"sale-456","provider":"stripe","provider_payment_intent_id":"pi_race"}
+08/02/2026, 23:44:07 info: {"message":"stripe_payment_intent_created","transaction_id":"58c0b82d-1d39-4d9a-9d70-6e0c3c7f4a01","order_id":"order-123","sale_id":"sale-456","provider":"stripe","provider_payment_intent_id":"pi_race"}
+08/02/2026, 23:44:07 info: {"message":"stripe_international_disabled","transaction_id":"58c0b82d-1d39-4d9a-9d70-6e0c3c7f4a01","order_id":"order-123","sale_id":"sale-456","provider":"stripe"}
+08/02/2026, 23:44:07 error: {"message":"stripe_payment_intent_failed","transaction_id":"58c0b82d-1d39-4d9a-9d70-6e0c3c7f4a01","order_id":"order-123","sale_id":"sale-456","provider":"stripe","error":"db failure"}
+08/02/2026, 23:44:07 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:07 info: Redis reconnecting
+08/02/2026, 23:44:07 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:07 info: Redis reconnecting
+08/02/2026, 23:44:07 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:07 info: Redis reconnecting
+08/02/2026, 23:44:07 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:07 info: Redis reconnecting
+08/02/2026, 23:44:07 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:07 info: Redis reconnecting
+08/02/2026, 23:44:07 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:07 info: Redis reconnecting
+08/02/2026, 23:44:07 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:08 info: Redis reconnecting
+08/02/2026, 23:44:08 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:08 info: Redis reconnecting
+08/02/2026, 23:44:08 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:09 info: Redis reconnecting
+08/02/2026, 23:44:09 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:09 info: Redis reconnecting
+08/02/2026, 23:44:09 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:10 info: Redis reconnecting
+08/02/2026, 23:44:10 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:10 info: Redis reconnecting
+08/02/2026, 23:44:10 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:11 info: Redis reconnecting
+08/02/2026, 23:44:11 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:11 info: Redis reconnecting
+08/02/2026, 23:44:11 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:12 info: Redis reconnecting
+08/02/2026, 23:44:12 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:12 info: Redis reconnecting
+08/02/2026, 23:44:12 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:13 info: Redis reconnecting
+08/02/2026, 23:44:13 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:13 info: Redis reconnecting
+08/02/2026, 23:44:13 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:14 info: Redis reconnecting
+08/02/2026, 23:44:14 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:14 info: Redis reconnecting
+08/02/2026, 23:44:14 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:15 info: Redis reconnecting
+08/02/2026, 23:44:15 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:15 info: Redis reconnecting
+08/02/2026, 23:44:15 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:16 info: Redis reconnecting
+08/02/2026, 23:44:16 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:16 info: Redis reconnecting
+08/02/2026, 23:44:16 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:17 info: Redis reconnecting
+08/02/2026, 23:44:17 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:17 info: Redis reconnecting
+08/02/2026, 23:44:17 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:18 info: Redis reconnecting
+08/02/2026, 23:44:18 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:18 info: Redis reconnecting
+08/02/2026, 23:44:18 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:19 info: Redis reconnecting
+08/02/2026, 23:44:19 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:19 info: Redis reconnecting
+08/02/2026, 23:44:19 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:20 info: Redis reconnecting
+08/02/2026, 23:44:20 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:20 info: Redis reconnecting
+08/02/2026, 23:44:20 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:28 info: {"message":"stripe_payment_intent_created","transaction_id":"58c0b82d-1d39-4d9a-9d70-6e0c3c7f4a01","order_id":"order-123","sale_id":"sale-456","provider":"stripe","provider_payment_intent_id":"pi_123"}
+08/02/2026, 23:44:28 info: {"message":"stripe_webhook_queued","eventId":"evt_123","eventType":"payment_intent.succeeded","transactionId":"transaction-123"}
+08/02/2026, 23:44:28 info: {"message":"stripe_international_disabled","transaction_id":"58c0b82d-1d39-4d9a-9d70-6e0c3c7f4a01","order_id":"order-123","sale_id":"sale-456","provider":"stripe"}
+08/02/2026, 23:44:28 info: {"message":"stripe_payment_intent_reused","transaction_id":"58c0b82d-1d39-4d9a-9d70-6e0c3c7f4a01","order_id":"order-123","sale_id":"sale-456","provider":"stripe","provider_payment_intent_id":"pi_existing"}
+08/02/2026, 23:44:28 error: {"message":"stripe_payment_intent_failed","transaction_id":"58c0b82d-1d39-4d9a-9d70-6e0c3c7f4a01","order_id":"order-123","sale_id":"sale-456","provider":"stripe","error":"Stripe error"}
+08/02/2026, 23:44:28 info: {"message":"stripe_payment_intent_created","transaction_id":"58c0b82d-1d39-4d9a-9d70-6e0c3c7f4a01","order_id":"order-123","sale_id":"sale-456","provider":"stripe","provider_payment_intent_id":"pi_123"}
+08/02/2026, 23:44:28 info: {"message":"stripe_payment_intent_created","transaction_id":"58c0b82d-1d39-4d9a-9d70-6e0c3c7f4a01","order_id":"order-123","sale_id":"sale-456","provider":"stripe","provider_payment_intent_id":"pi_123"}
+08/02/2026, 23:44:28 info: {"message":"stripe_payment_intent_created","transaction_id":"58c0b82d-1d39-4d9a-9d70-6e0c3c7f4a01","order_id":"order-123","sale_id":"sale-456","provider":"stripe","provider_payment_intent_id":"pi_123"}
+08/02/2026, 23:44:28 info: {"message":"stripe_payment_intent_reused","transaction_id":"58c0b82d-1d39-4d9a-9d70-6e0c3c7f4a01","order_id":"order-123","sale_id":"sale-456","provider":"stripe","provider_payment_intent_id":"pi_race"}
+08/02/2026, 23:44:28 info: {"message":"stripe_payment_intent_created","transaction_id":"58c0b82d-1d39-4d9a-9d70-6e0c3c7f4a01","order_id":"order-123","sale_id":"sale-456","provider":"stripe","provider_payment_intent_id":"pi_race"}
+08/02/2026, 23:44:28 info: {"message":"stripe_international_disabled","transaction_id":"58c0b82d-1d39-4d9a-9d70-6e0c3c7f4a01","order_id":"order-123","sale_id":"sale-456","provider":"stripe"}
+08/02/2026, 23:44:28 error: {"message":"stripe_payment_intent_failed","transaction_id":"58c0b82d-1d39-4d9a-9d70-6e0c3c7f4a01","order_id":"order-123","sale_id":"sale-456","provider":"stripe","error":"db failure"}
+08/02/2026, 23:44:28 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:28 info: Redis reconnecting
+08/02/2026, 23:44:28 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:28 info: Redis reconnecting
+08/02/2026, 23:44:28 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:28 info: {"message":"stripe_webhook_invalid_signature","error":"Invalid signature"}
+08/02/2026, 23:44:28 info: {"message":"stripe_webhook_duplicate","eventId":"evt_123","eventType":"payment_intent.succeeded"}
+08/02/2026, 23:44:28 info: {"message":"stripe_webhook_queued","eventId":"evt_123","eventType":"payment_intent.payment_failed","transactionId":"transaction-123"}
+08/02/2026, 23:44:28 info: {"message":"stripe_webhook_queued","eventId":"evt_123","eventType":"charge.refunded","transactionId":null}
+08/02/2026, 23:44:28 info: {"message":"stripe_webhook_invalid_payload","eventId":"evt_456","eventType":"payment_intent.succeeded","reason":"missing_payment_intent_identifier"}
+08/02/2026, 23:44:29 info: Redis reconnecting
+08/02/2026, 23:44:29 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:29 info: Redis reconnecting
+08/02/2026, 23:44:29 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:29 info: Redis reconnecting
+08/02/2026, 23:44:29 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:29 info: Redis reconnecting
+08/02/2026, 23:44:29 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:29 info: Redis reconnecting
+08/02/2026, 23:44:29 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:30 info: Redis reconnecting
+08/02/2026, 23:44:30 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:30 info: Redis reconnecting
+08/02/2026, 23:44:30 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:31 info: Redis reconnecting
+08/02/2026, 23:44:31 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:31 info: Redis reconnecting
+08/02/2026, 23:44:31 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:32 info: Redis reconnecting
+08/02/2026, 23:44:32 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:32 info: Redis reconnecting
+08/02/2026, 23:44:32 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:33 info: Redis reconnecting
+08/02/2026, 23:44:33 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:33 info: Redis reconnecting
+08/02/2026, 23:44:33 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:34 info: Redis reconnecting
+08/02/2026, 23:44:34 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:34 info: Redis reconnecting
+08/02/2026, 23:44:34 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:35 info: Redis reconnecting
+08/02/2026, 23:44:35 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:35 info: Redis reconnecting
+08/02/2026, 23:44:35 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:36 info: Redis reconnecting
+08/02/2026, 23:44:36 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:36 info: Redis reconnecting
+08/02/2026, 23:44:36 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:37 info: Redis reconnecting
+08/02/2026, 23:44:37 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:37 info: Redis reconnecting
+08/02/2026, 23:44:37 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:38 info: Redis reconnecting
+08/02/2026, 23:44:38 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:38 info: Redis reconnecting
+08/02/2026, 23:44:38 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:39 info: Redis reconnecting
+08/02/2026, 23:44:39 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:39 info: Redis reconnecting
+08/02/2026, 23:44:39 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:40 info: Redis reconnecting
+08/02/2026, 23:44:40 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:40 info: Redis reconnecting
+08/02/2026, 23:44:40 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:41 info: Redis reconnecting
+08/02/2026, 23:44:41 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:41 info: Redis reconnecting
+08/02/2026, 23:44:41 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:42 info: Redis reconnecting
+08/02/2026, 23:44:42 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:42 info: Redis reconnecting
+08/02/2026, 23:44:42 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:43 info: Redis reconnecting
+08/02/2026, 23:44:43 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:43 info: Redis reconnecting
+08/02/2026, 23:44:43 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:44 info: Redis reconnecting
+08/02/2026, 23:44:44 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:44 info: Redis reconnecting
+08/02/2026, 23:44:44 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:45 info: Redis reconnecting
+08/02/2026, 23:44:45 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:45 info: Redis reconnecting
+08/02/2026, 23:44:45 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:46 info: Redis reconnecting
+08/02/2026, 23:44:46 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:46 info: Redis reconnecting
+08/02/2026, 23:44:46 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:47 info: Redis reconnecting
+08/02/2026, 23:44:47 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:48 info: Redis reconnecting
+08/02/2026, 23:44:48 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:48 info: Redis reconnecting
+08/02/2026, 23:44:48 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:49 info: Redis reconnecting
+08/02/2026, 23:44:49 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:49 info: Redis reconnecting
+08/02/2026, 23:44:49 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:50 info: Redis reconnecting
+08/02/2026, 23:44:50 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:50 info: Redis reconnecting
+08/02/2026, 23:44:50 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:51 info: Redis reconnecting
+08/02/2026, 23:44:51 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:51 info: Redis reconnecting
+08/02/2026, 23:44:51 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:52 info: Redis reconnecting
+08/02/2026, 23:44:52 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:52 info: Redis reconnecting
+08/02/2026, 23:44:52 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:53 info: Redis reconnecting
+08/02/2026, 23:44:53 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:53 info: Redis reconnecting
+08/02/2026, 23:44:53 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:54 info: Redis reconnecting
+08/02/2026, 23:44:54 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:54 info: Redis reconnecting
+08/02/2026, 23:44:54 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:55 info: Redis reconnecting
+08/02/2026, 23:44:55 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:55 info: Redis reconnecting
+08/02/2026, 23:44:55 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:56 info: Redis reconnecting
+08/02/2026, 23:44:56 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:56 info: Redis reconnecting
+08/02/2026, 23:44:56 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:57 info: Redis reconnecting
+08/02/2026, 23:44:57 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:57 info: Redis reconnecting
+08/02/2026, 23:44:57 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:58 info: Redis reconnecting
+08/02/2026, 23:44:58 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:58 info: Redis reconnecting
+08/02/2026, 23:44:58 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:59 info: Redis reconnecting
+08/02/2026, 23:44:59 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:44:59 info: Redis reconnecting
+08/02/2026, 23:44:59 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:45:00 info: Redis reconnecting
+08/02/2026, 23:45:00 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:45:00 info: Redis reconnecting
+08/02/2026, 23:45:00 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:45:01 info: Redis reconnecting
+08/02/2026, 23:45:01 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:45:01 info: Redis reconnecting
+08/02/2026, 23:45:01 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:45:02 info: Redis reconnecting
+08/02/2026, 23:45:02 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:45:02 info: Redis reconnecting
+08/02/2026, 23:45:02 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:45:03 info: Redis reconnecting
+08/02/2026, 23:45:03 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:45:03 info: Redis reconnecting
+08/02/2026, 23:45:03 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:45:04 info: Redis reconnecting
+08/02/2026, 23:45:04 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:45:04 info: Redis reconnecting
+08/02/2026, 23:45:04 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:45:05 info: Redis reconnecting
+08/02/2026, 23:45:05 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:45:05 info: Redis reconnecting
+08/02/2026, 23:45:05 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:45:06 info: Redis reconnecting
+08/02/2026, 23:45:06 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:45:06 info: Redis reconnecting
+08/02/2026, 23:45:06 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:45:07 info: Redis reconnecting
+08/02/2026, 23:45:07 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:45:07 info: Redis reconnecting
+08/02/2026, 23:45:07 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:45:08 info: Redis reconnecting
+08/02/2026, 23:45:08 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:45:08 info: Redis reconnecting
+08/02/2026, 23:45:08 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:45:09 info: Redis reconnecting
+08/02/2026, 23:45:09 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:45:09 info: Redis reconnecting
+08/02/2026, 23:45:09 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}
+08/02/2026, 23:45:10 info: Redis reconnecting
+08/02/2026, 23:45:10 error: Error on REDIS {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"redis"}

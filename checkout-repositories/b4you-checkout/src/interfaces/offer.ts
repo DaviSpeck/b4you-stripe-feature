@@ -196,6 +196,8 @@ export interface iUpsellNative {
 
 export interface iOffer {
   uuid: string;
+  id_user?: number;
+  brand?: string;
   counter: counterType;
   enable_two_cards_payment: boolean;
   price: number;

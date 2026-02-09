@@ -1,0 +1,11 @@
+{
+  "uuid": "offer-international",
+  "id_user": 991,
+  "brand": "master",
+  "price": 120,
+  "product": {
+    "id": 501,
+    "name": "International Masterclass",
+    "warranty": 7
+  }
+}

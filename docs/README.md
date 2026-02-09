@@ -36,5 +36,10 @@ Entregar um fluxo internacional mínimo viável com Stripe que suporte:
 - **02-tasks-e-checklists.md**: lista de tasks, checklist MVP e dependências.
 - **03-criterios-de-aceite-e-validacao.md**: critérios de aceite e go/no-go.
 - **04-riscos-e-pontos-de-atencao.md**: riscos e decisões futuras.
+- **19-visao-fase-3.md**: visão e escopo da FASE 3 (refund/dispute).
+- **20-contrato-eventos-refund-dispute.md**: contrato de eventos refund/dispute.
+- **21-mapeamento-estados-refund-dispute.md**: tabela de mapeamento de estados internos.
+- **22-checklist-fase-3.md**: checklist e gates da FASE 3.
+- **23-testes-contrato-fase-3.md**: definição de testes de contrato da FASE 3.
 
 > Nota de governança: o **dashboard** é o canal de gestão da feature após liberação (uso por produtores), enquanto o **backoffice** permanece como canal interno da B4You para configurar produtos/ofertas internacionais e habilitar a integração do checkout.

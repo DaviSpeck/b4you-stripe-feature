@@ -19695,3 +19695,118 @@
 04/02/2026, 04:47:00 info: data sent -> 98b9f026-28c3-4336-b167-6384d858fc8d
 04/02/2026, 04:47:10 info: body: {"isActive":true,"upsellProductId":"06e49575-37a1-4da3-abe5-5b73e722ee38","upsellOfferId":"","plan":"","stepColorBackground":"#ffffffff","stepColor":"#0f1b35","isStepVisible":true,"header":"Não saia desta página sem conferir esta oferta imperdível!","headerBackgroundColor":"#0f1b35","headerTextColor":"#ffffffff","isHeaderVisible":true,"alertNotClosePrimaryColor":"#0f1b35","alertNotClosePrimaryTextColor":"#f1f1f1","isMessageNotClose":true,"titleimage":null,"title":"Título da oferta","titleSize":24,"titleColor":"#0f1b35","subtitleOne":"","subtitleOneWeight":400,"subtitleOneSize":24,"subtitleOneColor":"#0f1b35","subtitleTwo":"","subtitleTwoWeight":400,"subtitleTwoSize":24,"subtitleTwoColor":"#0f1b35","btnTextAcceptSize":16,"btnTextAccept":"Texto do botão de compra","btnColorAccept":"#0f1b35","btnTextColorAccept":"#f1f1f1","isOneClick":true,"isEmbedVideo":false,"isMultiOffer":true,"offers":["sON3DsrAOv","FMu9LK0401"],"btnTextRefuse":"Texto do botão de recusar compra","btnTextColorRefuse":"#373737ff","btnTextRefuseSize":16,"backgroundImageDesktop":"","backgroundImageMobile":"","mediaUrl":"","mediaEmbed":"","background":"#ffffffff","isActiveMessage":true,"isFooterVisible":false,"id":11,"uuid":"dd1d46d9-99a2-4ac4-bdf0-c7447d69806a","productId":870,"titleImage":"","createdAt":"2026-02-03T11:28:20.000Z","updatedAt":"2026-02-03T11:28:20.000Z","product_id":"3c4810d0-eea7-4324-82fa-5fef9f81fe61"} - query: {} - params: {"product_id":"3c4810d0-eea7-4324-82fa-5fef9f81fe61"} - cookies: {} - ip_address: undefined - origin: "http://localhost:3000"
 04/02/2026, 04:47:10 info: body: {} - query: {} - params: {"product_id":"3c4810d0-eea7-4324-82fa-5fef9f81fe61"} - cookies: {} - ip_address: undefined - origin: "http://localhost:3000"
+09/02/2026, 01:24:41 error: Você não pode enviar uma solicitação de coprodução para si mesmo.
+09/02/2026, 01:24:41 error: É necessário enviar uma url
+09/02/2026, 01:24:41 error: É necessário enviar id_event
+09/02/2026, 01:24:41 error: Evento precisa ser um número
+09/02/2026, 01:24:41 error: Evento não encontrado
+09/02/2026, 01:24:41 error: Webhook Inválido
+09/02/2026, 01:24:41 error: Transação externa não encontrada
+09/02/2026, 01:24:41 error: Venda não encontrada
+09/02/2026, 01:24:41 error: Venda não encontrada
+09/02/2026, 01:24:41 error: Afiliado já tem comissão
+09/02/2026, 01:24:41 error: Afiliado não encontrado
+09/02/2026, 01:24:41 error: Callback status não encontrado
+09/02/2026, 01:24:41 error: Callback id inválido
+09/02/2026, 01:24:41 error: Transação interna não encontrada
+09/02/2026, 01:24:42 error: Token não informado
+09/02/2026, 01:24:42 error: Usuário não informado
+09/02/2026, 01:24:42 error: Usuário não informado
+09/02/2026, 01:24:42 error: Tokens inválidos
+09/02/2026, 01:24:42 error: Já existe uma conta cadastrada neste email
+09/02/2026, 01:24:42 error: Já existe uma conta cadastrada neste email
+09/02/2026, 01:24:42 error: Email não pode ser o mesmo utilizado atualmente
+09/02/2026, 01:24:42 error: Email inválido
+09/02/2026, 01:24:42 error: Documento inválido
+09/02/2026, 01:24:42 error: Documento inválido
+09/02/2026, 01:24:42 error: Você pode somente cancelar convites pendentes ainda não aceitos pelo produtor
+09/02/2026, 01:24:42 error: Este tipo de produto não aceita assinatura como método de pagamento
+09/02/2026, 01:24:42 error: Produto não encontrado
+09/02/2026, 01:24:42 error: Produto não possui uma header mobile
+09/02/2026, 01:24:42 error: Produto não encontrado
+09/02/2026, 01:24:42 error: Produto não possui imagem sidebar desktop
+09/02/2026, 01:24:42 error: Produto não encontrado
+09/02/2026, 01:24:42 error: Produto não possui foto uma imagem de header
+09/02/2026, 01:24:42 error: Operação não permitida
+09/02/2026, 01:24:42 error: Produto não encontrado
+09/02/2026, 01:24:42 error: Produto não possui uma segunda imagem header mobile
+09/02/2026, 01:24:42 error: Produto não encontrado
+09/02/2026, 01:24:42 error: Produto não encontrado
+09/02/2026, 01:24:42 error: Produto não possui um favicon
+09/02/2026, 01:24:42 error: Carteira não encontrada
+09/02/2026, 01:24:42 error: Produto não encontrado
+09/02/2026, 01:24:42 error: Produto não possui uma imagem banner
+09/02/2026, 01:24:42 error: Produto não possui uma imagem banner mobile
+09/02/2026, 01:24:42 error: Produto não encontrado
+09/02/2026, 01:24:42 error: Produto sem logo
+09/02/2026, 01:24:42 error: Produto não encontrado
+09/02/2026, 01:24:42 error: Produto sem capa
+09/02/2026, 01:24:42 info: PAYING COMMISSION - DATA {"id_user":1,"amount":100,"operation":"increment"}
+09/02/2026, 01:24:42 error: Coprodutor não encontrado
+09/02/2026, 01:24:42 error: product not found
+09/02/2026, 01:24:42 error: [object Object]
+09/02/2026, 01:24:42 info: CALLBACK REFUNDS -> {"data":{"id":"prov_123"},"type":"charge.refunded"}
+09/02/2026, 01:24:42 error: Internal Server Error, POST: /callbacks/refunds
+09/02/2026, 01:24:42 error: Cannot read properties of undefined (reading 'constructor')
+09/02/2026, 01:24:42 error: Produto não encontrado
+09/02/2026, 01:24:42 error: Produto sem capa
+09/02/2026, 01:24:43 error: Produto não encontrado
+09/02/2026, 01:24:43 error: Body da requisição vazio
+09/02/2026, 01:25:29 error: Você não pode enviar uma solicitação de coprodução para si mesmo.
+09/02/2026, 01:25:30 error: Coprodutor não encontrado
+09/02/2026, 01:25:30 error: [object Object]
+09/02/2026, 01:25:30 error: Este produto já possui coprodução ativa/pendente
+09/02/2026, 01:25:30 error: This product already have a invite, but the invitation has not expired yet.
+09/02/2026, 01:25:30 error: Transação externa não encontrada
+09/02/2026, 01:25:30 error: Callback status não encontrado
+09/02/2026, 01:25:30 error: Callback id inválido
+09/02/2026, 01:25:30 error: Transação interna não encontrada
+09/02/2026, 01:25:30 info: PAYING COMMISSION - DATA {"id_user":1,"amount":100,"operation":"increment"}
+09/02/2026, 01:25:30 error: Operação não permitida
+09/02/2026, 01:25:30 error: Carteira não encontrada
+09/02/2026, 01:25:30 info: CALLBACK REFUNDS -> {"data":{"id":"prov_123"},"type":"charge.refunded"}
+09/02/2026, 01:25:30 error: Internal Server Error, POST: /callbacks/refunds
+09/02/2026, 01:25:30 error: Cannot read properties of undefined (reading 'constructor')
+09/02/2026, 01:25:30 error: Venda não encontrada
+09/02/2026, 01:25:30 error: Venda não encontrada
+09/02/2026, 01:25:30 error: Afiliado já tem comissão
+09/02/2026, 01:25:30 error: Afiliado não encontrado
+09/02/2026, 01:25:30 error: É necessário enviar uma url
+09/02/2026, 01:25:30 error: É necessário enviar id_event
+09/02/2026, 01:25:30 error: Evento precisa ser um número
+09/02/2026, 01:25:30 error: Evento não encontrado
+09/02/2026, 01:25:30 error: Webhook Inválido
+09/02/2026, 01:25:30 error: Produto não encontrado
+09/02/2026, 01:25:30 error: Body da requisição vazio
+09/02/2026, 01:25:31 error: Produto não encontrado
+09/02/2026, 01:25:31 error: Produto não encontrado
+09/02/2026, 01:25:31 error: Produto não possui um favicon
+09/02/2026, 01:25:31 error: Produto não possui uma segunda imagem header mobile
+09/02/2026, 01:25:31 error: Documento inválido
+09/02/2026, 01:25:31 error: Produto não encontrado
+09/02/2026, 01:25:31 error: Produto sem capa
+09/02/2026, 01:25:31 error: Produto não encontrado
+09/02/2026, 01:25:31 error: Produto não possui uma imagem banner
+09/02/2026, 01:25:31 error: Usuário não informado
+09/02/2026, 01:25:31 error: Já existe uma conta cadastrada neste email
+09/02/2026, 01:25:31 error: Email não pode ser o mesmo utilizado atualmente
+09/02/2026, 01:25:31 error: Email inválido
+09/02/2026, 01:25:31 error: Token não informado
+09/02/2026, 01:25:31 error: Produto não encontrado
+09/02/2026, 01:25:31 error: Produto sem logo
+09/02/2026, 01:25:31 error: Coprodutor não encontrado
+09/02/2026, 01:25:31 error: [object Object]
+09/02/2026, 01:25:31 error: Produto não encontrado
+09/02/2026, 01:25:31 error: Produto não possui uma imagem banner mobile
+09/02/2026, 01:25:31 error: Documento inválido
+09/02/2026, 01:25:31 error: Este tipo de produto não aceita assinatura como método de pagamento
+09/02/2026, 01:25:31 error: Produto não encontrado
+09/02/2026, 01:25:31 error: Produto não possui foto uma imagem de header
+09/02/2026, 01:25:31 error: Você pode somente cancelar convites pendentes ainda não aceitos pelo produtor
+09/02/2026, 01:25:31 error: Produto não encontrado
+09/02/2026, 01:25:31 error: Produto não possui imagem sidebar desktop
+09/02/2026, 01:25:31 error: Produto não encontrado
+09/02/2026, 01:25:31 error: Produto não possui uma header mobile
+09/02/2026, 01:25:31 error: product not found
+09/02/2026, 01:25:31 error: Produto não encontrado
+09/02/2026, 01:25:31 error: Produto sem capa

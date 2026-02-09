@@ -3840,3 +3840,114 @@
 04/02/2026, 04:45:21 error: Upsell nativo não existe
 04/02/2026, 04:45:28 error: Upsell nativo não existe
 04/02/2026, 04:46:54 error: Upsell nativo não existe
+09/02/2026, 01:24:41 error: Você não pode enviar uma solicitação de coprodução para si mesmo.
+09/02/2026, 01:24:41 error: É necessário enviar uma url
+09/02/2026, 01:24:41 error: É necessário enviar id_event
+09/02/2026, 01:24:41 error: Evento precisa ser um número
+09/02/2026, 01:24:41 error: Evento não encontrado
+09/02/2026, 01:24:41 error: Webhook Inválido
+09/02/2026, 01:24:41 error: Transação externa não encontrada
+09/02/2026, 01:24:41 error: Venda não encontrada
+09/02/2026, 01:24:41 error: Venda não encontrada
+09/02/2026, 01:24:41 error: Afiliado já tem comissão
+09/02/2026, 01:24:41 error: Afiliado não encontrado
+09/02/2026, 01:24:41 error: Callback status não encontrado
+09/02/2026, 01:24:41 error: Callback id inválido
+09/02/2026, 01:24:41 error: Transação interna não encontrada
+09/02/2026, 01:24:42 error: Token não informado
+09/02/2026, 01:24:42 error: Usuário não informado
+09/02/2026, 01:24:42 error: Tokens inválidos
+09/02/2026, 01:24:42 error: Já existe uma conta cadastrada neste email
+09/02/2026, 01:24:42 error: Usuário não informado
+09/02/2026, 01:24:42 error: Já existe uma conta cadastrada neste email
+09/02/2026, 01:24:42 error: Email não pode ser o mesmo utilizado atualmente
+09/02/2026, 01:24:42 error: Email inválido
+09/02/2026, 01:24:42 error: Documento inválido
+09/02/2026, 01:24:42 error: Documento inválido
+09/02/2026, 01:24:42 error: Você pode somente cancelar convites pendentes ainda não aceitos pelo produtor
+09/02/2026, 01:24:42 error: Este tipo de produto não aceita assinatura como método de pagamento
+09/02/2026, 01:24:42 error: Produto não encontrado
+09/02/2026, 01:24:42 error: Produto não encontrado
+09/02/2026, 01:24:42 error: Produto não possui uma header mobile
+09/02/2026, 01:24:42 error: Produto não possui imagem sidebar desktop
+09/02/2026, 01:24:42 error: Produto não encontrado
+09/02/2026, 01:24:42 error: Produto não possui foto uma imagem de header
+09/02/2026, 01:24:42 error: Operação não permitida
+09/02/2026, 01:24:42 error: Produto não encontrado
+09/02/2026, 01:24:42 error: Produto não possui uma segunda imagem header mobile
+09/02/2026, 01:24:42 error: Produto não encontrado
+09/02/2026, 01:24:42 error: Produto não encontrado
+09/02/2026, 01:24:42 error: Produto não possui um favicon
+09/02/2026, 01:24:42 error: Carteira não encontrada
+09/02/2026, 01:24:42 error: Produto não encontrado
+09/02/2026, 01:24:42 error: Produto não possui uma imagem banner
+09/02/2026, 01:24:42 error: Produto não possui uma imagem banner mobile
+09/02/2026, 01:24:42 error: Produto não encontrado
+09/02/2026, 01:24:42 error: Produto sem logo
+09/02/2026, 01:24:42 error: Produto não encontrado
+09/02/2026, 01:24:42 error: Produto sem capa
+09/02/2026, 01:24:42 error: Coprodutor não encontrado
+09/02/2026, 01:24:42 error: product not found
+09/02/2026, 01:24:42 error: [object Object]
+09/02/2026, 01:24:42 error: Internal Server Error, POST: /callbacks/refunds
+09/02/2026, 01:24:42 error: Cannot read properties of undefined (reading 'constructor')
+09/02/2026, 01:24:42 error: Produto não encontrado
+09/02/2026, 01:24:42 error: Produto sem capa
+09/02/2026, 01:24:43 error: Produto não encontrado
+09/02/2026, 01:24:43 error: Body da requisição vazio
+09/02/2026, 01:25:29 error: Você não pode enviar uma solicitação de coprodução para si mesmo.
+09/02/2026, 01:25:30 error: Coprodutor não encontrado
+09/02/2026, 01:25:30 error: [object Object]
+09/02/2026, 01:25:30 error: Este produto já possui coprodução ativa/pendente
+09/02/2026, 01:25:30 error: This product already have a invite, but the invitation has not expired yet.
+09/02/2026, 01:25:30 error: Transação externa não encontrada
+09/02/2026, 01:25:30 error: Callback status não encontrado
+09/02/2026, 01:25:30 error: Callback id inválido
+09/02/2026, 01:25:30 error: Transação interna não encontrada
+09/02/2026, 01:25:30 error: Operação não permitida
+09/02/2026, 01:25:30 error: Carteira não encontrada
+09/02/2026, 01:25:30 error: Internal Server Error, POST: /callbacks/refunds
+09/02/2026, 01:25:30 error: Cannot read properties of undefined (reading 'constructor')
+09/02/2026, 01:25:30 error: Venda não encontrada
+09/02/2026, 01:25:30 error: Venda não encontrada
+09/02/2026, 01:25:30 error: Afiliado já tem comissão
+09/02/2026, 01:25:30 error: Afiliado não encontrado
+09/02/2026, 01:25:30 error: É necessário enviar uma url
+09/02/2026, 01:25:30 error: É necessário enviar id_event
+09/02/2026, 01:25:30 error: Evento precisa ser um número
+09/02/2026, 01:25:30 error: Evento não encontrado
+09/02/2026, 01:25:30 error: Webhook Inválido
+09/02/2026, 01:25:30 error: Produto não encontrado
+09/02/2026, 01:25:30 error: Body da requisição vazio
+09/02/2026, 01:25:31 error: Produto não encontrado
+09/02/2026, 01:25:31 error: Produto não encontrado
+09/02/2026, 01:25:31 error: Produto não possui um favicon
+09/02/2026, 01:25:31 error: Produto não possui uma segunda imagem header mobile
+09/02/2026, 01:25:31 error: Documento inválido
+09/02/2026, 01:25:31 error: Produto não encontrado
+09/02/2026, 01:25:31 error: Produto sem capa
+09/02/2026, 01:25:31 error: Produto não encontrado
+09/02/2026, 01:25:31 error: Produto não possui uma imagem banner
+09/02/2026, 01:25:31 error: Usuário não informado
+09/02/2026, 01:25:31 error: Já existe uma conta cadastrada neste email
+09/02/2026, 01:25:31 error: Email não pode ser o mesmo utilizado atualmente
+09/02/2026, 01:25:31 error: Email inválido
+09/02/2026, 01:25:31 error: Token não informado
+09/02/2026, 01:25:31 error: Produto não encontrado
+09/02/2026, 01:25:31 error: Produto sem logo
+09/02/2026, 01:25:31 error: Coprodutor não encontrado
+09/02/2026, 01:25:31 error: [object Object]
+09/02/2026, 01:25:31 error: Produto não encontrado
+09/02/2026, 01:25:31 error: Produto não possui uma imagem banner mobile
+09/02/2026, 01:25:31 error: Documento inválido
+09/02/2026, 01:25:31 error: Este tipo de produto não aceita assinatura como método de pagamento
+09/02/2026, 01:25:31 error: Produto não encontrado
+09/02/2026, 01:25:31 error: Produto não possui foto uma imagem de header
+09/02/2026, 01:25:31 error: Você pode somente cancelar convites pendentes ainda não aceitos pelo produtor
+09/02/2026, 01:25:31 error: Produto não encontrado
+09/02/2026, 01:25:31 error: Produto não possui imagem sidebar desktop
+09/02/2026, 01:25:31 error: Produto não encontrado
+09/02/2026, 01:25:31 error: Produto não possui uma header mobile
+09/02/2026, 01:25:31 error: product not found
+09/02/2026, 01:25:31 error: Produto não encontrado
+09/02/2026, 01:25:31 error: Produto sem capa

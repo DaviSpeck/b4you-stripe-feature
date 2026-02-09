@@ -70,9 +70,27 @@ describe('testing update balance', () => {
       id_user: 3,
       amount,
     });
+    let historyData = null;
+    jest
+      .spyOn(balanceRepoStub, 'update')
+      .mockImplementationOnce((id_user, value, operation) => {
+        historyData = {
+          id_user,
+          old_amount: 0,
+          new_amount: 0 + value,
+          amount: value,
+          operation,
+        };
+        return null;
+      });
     const balance = await balanceRepoStub.find();
     const newAMount = await sut.execute();
     expect(newAMount).toBeCloseTo(balance.amount + amount);
+    expect(historyData).toBeDefined();
+    expect(historyData.old_amount).toBeCloseTo(balance.amount);
+    expect(historyData.new_amount).toBeCloseTo(newAMount);
+    expect(historyData.operation).toBe('increment');
+    expect(historyData.amount).toBe(amount);
   });
 
   it('should decrement balance', async () => {
@@ -82,8 +100,26 @@ describe('testing update balance', () => {
       id_user: 3,
       amount,
     });
+    let historyData = null;
+    jest
+      .spyOn(balanceRepoStub, 'update')
+      .mockImplementationOnce((id_user, value, operation) => {
+        historyData = {
+          id_user,
+          old_amount: 0,
+          new_amount: 0 - value,
+          amount: value,
+          operation,
+        };
+        return null;
+      });
     const balance = await balanceRepoStub.find();
     const newAMount = await sut.execute();
     expect(newAMount).toBeCloseTo(balance.amount - amount);
+    expect(historyData).toBeDefined();
+    expect(historyData.old_amount).toBeCloseTo(balance.amount);
+    expect(historyData.new_amount).toBeCloseTo(newAMount);
+    expect(historyData.operation).toBe('decrement');
+    expect(historyData.amount).toBe(amount);
   });
 });

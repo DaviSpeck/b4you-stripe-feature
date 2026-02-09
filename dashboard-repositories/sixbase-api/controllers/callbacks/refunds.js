@@ -8,6 +8,10 @@ const Pagarme = require('../../services/payments/Pagarme');
 const SQS = require('../../queues/aws');
 const Models = require('../../database/models/index');
 const Charges = require('../../database/models/Charges');
+const {
+  buildEventId,
+  recordProviderEvent,
+} = require('../../useCases/callbacks/providerEventsHistory');
 
 /**
  * Controller para callback de reembolsos da Pagarme.
@@ -24,9 +28,11 @@ const Charges = require('../../database/models/Charges');
  * @returns {Promise<void>}
  */
 const callbackRefundsController = async (req, res, next) => {
-  const { refund_id, data = {} } = req.body;
+  const { refund_id, data = {}, event_id: bodyEventId, occurred_at } = req.body;
   logger.info(`CALLBACK REFUNDS -> ${JSON.stringify(req.body)}`);
   try {
+    const rawEventId = bodyEventId || data.id || refund_id;
+    const eventId = buildEventId(rawEventId, [refund_id, 'success']);
     let refund = null;
     let chargeFromCallback = null;
     if (data && data.id) {
@@ -110,6 +116,23 @@ const callbackRefundsController = async (req, res, next) => {
     if (!saleItem || !saleItem.charges || saleItem.charges.length === 0) {
       throw ApiError.badRequest('Sale item or charges not found');
     }
+
+    const eventResult = await recordProviderEvent({
+      eventId,
+      provider: 'pagarme',
+      eventType: 'refund',
+      eventAction: 'success',
+      occurredAt:
+        occurred_at ||
+        data.updated_at ||
+        data.created_at ||
+        new Date(),
+      transactionId: saleItem.uuid || null,
+      orderId: null,
+      saleId: saleItem.id_sale || null,
+      payload: req.body,
+    });
+    if (eventResult.duplicate) return res.sendStatus(200);
 
     let targetCharge = saleItem.charges[0];
 

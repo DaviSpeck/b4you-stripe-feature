@@ -169,6 +169,8 @@ const pagarmeCallbackController = async (req, res, next) => {
         id: body.data.id,
         status: 6,
         provider: 'PAGARME',
+        event_id: body.id || body.data?.id,
+        occurred_at: body.created_at || body.data?.created_at,
       });
       return res.sendStatus(200);
     }

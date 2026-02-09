@@ -4,13 +4,15 @@ const logger = require('../../utils/logger');
 const aws = require('../../queues/aws');
 
 const callbackChargebackController = async (req, res, next) => {
-  const { id, status } = req.body;
+  const { id, status, event_id, occurred_at } = req.body;
 
   logger.info(`CALLBACK CHARGEBACK -> ${JSON.stringify(req.body)}`);
   try {
     await aws.add('callbacksCard', {
       id,
       status,
+      event_id,
+      occurred_at,
     });
     logger.info(`aws queue callbacksCard dispatch`);
     return res.sendStatus(200);

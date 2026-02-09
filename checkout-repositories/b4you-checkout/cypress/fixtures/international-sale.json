@@ -1,0 +1,34 @@
+{
+  "total": 120,
+  "payment_method": "card",
+  "products": [
+    {
+      "name": "International Masterclass",
+      "uuid": "product-001",
+      "payment": {
+        "amount": 12000,
+        "status": "pending"
+      },
+      "type": "main",
+      "pixels": [],
+      "id_type": 1,
+      "sale_item_uuid": "sale-item-001",
+      "is_upsell": false,
+      "product": {
+        "id": 501,
+        "uuid": "product-001",
+        "name": "International Masterclass",
+        "cover": null
+      },
+      "offer": null,
+      "plan": null
+    }
+  ],
+  "student": {
+    "full_name": "Jane Doe",
+    "email": "jane.doe@example.com"
+  },
+  "membership_redirect": null,
+  "physical": false,
+  "uuid": "sale-123"
+}

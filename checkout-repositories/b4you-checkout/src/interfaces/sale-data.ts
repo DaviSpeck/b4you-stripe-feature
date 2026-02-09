@@ -2,7 +2,11 @@ type ProductType = {
   name: string;
   uuid: string;
 
-  payment: { amount: number };
+  payment: {
+    amount: number;
+    status?: "pending" | "approved" | "failed" | "refunded" | "dispute";
+    payment_method?: string;
+  };
   type: string;
   pixels: unknown[];
   id_type: number;

@@ -113,6 +113,16 @@
 - [ ] Base de UI/i18n compartilhada com o legado.
 - [ ] Cliente de comunicação com api-checkout reutilizável.
 
+### Checklist — FASE 4 (Checkout Internacional)
+- [ ] Checkout internacional em EN consumindo apenas estado interno (`pending`, `approved`, `failed`, `refunded`, `dispute`).
+- [ ] Comportamento sem webhook exibe `pending` e impede confirmação sem webhook.
+- [ ] Retry idempotente sem criação de nova transação.
+- [ ] Thank you page internacional confirma pagamento apenas com `approved`.
+- [ ] `refunded` e `dispute` tratados como informativos.
+- [ ] Feature flag com fail-safe (inconsistência → bloquear internacional).
+- [ ] Testes automatizados cobrindo estados e flag.
+- [ ] Garantia explícita de não impacto no fluxo nacional.
+
 ### Ordem sugerida
 1. UI internacional.
 2. Integração com api-checkout.

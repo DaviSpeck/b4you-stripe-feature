@@ -41,5 +41,11 @@ Entregar um fluxo internacional mínimo viável com Stripe que suporte:
 - **21-mapeamento-estados-refund-dispute.md**: tabela de mapeamento de estados internos.
 - **22-checklist-fase-3.md**: checklist e gates da FASE 3.
 - **23-testes-contrato-fase-3.md**: definição de testes de contrato da FASE 3.
+- **24-encerramento-fase-3.md**: encerramento formal da FASE 3.
+- **25-documentacao-complementar-fase-4.md**: documentação complementar obrigatória da FASE 4.
+- **26-checklist-pre-fase-4.md**: checklist de validação pré-FASE 4.
+- **27-gate-fase-5.md**: gate formal de entrada da FASE 5.
+- **28-encerramento-fase-4.md**: encerramento formal da FASE 4.
+- **ADR-001-checkout-internacional-como-variacao.md**: decisão arquitetural do checkout internacional como variação.
 
 > Nota de governança: o **dashboard** é o canal de gestão da feature após liberação (uso por produtores), enquanto o **backoffice** permanece como canal interno da B4You para configurar produtos/ofertas internacionais e habilitar a integração do checkout.

@@ -1,10 +1,24 @@
 const DEFAULT_FLAG_STATE = 'enabled';
+const DEFAULT_PROVIDER = 'stripe';
 
 const toLower = (value) =>
   typeof value === 'string' ? value.trim().toLowerCase() : null;
 
-export const getInternationalFlagState = (offer = {}) => {
-  const rawState =
+const warnDeprecation = (message) => {
+  if (typeof console !== 'undefined' && console.warn) {
+    console.warn(message);
+  }
+};
+
+const resolveLegacyInternationalContract = (offer = {}) => {
+  const isInternational = Boolean(
+    offer?.international ??
+      offer?.internacional ??
+      offer?.product?.international ??
+      offer?.product?.internacional
+  );
+
+  const rawFlagState =
     offer?.feature_state ??
     offer?.featureState ??
     offer?.stripe_feature_state ??
@@ -12,19 +26,35 @@ export const getInternationalFlagState = (offer = {}) => {
     offer?.feature?.state ??
     offer?.feature?.stripe;
 
-  return toLower(rawState);
+  const featureEnabled = toLower(rawFlagState) === DEFAULT_FLAG_STATE;
+
+  return {
+    source: 'legacy',
+    isInternational,
+    featureEnabled,
+    provider: offer?.provider ?? DEFAULT_PROVIDER,
+  };
 };
 
-export const isInternationalProduct = (offer = {}) =>
-  Boolean(
-    offer?.internacional ??
-      offer?.international ??
-      offer?.product?.internacional ??
-      offer?.product?.international
+export const getInternationalContract = (offer = {}) => {
+  const canonical = offer?.international_checkout ?? offer?.international;
+
+  if (canonical) {
+    return {
+      source: 'canonical',
+      isInternational: Boolean(canonical?.is_international),
+      featureEnabled: Boolean(canonical?.feature_enabled),
+      provider: canonical?.provider ?? DEFAULT_PROVIDER,
+      baseUrl: canonical?.checkout_url ?? canonical?.base_url,
+    };
+  }
+
+  warnDeprecation(
+    '[handoff] Using legacy international fields. Please migrate to international_checkout contract.'
   );
 
-export const isInternationalEnabled = (offer = {}) =>
-  getInternationalFlagState(offer) === DEFAULT_FLAG_STATE;
+  return resolveLegacyInternationalContract(offer);
+};
 
 export const getInternationalCheckoutBaseUrl = (offer = {}) => {
   const envUrl =
@@ -32,7 +62,10 @@ export const getInternationalCheckoutBaseUrl = (offer = {}) => {
       ? ''
       : process.env.REACT_APP_INTERNATIONAL_CHECKOUT_URL;
 
+  const contract = getInternationalContract(offer);
+
   return (
+    contract?.baseUrl ??
     offer?.checkout?.international_url ??
     offer?.checkout?.international_checkout_url ??
     offer?.international_checkout_url ??
@@ -66,14 +99,24 @@ export const getInternationalHandoffDecision = ({
   offerId,
   search,
 }) => {
-  if (!isInternationalProduct(offer)) {
+  const contract = getInternationalContract(offer);
+
+  if (!contract?.isInternational) {
     return { action: 'continue' };
   }
 
-  if (!isInternationalEnabled(offer)) {
+  if (!contract?.featureEnabled) {
     return {
       action: 'error',
       reason: 'flag_disabled',
+      message: 'Fluxo internacional indisponível no momento.',
+    };
+  }
+
+  if (contract?.provider && contract.provider !== DEFAULT_PROVIDER) {
+    return {
+      action: 'error',
+      reason: 'provider_mismatch',
       message: 'Fluxo internacional indisponível no momento.',
     };
   }

@@ -33,6 +33,7 @@
 - Fluxo nacional inalterado.
 - Parâmetros legados preservados no redirecionamento.
 - Erro controlado em falha de handoff (sem fallback internacional → nacional).
+- Decisão baseada em contrato canônico (sem heurística no frontend legado).
 - Componentes e mensagens compartilhados com o novo checkout.
 - Camada de comunicação com api-checkout alinhada ao novo checkout.
 

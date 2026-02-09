@@ -41,8 +41,11 @@ describe('international handoff (deterministic)', () => {
   it('redirects to international checkout for standard checkout when allowed', async () => {
     api.get.mockResolvedValue({
       data: {
-        product: { internacional: true },
-        feature_state: 'enabled',
+        international_checkout: {
+          is_international: true,
+          feature_enabled: true,
+          provider: 'stripe',
+        },
       },
     });
 
@@ -64,8 +67,11 @@ describe('international handoff (deterministic)', () => {
   it('redirects to international checkout for 3 steps when allowed', async () => {
     api.get.mockResolvedValue({
       data: {
-        product: { internacional: true },
-        feature_state: 'enabled',
+        international_checkout: {
+          is_international: true,
+          feature_enabled: true,
+          provider: 'stripe',
+        },
       },
     });
 
@@ -87,8 +93,11 @@ describe('international handoff (deterministic)', () => {
   it('shows error when product is international and flag is disabled', async () => {
     api.get.mockResolvedValue({
       data: {
-        product: { internacional: true },
-        feature_state: 'disabled',
+        international_checkout: {
+          is_international: true,
+          feature_enabled: false,
+          provider: 'stripe',
+        },
       },
     });
 

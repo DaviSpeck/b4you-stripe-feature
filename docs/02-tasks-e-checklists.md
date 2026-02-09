@@ -143,6 +143,7 @@
 5. Assegurar que falhas no handoff não quebrem o fluxo nacional.
 6. Consolidar componentes e mensagens com o novo checkout.
 7. Adotar camada de comunicação com api-checkout compartilhada.
+8. Consumir contrato canônico de internacionalização (sem heurísticas no legado).
 
 ### Checklist do MVP
 - [x] Detecção de produto internacional por flag explícita. **(FASE 5 · Etapa 1)**
@@ -150,6 +151,7 @@
 - [x] Fluxo nacional intacto. **(FASE 5 · Etapa 1)**
 - [x] Parâmetros legados mantidos no handoff. **(FASE 5 · Etapa 1)**
 - [x] Erro controlado sem fallback internacional → nacional. **(FASE 5 · Etapa 1)**
+- [x] Contrato canônico consumido (com compatibilidade temporária documentada). **(FASE 5 · Etapa 1)**
 - [ ] Componentes e mensagens compartilhados com o novo checkout.
 - [ ] Comunicação com api-checkout alinhada ao novo checkout.
 

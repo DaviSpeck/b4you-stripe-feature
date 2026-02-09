@@ -72,6 +72,13 @@ Definir contratos e regras de governança expostos pelo backoffice. O backoffice
 - **Status internacional do produto/oferta**
 - **Histórico/auditoria de alterações**
 
+### Contrato canônico para consumo no checkout legado
+- `international_checkout` (objeto):
+  - `is_international` (bool)
+  - `feature_enabled` (bool)
+  - `provider` (string, ex.: `stripe`)
+  - `checkout_url` (string, base URL do checkout internacional)
+
 ### Consumo por serviços
 - **api-checkout**: lê estado da feature e status internacional.
 - **sixbase-dashboard**: lê estado da feature e status internacional para visualização.

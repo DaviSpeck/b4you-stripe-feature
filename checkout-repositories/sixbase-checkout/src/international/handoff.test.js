@@ -1,8 +1,7 @@
 import {
   buildInternationalRedirectUrl,
+  getInternationalContract,
   getInternationalHandoffDecision,
-  isInternationalEnabled,
-  isInternationalProduct,
 } from './handoff';
 
 describe('international handoff helpers', () => {
@@ -16,17 +15,39 @@ describe('international handoff helpers', () => {
     process.env = originalEnv;
   });
 
-  it('detects international product from explicit flag', () => {
-    expect(isInternationalProduct({ internacional: true })).toBe(true);
-    expect(isInternationalProduct({ product: { internacional: true } })).toBe(
-      true
-    );
-    expect(isInternationalProduct({})).toBe(false);
+  it('uses canonical international contract when provided', () => {
+    const contract = getInternationalContract({
+      international_checkout: {
+        is_international: true,
+        feature_enabled: true,
+        provider: 'stripe',
+      },
+    });
+
+    expect(contract).toEqual({
+      source: 'canonical',
+      isInternational: true,
+      featureEnabled: true,
+      provider: 'stripe',
+      baseUrl: undefined,
+    });
   });
 
-  it('requires enabled feature flag to allow international', () => {
-    expect(isInternationalEnabled({ feature_state: 'enabled' })).toBe(true);
-    expect(isInternationalEnabled({ feature_state: 'disabled' })).toBe(false);
+  it('falls back to legacy fields with deprecation warning', () => {
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
+    const contract = getInternationalContract({
+      internacional: true,
+      feature_state: 'enabled',
+    });
+
+    expect(contract.isInternational).toBe(true);
+    expect(contract.featureEnabled).toBe(true);
+    expect(contract.provider).toBe('stripe');
+    expect(contract.source).toBe('legacy');
+    expect(warnSpy).toHaveBeenCalled();
+
+    warnSpy.mockRestore();
   });
 
   it('builds redirect url preserving query params', () => {
@@ -46,7 +67,13 @@ describe('international handoff helpers', () => {
 
   it('blocks when product is international and feature flag disabled', () => {
     const decision = getInternationalHandoffDecision({
-      offer: { internacional: true, feature_state: 'disabled' },
+      offer: {
+        international_checkout: {
+          is_international: true,
+          feature_enabled: false,
+          provider: 'stripe',
+        },
+      },
       offerId: 'offer-123',
       search: '?utm_source=unit',
     });
@@ -60,7 +87,13 @@ describe('international handoff helpers', () => {
       'https://checkout-international.test';
 
     const decision = getInternationalHandoffDecision({
-      offer: { internacional: true, feature_state: 'enabled' },
+      offer: {
+        international_checkout: {
+          is_international: true,
+          feature_enabled: true,
+          provider: 'stripe',
+        },
+      },
       offerId: 'offer-123',
       search: '?utm_source=unit',
     });

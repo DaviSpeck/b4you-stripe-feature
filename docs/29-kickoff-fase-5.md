@@ -43,6 +43,7 @@
 - ✅ Redirecionamento ativo apenas para produto internacional com flag enabled.
 - ✅ Documentação atualizada (tasks/checklists + critérios de aceite + checkpoint).
 - ✅ Testes determinísticos cobrindo handoff (unit + E2E).
+- ✅ Contrato canônico de internacionalização consumido pelo legado.
 
 ---
 

@@ -7,6 +7,9 @@ const SUPPORTED_EVENTS = new Set([
   'payment_intent.succeeded',
   'payment_intent.payment_failed',
   'charge.refunded',
+  'charge.refund.updated',
+  'charge.dispute.created',
+  'charge.dispute.closed',
 ]);
 
 const getPaymentIntentIdentifiers = (event) => {
@@ -20,11 +23,13 @@ const getPaymentIntentIdentifiers = (event) => {
   }
 
   if (event.type?.startsWith('charge.')) {
+    const chargeObject = object.charge || {};
     return {
       transactionId: null,
       providerPaymentIntentId:
         object.payment_intent ||
-        object.charge?.payment_intent ||
+        chargeObject.payment_intent ||
+        chargeObject.payment_intent_id ||
         null,
     };
   }

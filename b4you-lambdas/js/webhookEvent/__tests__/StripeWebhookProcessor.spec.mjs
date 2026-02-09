@@ -7,6 +7,11 @@ const basePayload = {
   event_type: 'payment_intent.succeeded',
   transaction_id: 'transaction-123',
   provider_payment_intent_id: 'pi_123',
+  payload: {
+    data: {
+      object: {},
+    },
+  },
 };
 
 describe('StripeWebhookProcessor', () => {
@@ -47,7 +52,7 @@ describe('StripeWebhookProcessor', () => {
     };
   });
 
-  it('applies valid transitions and publishes webhook events', async () => {
+  it('applies valid payment transitions and publishes webhook events', async () => {
     const result = await processStripeWebhookEvent(basePayload, {
       StripeWebhookEvents,
       StripePaymentIntents,
@@ -62,17 +67,20 @@ describe('StripeWebhookProcessor', () => {
       { where: { transaction_id: 'transaction-123' } }
     );
     expect(StripeWebhookEvents.update).toHaveBeenCalledWith(
-      { processing_result: 'processed', payment_intent_status: 'succeeded' },
+      expect.objectContaining({
+        processing_result: 'processed',
+        payment_intent_status: 'succeeded',
+      }),
       { where: { provider_event_id: 'evt_123' } }
     );
     expect(webhooksEvents.send).toHaveBeenCalled();
   });
 
-  it('ignores out-of-order regression events', async () => {
+  it('ignores out-of-order regression payment events', async () => {
     StripePaymentIntents.findOne.mockResolvedValue({
       transaction_id: 'transaction-123',
       sale_id: 'sale-123',
-      status: 'succeeded',
+      status: 'refund_succeeded',
     });
 
     const result = await processStripeWebhookEvent(
@@ -90,10 +98,10 @@ describe('StripeWebhookProcessor', () => {
     expect(result.regression).toBe(true);
     expect(StripePaymentIntents.update).not.toHaveBeenCalled();
     expect(StripeWebhookEvents.update).toHaveBeenCalledWith(
-      {
+      expect.objectContaining({
         processing_result: 'ignored_regression',
-        payment_intent_status: 'succeeded',
-      },
+        payment_intent_status: 'refund_succeeded',
+      }),
       { where: { provider_event_id: 'evt_123' } }
     );
     expect(webhooksEvents.send).not.toHaveBeenCalled();
@@ -134,8 +142,127 @@ describe('StripeWebhookProcessor', () => {
     expect(result.ok).toBe(true);
     expect(result.orphaned).toBe(true);
     expect(StripeWebhookEvents.update).toHaveBeenCalledWith(
-      { processing_result: 'orphaned' },
+      expect.objectContaining({ processing_result: 'orphaned' }),
       { where: { provider_event_id: 'evt_123' } }
+    );
+  });
+
+  it('maps refund request events to refund_requested', async () => {
+    const result = await processStripeWebhookEvent(
+      {
+        ...basePayload,
+        event_type: 'charge.refund.updated',
+        payload: { data: { object: { status: 'pending' } } },
+      },
+      {
+        StripeWebhookEvents,
+        StripePaymentIntents,
+        Sales_items,
+        Products,
+        webhooksEvents,
+      }
+    );
+
+    expect(result.ok).toBe(true);
+    expect(StripePaymentIntents.update).toHaveBeenCalledWith(
+      { status: 'refund_requested' },
+      { where: { transaction_id: 'transaction-123' } }
+    );
+  });
+
+  it('maps refund success events to refund_succeeded', async () => {
+    const result = await processStripeWebhookEvent(
+      {
+        ...basePayload,
+        event_type: 'charge.refund.updated',
+        payload: { data: { object: { status: 'succeeded' } } },
+      },
+      {
+        StripeWebhookEvents,
+        StripePaymentIntents,
+        Sales_items,
+        Products,
+        webhooksEvents,
+      }
+    );
+
+    expect(result.ok).toBe(true);
+    expect(StripePaymentIntents.update).toHaveBeenCalledWith(
+      { status: 'refund_succeeded' },
+      { where: { transaction_id: 'transaction-123' } }
+    );
+  });
+
+  it('blocks refund regression after success', async () => {
+    StripePaymentIntents.findOne.mockResolvedValue({
+      transaction_id: 'transaction-123',
+      sale_id: 'sale-123',
+      status: 'refund_succeeded',
+    });
+
+    const result = await processStripeWebhookEvent(
+      {
+        ...basePayload,
+        event_type: 'charge.refund.updated',
+        payload: { data: { object: { status: 'pending' } } },
+      },
+      {
+        StripeWebhookEvents,
+        StripePaymentIntents,
+        Sales_items,
+        Products,
+        webhooksEvents,
+      }
+    );
+
+    expect(result.ok).toBe(true);
+    expect(result.regression).toBe(true);
+    expect(StripePaymentIntents.update).not.toHaveBeenCalled();
+  });
+
+  it('maps dispute open events to dispute_open', async () => {
+    const result = await processStripeWebhookEvent(
+      {
+        ...basePayload,
+        event_type: 'charge.dispute.created',
+        payload: { data: { object: { status: 'needs_response' } } },
+      },
+      {
+        StripeWebhookEvents,
+        StripePaymentIntents,
+        Sales_items,
+        Products,
+        webhooksEvents,
+      }
+    );
+
+    expect(result.ok).toBe(true);
+    expect(StripePaymentIntents.update).toHaveBeenCalledWith(
+      { status: 'dispute_open' },
+      { where: { transaction_id: 'transaction-123' } }
+    );
+  });
+
+  it('maps dispute closed lost events to dispute_lost', async () => {
+    const result = await processStripeWebhookEvent(
+      {
+        ...basePayload,
+        event_type: 'charge.dispute.closed',
+        payload: { data: { object: { status: 'lost' } } },
+      },
+      {
+        StripeWebhookEvents,
+        StripePaymentIntents,
+        Sales_items,
+        Products,
+        webhooksEvents,
+      }
+    );
+
+    expect(result.ok).toBe(true);
+    expect(StripePaymentIntents.update).toHaveBeenCalledWith(
+      { status: 'dispute_lost' },
+      { where: { transaction_id: 'transaction-123' } }
     );
   });
 });

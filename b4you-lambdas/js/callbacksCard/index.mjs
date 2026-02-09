@@ -7,17 +7,29 @@ import ChargebackWin from './useCases/ChargebackWin.mjs';
 import ChargebackReverse from './useCases/ChargebackReverse.mjs';
 import Denied from './useCases/Denied.mjs';
 import ChargebackPagarme from './useCases/ChargebackLostPagarme.mjs';
+import { Charges } from './database/models/Charges.mjs';
+import { findChargeStatus } from './status/charges.mjs';
+import { Provider_events_history } from './database/models/Provider_events_history.mjs';
+import {
+  CHARGEBACK,
+  CHARGEBACK_DISPUTE,
+  CHARGEBACK_REVERSE,
+  CHARGEBACK_WIN,
+  mapChargeStatusKey,
+  mapDisputeStatus,
+  shouldApplyDisputeTransition,
+} from './useCases/disputeTransitions.mjs';
+import {
+  buildEventId,
+  recordProviderEvent,
+} from './useCases/providerEventsHistory.mjs';
 
 const makePaymentService = () => {
   const { PAY42_KEY, PAY42_URL } = process.env;
   return new PaymentService(new HttpClient({ baseURL: PAY42_URL }), PAY42_KEY);
 };
 
-const CHARGEBACK = 6;
-const CHARGEBACK_DISPUTE = 7;
-const CHARGEBACK_WIN = 1;
 const DENIED = 2;
-const CHARGEBACK_REVERSE = 8;
 
 const successResponse = {
   statusCode: 200,
@@ -43,7 +55,51 @@ export const handler = async (event) => {
     console.log('Event-> ', event);
     const { Records } = event;
     const [message] = Records;
-    const { id, status, provider } = JSON.parse(message.body);
+    const messageBody = JSON.parse(message.body);
+    const { id, status, provider, event_id: rawEventId, occurred_at } = messageBody;
+    const nextDisputeState = mapDisputeStatus(status);
+    const disputeActionMap = {
+      dispute_open: 'open',
+      dispute_won: 'won',
+      dispute_lost: 'lost',
+    };
+    const eventAction = disputeActionMap[nextDisputeState] || null;
+    let currentDisputeState = null;
+    if (nextDisputeState) {
+      const charge = await Charges.findOne({
+        where: { psp_id: id },
+        attributes: ['id_status', 'id_sale', 'id_sale_item'],
+      });
+      if (charge?.id_status) {
+        const chargeStatusKey = findChargeStatus(charge.id_status)?.key;
+        currentDisputeState = mapChargeStatusKey(chargeStatusKey);
+      }
+      const eventId = buildEventId(rawEventId, [id, eventAction || status]);
+      const eventResult = await recordProviderEvent({
+        ProviderEventsHistory: Provider_events_history,
+        eventId,
+        provider: (provider || 'pagarme').toLowerCase(),
+        eventType: 'dispute',
+        eventAction,
+        occurredAt: occurred_at || new Date(),
+        transactionId: charge?.id_sale_item || null,
+        orderId: null,
+        saleId: charge?.id_sale || null,
+        payload: messageBody,
+      });
+      if (eventResult.duplicate) return successResponse;
+      const { apply, regression } = shouldApplyDisputeTransition(
+        currentDisputeState,
+        nextDisputeState,
+      );
+      if (!apply) {
+        console.log(
+          `Ignoring dispute transition from ${currentDisputeState} to ${nextDisputeState} (regression: ${regression})`,
+        );
+        return successResponse;
+      }
+    }
+
     if (provider && provider === 'PAGARME') {
       await database.sequelize.transaction(async (t) => {
         await ChargebackPagarme.execute({ provider_id: id, t });

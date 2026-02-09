@@ -41,6 +41,11 @@ const date = require('../../utils/helpers/date');
 const { updateBalance } = require('../../database/controllers/balances');
 const Users = require('../../database/models/Users');
 const Charges = require('../../database/models/Charges');
+const {
+  mapCallbackStatus,
+  mapRefundStatusKey,
+  shouldApplyRefundTransition,
+} = require('./refundTransitions');
 
 const validStatus = [1, 2];
 const [PAID, REJECTED] = validStatus;
@@ -136,6 +141,20 @@ module.exports = class Refunds {
     });
 
     if (!refund) throw ApiError.badRequest('Invalid refund');
+    const currentRefundState = mapRefundStatusKey(
+      findRefundStatus(refund.id_status)?.key,
+    );
+    const nextRefundState = mapCallbackStatus(this.status);
+    const { apply, regression } = shouldApplyRefundTransition(
+      currentRefundState,
+      nextRefundState,
+    );
+    if (!apply) {
+      console.log(
+        `Ignoring refund transition from ${currentRefundState} to ${nextRefundState} (regression: ${regression})`,
+      );
+      return;
+    }
     if (this.status === PAID) {
       await models.sequelize.transaction(async (t) => {
         const targetCharge = this.charge_id

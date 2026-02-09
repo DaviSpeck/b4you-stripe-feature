@@ -13,6 +13,7 @@ import { Sales_items_charges } from './SalesItemsCharges.mjs';
 import { Commissions } from './Commissions.mjs';
 import { Blacklist } from './Blacklist.mjs';
 import { Sales } from './Sales.mjs';
+import { Provider_events_history } from './Provider_events_history.mjs';
 
 export const models = [
   Commissions,
@@ -30,4 +31,5 @@ export const models = [
   Transactions,
   Blacklist,
   Sales,
+  Provider_events_history,
 ];

@@ -21,7 +21,7 @@ jest.mock('../../queues/aws', () => ({
 }));
 jest.mock('../../services/payment/Pagarme', () => jest.fn());
 
-describe('Stripe webhook processing - Phase 2', () => {
+describe('Stripe webhook processing - Phase 3', () => {
   const baseEvent = {
     id: 'evt_123',
     type: 'payment_intent.succeeded',
@@ -138,6 +138,66 @@ describe('Stripe webhook processing - Phase 2', () => {
         provider: 'stripe',
         provider_payment_intent_id: 'pi_123',
         event_type: 'charge.refunded',
+      }),
+    );
+  });
+
+  it('queues refund updated events with payment intent reference', async () => {
+    mockConstructEvent.mockReturnValue({
+      ...baseEvent,
+      type: 'charge.refund.updated',
+      data: {
+        object: {
+          id: 're_123',
+          status: 'pending',
+          payment_intent: 'pi_123',
+        },
+      },
+    });
+    StripeWebhookEventsRepository.findByProviderEventId.mockResolvedValue(null);
+
+    const result = await new HandleStripeWebhook().execute({
+      rawBody: Buffer.from('{"id":"evt_123"}'),
+      signature: 'sig',
+    });
+
+    expect(result.ok).toBe(true);
+    expect(SQS.add).toHaveBeenCalledWith(
+      'webhookEvent',
+      expect.objectContaining({
+        provider: 'stripe',
+        provider_payment_intent_id: 'pi_123',
+        event_type: 'charge.refund.updated',
+      }),
+    );
+  });
+
+  it('queues dispute events with payment intent reference', async () => {
+    mockConstructEvent.mockReturnValue({
+      ...baseEvent,
+      type: 'charge.dispute.created',
+      data: {
+        object: {
+          id: 'dp_123',
+          status: 'needs_response',
+          payment_intent: 'pi_123',
+        },
+      },
+    });
+    StripeWebhookEventsRepository.findByProviderEventId.mockResolvedValue(null);
+
+    const result = await new HandleStripeWebhook().execute({
+      rawBody: Buffer.from('{"id":"evt_123"}'),
+      signature: 'sig',
+    });
+
+    expect(result.ok).toBe(true);
+    expect(SQS.add).toHaveBeenCalledWith(
+      'webhookEvent',
+      expect.objectContaining({
+        provider: 'stripe',
+        provider_payment_intent_id: 'pi_123',
+        event_type: 'charge.dispute.created',
       }),
     );
   });

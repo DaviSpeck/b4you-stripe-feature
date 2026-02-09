@@ -1,34 +1,120 @@
 import { findRulesTypesByKey } from '../types/integrationRulesTypes.mjs';
 
-export const STATUS_RANK = {
-  pending: 0,
-  failed: 1,
-  succeeded: 2,
-  refunded: 3,
-  disputed: 4,
+const STATE_FLOW = {
+  payment: ['pending', 'failed', 'succeeded'],
+  refund: ['refund_requested', 'refund_succeeded', 'refund_failed'],
+  dispute: ['dispute_open', 'dispute_won', 'dispute_lost'],
 };
 
-export function mapEventToStatus(eventType) {
-  switch (eventType) {
-    case 'payment_intent.succeeded':
-      return { status: 'succeeded', eventKey: 'approved-payment' };
-    case 'payment_intent.payment_failed':
-      return { status: 'failed', eventKey: 'refused-payment' };
-    case 'charge.refunded':
-      return { status: 'refunded', eventKey: 'refund' };
-    default:
-      if (eventType?.startsWith('charge.dispute.')) {
-        return { status: 'disputed', eventKey: 'chargeback' };
-      }
-      return null;
+const STATE_CATEGORY = Object.freeze({
+  pending: 'payment',
+  failed: 'payment',
+  succeeded: 'payment',
+  refund_requested: 'refund',
+  refund_succeeded: 'refund',
+  refund_failed: 'refund',
+  dispute_open: 'dispute',
+  dispute_won: 'dispute',
+  dispute_lost: 'dispute',
+});
+
+const isRefundEvent = (eventType) =>
+  eventType === 'charge.refund.updated' || eventType === 'charge.refunded';
+
+const isDisputeEvent = (eventType) =>
+  eventType === 'charge.dispute.created' || eventType === 'charge.dispute.closed';
+
+export function normalizeStripeEvent(eventType, eventPayload) {
+  if (eventType === 'payment_intent.succeeded') {
+    return { status: 'succeeded', eventKey: 'approved-payment' };
   }
+  if (eventType === 'payment_intent.payment_failed') {
+    return { status: 'failed', eventKey: 'refused-payment' };
+  }
+
+  if (isRefundEvent(eventType)) {
+    const refundStatus = eventPayload?.data?.object?.status;
+    if (eventType === 'charge.refunded' || refundStatus === 'succeeded') {
+      return {
+        status: 'refund_succeeded',
+        eventKey: 'refund',
+        eventType: 'refund',
+        eventAction: 'success',
+      };
+    }
+    if (refundStatus === 'pending') {
+      return {
+        status: 'refund_requested',
+        eventKey: 'refund',
+        eventType: 'refund',
+        eventAction: 'request',
+      };
+    }
+    if (refundStatus === 'failed') {
+      return {
+        status: 'refund_failed',
+        eventKey: 'refund',
+        eventType: 'refund',
+        eventAction: 'failure',
+      };
+    }
+    return null;
+  }
+
+  if (isDisputeEvent(eventType)) {
+    const disputeStatus = eventPayload?.data?.object?.status;
+    if (eventType === 'charge.dispute.created') {
+      return {
+        status: 'dispute_open',
+        eventKey: 'chargeback',
+        eventType: 'dispute',
+        eventAction: 'open',
+      };
+    }
+    if (disputeStatus === 'won') {
+      return {
+        status: 'dispute_won',
+        eventKey: 'chargeback',
+        eventType: 'dispute',
+        eventAction: 'won',
+      };
+    }
+    if (disputeStatus === 'lost') {
+      return {
+        status: 'dispute_lost',
+        eventKey: 'chargeback',
+        eventType: 'dispute',
+        eventAction: 'lost',
+      };
+    }
+    return null;
+  }
+
+  return null;
 }
 
 export function shouldApplyStatus(currentStatus, nextStatus) {
-  const currentRank = STATUS_RANK[currentStatus] ?? -1;
-  const nextRank = STATUS_RANK[nextStatus] ?? -1;
-  if (nextRank < currentRank) return { apply: false, regression: true };
-  if (nextRank === currentRank) return { apply: false, regression: false };
+  if (!currentStatus) return { apply: true, regression: false };
+  const currentCategory = STATE_CATEGORY[currentStatus];
+  const nextCategory = STATE_CATEGORY[nextStatus];
+
+  if (currentCategory && nextCategory) {
+    if (currentCategory === nextCategory) {
+      const flow = STATE_FLOW[currentCategory] || [];
+      const currentRank = flow.indexOf(currentStatus);
+      const nextRank = flow.indexOf(nextStatus);
+      if (nextRank < currentRank) return { apply: false, regression: true };
+      if (nextRank === currentRank) return { apply: false, regression: false };
+      return { apply: true, regression: false };
+    }
+
+    if (currentCategory !== nextCategory && nextCategory === 'payment') {
+      return { apply: false, regression: true };
+    }
+
+    return { apply: true, regression: false };
+  }
+
   return { apply: true, regression: false };
 }
 
@@ -81,11 +167,23 @@ export async function processStripeWebhookEvent(
         where: { provider_payment_intent_id },
       });
 
-  const mapped = mapEventToStatus(event_type);
+  const mapped = normalizeStripeEvent(event_type, payload?.payload);
+  const normalizedPayload =
+    mapped?.eventType && mapped?.eventAction
+      ? {
+          ...payload.payload,
+          normalized_event: {
+            event_type: mapped.eventType,
+            event_action: mapped.eventAction,
+          },
+        }
+      : payload?.payload;
+
   if (!intentRecord || !mapped) {
     await StripeWebhookEvents.update(
       {
         processing_result: 'orphaned',
+        payload: normalizedPayload,
       },
       { where: { provider_event_id } }
     );
@@ -112,6 +210,7 @@ export async function processStripeWebhookEvent(
           ? 'ignored_regression'
           : 'ignored_same_status',
         payment_intent_status: intentRecord.status,
+        payload: normalizedPayload,
       },
       { where: { provider_event_id } }
     );
@@ -127,6 +226,7 @@ export async function processStripeWebhookEvent(
     {
       processing_result: 'processed',
       payment_intent_status: mapped.status,
+      payload: normalizedPayload,
     },
     { where: { provider_event_id } }
   );

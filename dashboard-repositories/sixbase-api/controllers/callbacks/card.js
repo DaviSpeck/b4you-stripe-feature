@@ -2,7 +2,7 @@ const ApiError = require('../../error/ApiError');
 const aws = require('../../queues/aws');
 
 const callbackCardController = async (req, res, next) => {
-  const { status, id, type } = req.body;
+  const { status, id, type, event_id, occurred_at } = req.body;
   try {
     if (
       type === 'chargeback_win' ||
@@ -13,6 +13,8 @@ const callbackCardController = async (req, res, next) => {
       await aws.add('callbacksCard', {
         id,
         status,
+        event_id,
+        occurred_at,
       });
     }
 

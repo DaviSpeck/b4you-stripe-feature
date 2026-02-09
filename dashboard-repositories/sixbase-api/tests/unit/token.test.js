@@ -1,5 +1,23 @@
 require('dotenv').config();
-const Token = require('../../utils/helpers/token');
+const { generateKeyPairSync } = require('crypto');
+
+let Token;
+
+beforeAll(() => {
+  const { privateKey, publicKey } = generateKeyPairSync('rsa', {
+    modulusLength: 2048,
+  });
+  process.env.JWT_PRIVATE_KEY = privateKey
+    .export({ type: 'pkcs1', format: 'pem' })
+    .toString()
+    .replace(/\n/g, '\\n');
+  process.env.JWT_PUBLIC_KEY = publicKey
+    .export({ type: 'pkcs1', format: 'pem' })
+    .toString()
+    .replace(/\n/g, '\\n');
+  jest.resetModules();
+  Token = require('../../utils/helpers/token');
+});
 
 describe('testing token', () => {
   it('should generate token', () => {

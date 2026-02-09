@@ -25,23 +25,10 @@ const fakeBalanceRepo = () => {
   return FakeBalanceRepo;
 };
 
-const fakeBalanceHistoryRepo = () => {
-  class FakeBalanceHistoryRepo {
-    static async create(data) {
-      return new Promise((resolve) => {
-        resolve(data);
-      });
-    }
-  }
-
-  return FakeBalanceHistoryRepo;
-};
-
 const makeSut = (data) => {
   const balanceRepoStub = fakeBalanceRepo();
-  const balanceHistoryRepoStub = fakeBalanceHistoryRepo();
-  const sut = new UpdateBalance(data, balanceRepoStub, balanceHistoryRepoStub);
-  return { sut, balanceRepoStub, balanceHistoryRepoStub };
+  const sut = new UpdateBalance(data, balanceRepoStub);
+  return { sut, balanceRepoStub };
 };
 
 describe('testing update balance', () => {
@@ -78,21 +65,28 @@ describe('testing update balance', () => {
 
   it('should increment balance', async () => {
     const amount = 100;
-    const { sut, balanceRepoStub, balanceHistoryRepoStub } = makeSut({
+    const { sut, balanceRepoStub } = makeSut({
       operation: 'increment',
       id_user: 3,
       amount,
     });
     let historyData = null;
     jest
-      .spyOn(balanceHistoryRepoStub, 'create')
-      .mockImplementationOnce((data) => {
-        historyData = data;
+      .spyOn(balanceRepoStub, 'update')
+      .mockImplementationOnce((id_user, value, operation) => {
+        historyData = {
+          id_user,
+          old_amount: 0,
+          new_amount: 0 + value,
+          amount: value,
+          operation,
+        };
         return null;
       });
     const balance = await balanceRepoStub.find();
     const newAMount = await sut.execute();
     expect(newAMount).toBeCloseTo(balance.amount + amount);
+    expect(historyData).toBeDefined();
     expect(historyData.old_amount).toBeCloseTo(balance.amount);
     expect(historyData.new_amount).toBeCloseTo(newAMount);
     expect(historyData.operation).toBe('increment');
@@ -101,21 +95,28 @@ describe('testing update balance', () => {
 
   it('should decrement balance', async () => {
     const amount = 100;
-    const { sut, balanceRepoStub, balanceHistoryRepoStub } = makeSut({
+    const { sut, balanceRepoStub } = makeSut({
       operation: 'decrement',
       id_user: 3,
       amount,
     });
     let historyData = null;
     jest
-      .spyOn(balanceHistoryRepoStub, 'create')
-      .mockImplementationOnce((data) => {
-        historyData = data;
+      .spyOn(balanceRepoStub, 'update')
+      .mockImplementationOnce((id_user, value, operation) => {
+        historyData = {
+          id_user,
+          old_amount: 0,
+          new_amount: 0 - value,
+          amount: value,
+          operation,
+        };
         return null;
       });
     const balance = await balanceRepoStub.find();
     const newAMount = await sut.execute();
     expect(newAMount).toBeCloseTo(balance.amount - amount);
+    expect(historyData).toBeDefined();
     expect(historyData.old_amount).toBeCloseTo(balance.amount);
     expect(historyData.new_amount).toBeCloseTo(newAMount);
     expect(historyData.operation).toBe('decrement');

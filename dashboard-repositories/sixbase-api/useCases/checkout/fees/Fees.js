@@ -225,7 +225,7 @@ module.exports = class Fees {
 
           // juros de parcelamento
           interest_installment_amount = Number(
-            Number((pmt * this.installments - price_base).toFixed(2)),
+            Number((pmt * this.installments - price_base).toFixed(1)),
           );
           interest_installment_percentage =
             (interest_installment_amount / price_base) * 100; // percentual dos juros de parcelamento
@@ -266,7 +266,7 @@ module.exports = class Fees {
       user_gross_amount = price_base;
       // Money On Hands
       if (type === 1) {
-        revenue = price_total - psp_cost_total;
+        revenue = price_total - Number(psp_cost_total.toFixed(2));
       } else {
         revenue = price_total;
       }
@@ -337,6 +337,39 @@ module.exports = class Fees {
         split_price,
         shipping_price,
       });
+    }
+
+    if (
+      this.student_pays_interest &&
+      this.installments > 1 &&
+      this.sales_items.length > 1
+    ) {
+      const itemTransactions = transactions.filter((t) => t.type !== 7);
+      const itemsTotal = itemTransactions.reduce((acc, t) => {
+        acc += t.price_total;
+        return acc;
+      }, 0);
+      const diff = Number((sale_total_price - itemsTotal).toFixed(2));
+      if (diff !== 0) {
+        const lastItem = itemTransactions[itemTransactions.length - 1];
+        lastItem.price_total = Number((lastItem.price_total + diff).toFixed(2));
+        lastItem.interest_installment_amount = Number(
+          (lastItem.price_total - lastItem.price_base).toFixed(2),
+        );
+        lastItem.interest_installment_percentage =
+          (lastItem.interest_installment_amount / lastItem.price_base) * 100;
+        lastItem.revenue = lastItem.price_total;
+        lastItem.company_gross_profit_amount =
+          lastItem.revenue - lastItem.user_net_amount;
+        lastItem.tax_interest_total =
+          lastItem.interest_installment_amount *
+          (lastItem.tax_interest_percentage / 100);
+        lastItem.tax_total = lastItem.tax_fee_total + lastItem.tax_interest_total;
+        lastItem.company_net_profit_amount =
+          lastItem.company_gross_profit_amount - lastItem.tax_total;
+        lastItem.spread_over_price_total =
+          (lastItem.company_net_profit_amount / lastItem.price_total) * 100;
+      }
     }
 
     return transactions;

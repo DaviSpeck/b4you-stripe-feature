@@ -1,50 +1,18 @@
-const ApiError = require('../../error/ApiError');
-const Zipcode = require('../../services/Zipcode');
-const getError = require('../getError');
-const HttpClient = require('../../services/HTTPClient');
-require('dotenv').config();
-
-const makeSut = () => {
-  const service = new HttpClient({
-    baseURL: process.env.ZIPCODE_SERVICE,
-  });
-
-  const sut = new Zipcode(service);
-  return {
-    sut,
-  };
-};
+const { verifyRegionByZipcode } = require('../../utils/verifyRegionByZipcode');
 
 describe('zipcode', () => {
-  it('should throw error if zipcode is not an string', async () => {
-    const { sut } = makeSut();
-    const error = await getError(() => sut.consult(123));
-    expect(error).toBeDefined();
-    expect(error).toBeInstanceOf(ApiError);
-    expect(error.code).toBe(400);
+  it('should return invalid message when zipcode is malformed', () => {
+    const result = verifyRegionByZipcode('123');
+    expect(result).toBe('CEP inválido');
   });
 
-  it('should throw error if zipcode has not 8 digits', async () => {
-    const { sut } = makeSut();
-    const error = await getError(() => sut.consult('123'));
-    expect(error).toBeDefined();
-    expect(error).toBeInstanceOf(ApiError);
-    expect(error.code).toBe(400);
+  it('should return region for southern zipcode', () => {
+    const result = verifyRegionByZipcode('88330123');
+    expect(result).toBe('SU');
   });
 
-  it('should return null if address is not found', async () => {
-    const { sut } = makeSut();
-    const address = await sut.consult('12345678');
-    expect(address).toBeNull();
-  });
-
-  it('should return address', async () => {
-    const { sut } = makeSut();
-    const address = await sut.consult('88330123');
-    expect(address).not.toBeNull();
-    expect(address.street).toBe('Avenida Normando Tedesco');
-    expect(address.neighborhood).toBe('Centro');
-    expect(address.city).toBe('Balneário Camboriú');
-    expect(address.state).toBe('SC');
+  it('should return region for southeastern zipcode', () => {
+    const result = verifyRegionByZipcode('01310000');
+    expect(result).toBe('SE');
   });
 });

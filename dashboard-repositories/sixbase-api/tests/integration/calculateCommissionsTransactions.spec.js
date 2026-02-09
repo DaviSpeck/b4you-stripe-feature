@@ -1,92 +1,27 @@
+jest.mock('../../database/models/Suppliers', () => ({ findAll: jest.fn() }));
+
 const CalculateCommissionsTransactions = require('../../useCases/common/splits/CalculateCommissionsTransactions');
+const Suppliers = require('../../database/models/Suppliers');
 
-const fakeTransactionsRepo = () => {
-  class FakeTransactionsRepo {
-    static async find() {
-      return new Promise((resolve) => {
-        resolve({
-          id: 2321,
-          uuid: 'b64313a1-aff0-4d19-8155-2287c3c392e8',
-          id_user: 3,
-          id_type: 2,
-          id_status: 2,
-          psp_id: 64875,
-          release_date: null,
-          released: 0,
-          id_charge: 627,
-          id_role: null,
-          socket_id: null,
-          method: 'card',
-          withdrawal_amount: 0.0,
-          withdrawal_total: 0.0,
-          installments: 1,
-          monthly_interest_installment: 0.0,
-          card_brand: 'master',
-          price_product: 100.0,
-          price_total: 80.0,
-          price_base: 80.0,
-          psp_cost_variable_percentage: 0.0,
-          psp_cost_variable_amount: 0.0,
-          psp_cost_fixed_amount: 0.0,
-          psp_cost_total: 0.0,
-          revenue: 78.04,
-          interest_installment_percentage: 0.0,
-          interest_installment_amount: 0.0,
-          fee_variable_percentage: 6.0,
-          fee_variable_percentage_amount: 4.8,
-          fee_fixed_amount: 2.0,
-          fee_total: 6.8,
-          user_gross_amount: 80.0,
-          user_net_amount: 73.2,
-          company_gross_profit_amount: 4.84,
-          tax_fee_percentage: 20.0,
-          tax_fee_total: 1.36,
-          tax_interest_percentage: 20.0,
-          tax_interest_total: 0.0,
-          tax_total: 1.36,
-          company_net_profit_amount: 3.48,
-          spread_over_price_product: 3.48,
-          spread_over_price_total: 4.35,
-          created_at: '2022-10-13 13:59:55',
-          updated_at: '2022-10-13 13:59:55',
-          id_invoice: null,
-          discount_percentage: 20.0,
-          discount_amount: 20.0,
-          original_price: 100.0,
-          subscription_fee: 0.0,
-          split_price: 80.0,
-        });
-      });
-    }
+const getError = async (callFunction) => {
+  try {
+    const r = await callFunction();
+    return r;
+  } catch (error) {
+    return error;
   }
-
-  return FakeTransactionsRepo;
-};
-
-const makeSut = (data) => {
-  const transactionRepoStub = fakeTransactionsRepo();
-  const sut = new CalculateCommissionsTransactions(data, transactionRepoStub);
-
-  return {
-    sut,
-    transactionRepoStub,
-  };
 };
 
 describe('testing calculate commissions transactions', () => {
-  it('should return 400 if transaction is not found', async () => {
-    const { sut, transactionRepoStub } = makeSut({});
-    jest.spyOn(transactionRepoStub, 'find').mockImplementationOnce(() => null);
-    let error = null;
-    try {
-      await sut.execute();
-    } catch (err) {
-      error = err;
-    }
+  beforeEach(() => {
+    Suppliers.findAll.mockResolvedValue([]);
+  });
 
+  it('should return error when sale item is missing', async () => {
+    const error = await getError(() =>
+      CalculateCommissionsTransactions.execute({}),
+    );
     expect(error).toBeDefined();
-    expect(error.code).toBe(400);
-    expect(error.message).toBe('Transação não encontrada');
   });
 
   it('should return 1 transaction if sale item has only producer', async () => {
@@ -109,6 +44,11 @@ describe('testing calculate commissions transactions', () => {
         valid_refund_until: '2022-10-11 13:29:54',
         paid_at: '2022-10-04 13:29:54',
         payment_splited: 0,
+        split_price: 80.0,
+        subscription_fee: 0.0,
+        shipping_price: 0.0,
+        fee_total: 6.8,
+        id_offer: 1,
         credit_card: null,
         src: null,
         sck: null,
@@ -159,11 +99,9 @@ describe('testing calculate commissions transactions', () => {
       },
       first_charge: false,
       affiliate: null,
-      transaction_id: 1,
+      shipping_type: 0,
     };
-    const { sut } = makeSut(data);
-
-    const transactions = await sut.execute();
+    const transactions = await CalculateCommissionsTransactions.execute(data);
 
     expect(transactions.length).toBe(1);
   });

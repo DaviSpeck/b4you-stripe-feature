@@ -7,7 +7,11 @@ const RefundUseCase = require('../../useCases/callbacks/Refund');
 jest.mock('../../database/models/Charges');
 jest.mock('../../database/models/Refunds');
 jest.mock('../../database/models/Sales_items');
-jest.mock('../../useCases/callbacks/Refund');
+jest.mock('../../useCases/callbacks/Refund', () =>
+  jest.fn().mockImplementation(() => ({
+    execute: jest.fn(),
+  })),
+);
 // Mock Sequelize transaction
 jest.mock('../../database/models/index', () => ({
     sequelize: {
@@ -27,6 +31,10 @@ jest.mock('../../queues/aws', () => ({ add: jest.fn() }));
 jest.mock('../../status/chargeStatus', () => ({
     chargeStatus: [{}, { id: 2 }], // Mock array for destructuring in controller
     findChargeStatusByKey: () => ({ id: 1 })
+}));
+jest.mock('../../useCases/callbacks/providerEventsHistory', () => ({
+    buildEventId: jest.fn((raw) => raw),
+    recordProviderEvent: jest.fn().mockResolvedValue({ duplicate: false }),
 }));
 
 describe('Refunds Callback Controller', () => {

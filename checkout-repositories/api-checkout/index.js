@@ -63,7 +63,19 @@ const readyPromise = (async () => {
 
     app.set('trust proxy', 1);
     app.use(helmet());
-    app.use(express.json());
+    app.use(
+      express.json({
+        verify: (req, _res, buf) => {
+          if (
+            req.originalUrl?.startsWith(
+              '/api/checkout/international/payments/stripe/webhook',
+            )
+          ) {
+            req.rawBody = buf;
+          }
+        },
+      }),
+    );
     app.use(cookieParser());
 
     app.use((req, res, next) => {

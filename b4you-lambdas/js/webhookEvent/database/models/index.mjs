@@ -16,6 +16,8 @@ import { Sales } from './Sales.mjs';
 import { Coupons_sales } from './Coupons_sales.mjs';
 import { Coupons } from './Coupons.mjs';
 import { Affiliates } from './Affiliates.mjs';
+import { Stripe_payment_intents } from './Stripe_payment_intents.mjs';
+import { Stripe_webhook_events } from './Stripe_webhook_events.mjs';
 
 export const models = [
   Commissions,
@@ -36,4 +38,6 @@ export const models = [
   Coupons,
   Coupons_sales,
   Affiliates,
+  Stripe_payment_intents,
+  Stripe_webhook_events,
 ];

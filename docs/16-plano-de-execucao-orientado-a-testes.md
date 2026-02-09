@@ -38,7 +38,34 @@ A execução ocorrerá em fases incrementais e independentes. Cada fase possui c
 
 ---
 
-### FASE 2 — Webhooks e consolidação de estado
+### FASE 2 — Checkout internacional (grafo transacional) + Webhooks
+**Status:** ✔️ CONCLUÍDA · ✔️ GATE DE TESTES SATISFEITO
+**FASE 2A — Grafo transacional no checkout internacional**
+**O que está sendo implementado**
+- Criação de `sales`, `sales_items`, `charges`, `transactions` e relacionamentos no checkout internacional.
+- Status inicial pendente (espelhando Pix/Boleto/Cartão Pagar.me).
+- `provider = stripe` e `provider_id = payment_intent.id` nas entidades de pagamento.
+- Nenhuma alteração no fluxo nacional.
+
+**Como testar**
+- **Teste automatizado**: validar criação dos registros e relacionamentos.
+- **Teste de contrato**: validar campos obrigatórios no payload internacional.
+- **Cenários de idempotência**: mesma `transaction_id` não duplica grafo.
+- **Teste de regressão**: fluxo nacional continua inalterado.
+
+**O que valida sucesso**
+- Grafo transacional criado em estado pendente.
+- `provider`/`provider_id` persistidos corretamente.
+- Idempotência preservada na criação de intentos.
+- Fluxo nacional inalterado.
+
+**O que invalida e exige ajuste**
+- Ausência de qualquer entidade do grafo transacional.
+- Status inicial diferente de pendente.
+- `provider`/`provider_id` ausentes ou incorretos.
+- Qualquer impacto no fluxo nacional.
+
+**FASE 2B — Webhooks e consolidação de estado**
 **O que está sendo implementado**
 - Recebimento de webhooks Stripe.
 - Validação de assinatura.

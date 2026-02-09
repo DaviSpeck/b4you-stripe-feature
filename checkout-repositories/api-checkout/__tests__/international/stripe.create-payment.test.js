@@ -8,17 +8,36 @@ const CreateStripePaymentIntent = require('../../useCases/checkout/international
 
 const StripePaymentIntentsRepository = require('../../repositories/sequelize/StripePaymentIntentsRepository');
 const { incrementPaymentIntentsCreated } = require('../../middlewares/prom');
+const { findSalesStatusByKey } = require('../../status/salesStatus');
+const { findChargeStatusByKey } = require('../../status/chargeStatus');
+const {
+  findTransactionStatusByKey,
+} = require('../../status/transactionStatus');
+const SalesItemsCharges = require('../../database/models/Sales_items_charges');
 
 const mockStripeCreate = jest.fn();
 const mockStripeRetrieve = jest.fn();
+const mockCreateSale = jest.fn();
+const mockCreateCharge = jest.fn();
+const mockCreateSaleItem = jest.fn();
+const mockCreateTransaction = jest.fn();
+const mockCreateSalesItemsTransactions = jest.fn();
+const mockFindStudentByEmail = jest.fn();
+const mockUpdateStudent = jest.fn();
+const mockCreateStudentExecute = jest.fn();
+const mockSalesFeesCalculate = jest.fn();
+const mockTransaction = { afterCommit: jest.fn((cb) => cb()) };
 
-jest.mock('stripe', () =>
-  jest.fn().mockImplementation(() => ({
-    paymentIntents: {
-      create: mockStripeCreate,
-      retrieve: mockStripeRetrieve,
-    },
-  })),
+jest.mock(
+  'stripe',
+  () =>
+    jest.fn().mockImplementation(() => ({
+      paymentIntents: {
+        create: mockStripeCreate,
+        retrieve: mockStripeRetrieve,
+      },
+    })),
+  { virtual: true },
 );
 
 jest.mock('../../repositories/sequelize/StripePaymentIntentsRepository', () => ({
@@ -31,6 +50,44 @@ jest.mock('../../middlewares/prom', () => ({
 }));
 
 jest.mock('../../services/payment/Pagarme', () => jest.fn());
+jest.mock('../../database/controllers/sales', () => ({
+  createSale: (...args) => mockCreateSale(...args),
+}));
+jest.mock('../../database/controllers/charges', () => ({
+  createCharge: (...args) => mockCreateCharge(...args),
+}));
+jest.mock('../../database/controllers/sales_items', () => ({
+  createSaleItem: (...args) => mockCreateSaleItem(...args),
+}));
+jest.mock('../../database/controllers/transactions', () => ({
+  createTransaction: (...args) => mockCreateTransaction(...args),
+}));
+jest.mock('../../database/controllers/sales_items_transactions', () => ({
+  createSalesItemsTransactions: (...args) =>
+    mockCreateSalesItemsTransactions(...args),
+}));
+jest.mock('../../database/controllers/students', () => ({
+  findStudentByEmail: (...args) => mockFindStudentByEmail(...args),
+  updateStudent: (...args) => mockUpdateStudent(...args),
+}));
+jest.mock('../../useCases/common/students/CreateStudent', () =>
+  jest.fn().mockImplementation(() => ({
+    execute: mockCreateStudentExecute,
+  })),
+);
+jest.mock('../../useCases/checkout/sales/SalesFees', () =>
+  jest.fn().mockImplementation(() => ({
+    calculate: mockSalesFeesCalculate,
+  })),
+);
+jest.mock('../../database/models/index', () => ({
+  sequelize: {
+    transaction: async (cb) => cb(mockTransaction),
+  },
+}));
+jest.mock('../../database/models/Sales_items_charges', () => ({
+  create: jest.fn(),
+}));
 
 const buildRes = () => {
   const res = {};
@@ -46,6 +103,36 @@ const basePayload = {
   amount: 1000,
   currency: 'usd',
   payment_method_types: ['card'],
+  id_user: 99,
+  brand: 'visa',
+  installments: 1,
+  student_pays_interest: false,
+  discount: 0,
+  coupon: null,
+  customer: {
+    full_name: 'Jane Doe',
+    email: 'jane@example.com',
+    whatsapp: '5511999999999',
+    document_number: '12345678900',
+    address: { street: 'Main St' },
+    params: { ip: '127.0.0.1' },
+  },
+  items: [
+    {
+      id_product: 10,
+      type: 'main',
+      price: 100,
+      quantity: 1,
+      id_offer: 20,
+      id_classroom: 30,
+      id_affiliate: null,
+      subscription_fee: 0,
+      shipping_price: 0,
+      integration_shipping_company: null,
+      is_upsell: false,
+      warranty: 7,
+    },
+  ],
 };
 
 describe('Stripe international payment intent - Phase 1', () => {
@@ -53,6 +140,18 @@ describe('Stripe international payment intent - Phase 1', () => {
     jest.clearAllMocks();
     process.env.STRIPE_SECRET_KEY = 'sk_test_mock';
     process.env.STRIPE_INTERNATIONAL_ENABLED = 'true';
+    mockFindStudentByEmail.mockResolvedValue(null);
+    mockCreateStudentExecute.mockResolvedValue({
+      student: { id: 123, status: 'pending' },
+    });
+    mockCreateSale.mockResolvedValue({ id: 456 });
+    mockCreateCharge.mockResolvedValue({ id: 789 });
+    mockCreateSaleItem.mockResolvedValue({ id: 321 });
+    mockCreateTransaction.mockResolvedValue({ id: 654 });
+    mockSalesFeesCalculate.mockResolvedValue([
+      { price: 100, psp_cost_fixed_amount: 0, psp_cost_variable_amount: 0 },
+      { price_product: 100 },
+    ]);
   });
 
   it('creates an international payment intent (happy path)', async () => {
@@ -89,7 +188,7 @@ describe('Stripe international payment intent - Phase 1', () => {
       amount: basePayload.amount,
       currency: basePayload.currency,
       status: 'pending',
-    });
+    }, mockTransaction);
     expect(incrementPaymentIntentsCreated).toHaveBeenCalledWith('stripe');
     expect(result).toMatchObject({
       provider: 'stripe',
@@ -127,6 +226,7 @@ describe('Stripe international payment intent - Phase 1', () => {
 
     expect(mockStripeCreate).not.toHaveBeenCalled();
     expect(mockStripeRetrieve).toHaveBeenCalledWith('pi_existing');
+    expect(mockCreateSale).not.toHaveBeenCalled();
     expect(result).toMatchObject({
       provider: 'stripe',
       provider_payment_intent_id: 'pi_existing',
@@ -177,6 +277,153 @@ describe('Stripe international payment intent - Phase 1', () => {
     await createStripePaymentIntentController(req, res);
 
     expect(Pagarme).not.toHaveBeenCalled();
+  });
+
+  it('creates sale, charge, sale items and transactions with pending status', async () => {
+    StripePaymentIntentsRepository.findByTransactionId.mockResolvedValue(null);
+    mockStripeCreate.mockResolvedValue({
+      id: 'pi_123',
+      client_secret: 'secret_123',
+    });
+
+    await new CreateStripePaymentIntent().execute(basePayload);
+
+    const pendingSaleStatus = findSalesStatusByKey('pending').id;
+    const pendingChargeStatus = findChargeStatusByKey('pending').id;
+    const pendingTransactionStatus = findTransactionStatusByKey('pending').id;
+
+    expect(mockCreateSale).toHaveBeenCalledWith(
+      expect.objectContaining({
+        id_student: 123,
+        id_user: basePayload.id_user,
+      }),
+      mockTransaction,
+    );
+    expect(mockCreateCharge).toHaveBeenCalledWith(
+      expect.objectContaining({
+        id_user: basePayload.id_user,
+        id_status: pendingChargeStatus,
+        provider: 'stripe',
+        provider_id: 'pi_123',
+        payment_method: 'credit_card',
+      }),
+      mockTransaction,
+    );
+    expect(mockCreateSaleItem).toHaveBeenCalledWith(
+      expect.objectContaining({
+        id_product: basePayload.items[0].id_product,
+        id_status: pendingSaleStatus,
+        payment_method: 'card',
+      }),
+      mockTransaction,
+    );
+    expect(mockCreateTransaction).toHaveBeenCalledWith(
+      expect.objectContaining({
+        id_status: pendingTransactionStatus,
+      }),
+      mockTransaction,
+    );
+    expect(mockCreateSalesItemsTransactions).toHaveBeenCalled();
+    expect(SalesItemsCharges.create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        id_charge: 789,
+        id_sale_item: 321,
+      }),
+      expect.any(Object),
+    );
+  });
+
+  it('creates relationships correctly for multiple items', async () => {
+    const multiPayload = {
+      ...basePayload,
+      items: [
+        {
+          id_product: 10,
+          type: 'main',
+          price: 100,
+          quantity: 1,
+          id_offer: 20,
+          id_classroom: 30,
+          id_affiliate: null,
+          subscription_fee: 0,
+          shipping_price: 0,
+          integration_shipping_company: null,
+          is_upsell: false,
+          warranty: 7,
+        },
+        {
+          id_product: 11,
+          type: 'upsell',
+          price: 50,
+          quantity: 1,
+          id_offer: 21,
+          id_classroom: null,
+          id_affiliate: 42,
+          subscription_fee: 0,
+          shipping_price: 0,
+          integration_shipping_company: null,
+          is_upsell: true,
+          warranty: 7,
+        },
+      ],
+    };
+
+    mockCreateSaleItem
+      .mockResolvedValueOnce({ id: 1001 })
+      .mockResolvedValueOnce({ id: 1002 });
+    mockCreateTransaction
+      .mockResolvedValueOnce({ id: 500 }) // cost transaction
+      .mockResolvedValueOnce({ id: 601 }) // payment transaction item 1
+      .mockResolvedValueOnce({ id: 602 }); // payment transaction item 2
+    mockSalesFeesCalculate.mockResolvedValue([
+      { price: 150, psp_cost_fixed_amount: 0, psp_cost_variable_amount: 0 },
+      { price_product: 100 },
+      { price_product: 50 },
+    ]);
+    StripePaymentIntentsRepository.findByTransactionId.mockResolvedValue(null);
+    mockStripeCreate.mockResolvedValue({
+      id: 'pi_123',
+      client_secret: 'secret_123',
+    });
+
+    await new CreateStripePaymentIntent().execute(multiPayload);
+
+    expect(mockCreateSaleItem).toHaveBeenNthCalledWith(
+      1,
+      expect.objectContaining({ id_product: 10 }),
+      mockTransaction,
+    );
+    expect(mockCreateSaleItem).toHaveBeenNthCalledWith(
+      2,
+      expect.objectContaining({ id_product: 11 }),
+      mockTransaction,
+    );
+    expect(SalesItemsCharges.create).toHaveBeenNthCalledWith(
+      1,
+      expect.objectContaining({ id_charge: 789, id_sale_item: 1001 }),
+      expect.any(Object),
+    );
+    expect(SalesItemsCharges.create).toHaveBeenNthCalledWith(
+      2,
+      expect.objectContaining({ id_charge: 789, id_sale_item: 1002 }),
+      expect.any(Object),
+    );
+    expect(mockCreateSalesItemsTransactions).toHaveBeenCalledWith(
+      { id_transaction: 500, id_sale_item: 1001 },
+      mockTransaction,
+    );
+    expect(mockCreateSalesItemsTransactions).toHaveBeenCalledWith(
+      { id_transaction: 601, id_sale_item: 1001 },
+      mockTransaction,
+    );
+    expect(mockCreateSalesItemsTransactions).toHaveBeenCalledWith(
+      { id_transaction: 500, id_sale_item: 1002 },
+      mockTransaction,
+    );
+    expect(mockCreateSalesItemsTransactions).toHaveBeenCalledWith(
+      { id_transaction: 602, id_sale_item: 1002 },
+      mockTransaction,
+    );
   });
 
   it('handles concurrent idempotent requests without duplicating intents', async () => {

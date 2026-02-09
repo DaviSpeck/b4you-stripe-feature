@@ -145,11 +145,11 @@
 7. Adotar camada de comunicação com api-checkout compartilhada.
 
 ### Checklist do MVP
-- [ ] Detecção de produto internacional por flag explícita.
-- [ ] Redirecionamento consistente para novo checkout.
-- [ ] Fluxo nacional intacto.
-- [ ] Parâmetros legados mantidos no handoff.
-- [ ] Fallback seguro em caso de falha no redirecionamento.
+- [x] Detecção de produto internacional por flag explícita. **(FASE 5 · Etapa 1)**
+- [x] Redirecionamento consistente para novo checkout. **(FASE 5 · Etapa 1)**
+- [x] Fluxo nacional intacto. **(FASE 5 · Etapa 1)**
+- [x] Parâmetros legados mantidos no handoff. **(FASE 5 · Etapa 1)**
+- [x] Erro controlado sem fallback internacional → nacional. **(FASE 5 · Etapa 1)**
 - [ ] Componentes e mensagens compartilhados com o novo checkout.
 - [ ] Comunicação com api-checkout alinhada ao novo checkout.
 

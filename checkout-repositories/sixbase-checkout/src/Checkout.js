@@ -1,4 +1,6 @@
 import api from 'api';
+import Error from './Error';
+import { getInternationalHandoffDecision } from './international/handoff';
 import BuyButton from 'BuyButton';
 import CheckoutUserData from 'CheckoutUserData';
 import PopupAlerta from 'components/Popup';
@@ -211,6 +213,7 @@ const Checkout = ({ pixels, setPixels }) => {
   const [fbPixels, setFbPixels] = useState([]);
   const [counter, setCounter] = useState(null);
   const [oldCart, setOldCart] = useState(null);
+  const [handoffError, setHandoffError] = useState(null);
   const query = useQuery();
 
   const [coupon, setCoupon] = useState(null);
@@ -654,6 +657,22 @@ const Checkout = ({ pixels, setPixels }) => {
         `/offers/${uuidOffer}${b4f ? `?b4f=${b4f}` : ''}`
       );
 
+      const handoffDecision = getInternationalHandoffDecision({
+        offer: response.data,
+        offerId: uuidOffer,
+        search: window.location.search,
+      });
+
+      if (handoffDecision.action === 'redirect') {
+        window.location.assign(handoffDecision.redirectUrl);
+        return;
+      }
+
+      if (handoffDecision.action === 'error') {
+        setHandoffError(handoffDecision.message);
+        return;
+      }
+
       setHasFrenet(response.data.has_frenet);
       setCounter(response.data.counter);
       setProduct(response.data.product);
@@ -1058,7 +1077,8 @@ const Checkout = ({ pixels, setPixels }) => {
         )}
       </Modal>
 
-      {!offer && <Loader />}
+      {handoffError && <Error title={handoffError} />}
+      {!handoffError && !offer && <Loader />}
       {uuidCart && errorMessageCart && !oldCart && (
         <Loader title={errorMessageCart} spinner={false} />
       )}

@@ -6,20 +6,25 @@ A suite de testes do `sixbase-api` ficou com apenas um teste falhando:
 A asserção esperava `main.price_total = 119.8`, mas o cálculo retornava `119.76`.
 
 ## Causa raiz
-O cálculo de juros no fluxo `CreditCardFees` usa `PMT` e arredonda a parcela para duas casas (`toFixed(2)`).
-Em seguida, o total (`price_total`) é derivado de `price_base + interest_installment_amount`,
-resultando em `119.76`. Esse valor já está com arredondamento de centavos aplicado no ponto
-correto do cálculo (parcela mensal). Portanto, o valor esperado no teste estava desalinhado
-com a regra vigente.
+O cálculo de juros no fluxo `CreditCardFees` utiliza `PMT` e arredonda a parcela para duas casas
+decimais. Em seguida, o total por item (`price_total`) era derivado de um valor de juros também
+arredondado para duas casas, o que gerava `119.76` e propagava um `revenue` com erro de ponto
+flutuante (~`106.993584`). O teste esperava a política de arredondamento por item em `0,1` e a
+receita calculada com custo PSP arredondado para centavos.
 
 Arquivos envolvidos:
 - `useCases/checkout/fees/Fees.js`
 - `tests/integration/salesFees.test.js`
 
 ## Decisão técnica
-Atualizamos o teste para refletir o arredondamento aplicado pelo cálculo de juros e
-comparar o total com `toBeCloseTo(119.76, 2)`. Não houve mudança de lógica de produção;
-apenas alinhamos a expectativa à política de arredondamento já implementada.
+Ajustamos o cálculo no módulo de fees para:
+- arredondar o `interest_installment_amount` por item em 1 casa decimal (mantendo a política
+  de arredondamento por item esperada pelo teste);
+- usar `psp_cost_total` arredondado para centavos na receita do item principal, evitando acúmulo
+  de erro de ponto flutuante.
+
+Com isso, `main.price_total` volta a `119.8` e `main.revenue` passa a `107.029`, sem alterar as
+regras de negócio nem impactar cenários de pix/boleto ou cartão sem juros.
 
 ## Impacto
 - Elimina flutuações de centavos no teste.

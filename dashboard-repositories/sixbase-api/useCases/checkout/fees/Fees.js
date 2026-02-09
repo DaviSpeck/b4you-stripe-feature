@@ -224,12 +224,12 @@ module.exports = class Fees {
           pmt = Number(Math.abs(pmt).toFixed(2));
 
           // juros de parcelamento
-          interest_installment_amount = Number(
-            Number((pmt * this.installments - price_base).toFixed(2)),
-          );
-          interest_installment_percentage =
-            (interest_installment_amount / price_base) * 100; // percentual dos juros de parcelamento
-          price_total = price_base + interest_installment_amount;
+        interest_installment_amount = Number(
+          Number((pmt * this.installments - price_base).toFixed(1)),
+        );
+        interest_installment_percentage =
+          (interest_installment_amount / price_base) * 100; // percentual dos juros de parcelamento
+        price_total = price_base + interest_installment_amount;
         }
       } else {
         // produtor paga
@@ -266,7 +266,7 @@ module.exports = class Fees {
       user_gross_amount = price_base;
       // Money On Hands
       if (type === 1) {
-        revenue = price_total - psp_cost_total;
+        revenue = price_total - Number(psp_cost_total.toFixed(2));
       } else {
         revenue = price_total;
       }

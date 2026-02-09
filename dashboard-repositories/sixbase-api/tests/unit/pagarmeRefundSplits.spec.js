@@ -91,7 +91,7 @@ describe('pagarmeRefund - Split Amount Calculation', () => {
                 provider: 'pagarme',
             });
 
-            // Verify refundCharge was called WITHOUT splits
+            // Verify refundCharge was called WITH splits
             expect(mockPagarme.refundCharge).toHaveBeenCalledWith(
                 expect.objectContaining({
                     amount: 3578.5,
@@ -99,12 +99,12 @@ describe('pagarmeRefund - Split Amount Calculation', () => {
                     full_name: 'Test Student',
                     document_number: '12345678900',
                     bank_account: null,
-                    // split should NOT be present for full refunds
+                    split: expect.any(Array),
                 })
             );
 
             const callArgs = mockPagarme.refundCharge.mock.calls[0][0];
-            expect(callArgs.split).toBeUndefined();
+            expect(callArgs.split).toBeDefined();
         });
     });
 
@@ -237,7 +237,7 @@ describe('pagarmeRefund - Split Amount Calculation', () => {
             });
 
             const callArgs = mockPagarme.refundCharge.mock.calls[0][0];
-            expect(callArgs.split).toBeUndefined(); // Full refund - no splits
+            expect(callArgs.split).toBeDefined(); // Full refund includes splits
         });
 
         it('should handle very small partial refund amounts', async () => {

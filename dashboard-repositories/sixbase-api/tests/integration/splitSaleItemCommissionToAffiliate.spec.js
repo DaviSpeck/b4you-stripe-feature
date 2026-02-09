@@ -1,5 +1,29 @@
 /* eslint-disable max-classes-per-file */
+jest.mock('../../database/models/Affiliates', () => ({ findOne: jest.fn() }));
+jest.mock('../../database/models/Commissions', () => ({
+  update: jest.fn(),
+  create: jest.fn(),
+}));
+jest.mock('../../database/models/Managers', () => ({
+  sequelize: { query: jest.fn() },
+  findOne: jest.fn(),
+}));
+jest.mock('../../database/models/Sales_items', () => ({ update: jest.fn() }));
+jest.mock('../../database/models/SalesMetricsDaily', () => ({
+  decrement: jest.fn(),
+}));
+jest.mock('../../database/models/Suppliers', () => ({ findAll: jest.fn() }));
+jest.mock('../../database/models/Sales_settings', () => ({ findOne: jest.fn() }));
+jest.mock('../../queues/aws', () => ({ add: jest.fn() }));
+
 const SplitSaleItemCommission = require('../../useCases/dashboard/affiliates/SplitSaleItemCommission');
+const Affiliates = require('../../database/models/Affiliates');
+const Commissions = require('../../database/models/Commissions');
+const Managers = require('../../database/models/Managers');
+const SalesMetricsDaily = require('../../database/models/SalesMetricsDaily');
+const Suppliers = require('../../database/models/Suppliers');
+const SalesSettings = require('../../database/models/Sales_settings');
+const aws = require('../../queues/aws');
 
 const saleItemData = {
   id: 640,
@@ -19,10 +43,18 @@ const saleItemData = {
   valid_refund_until: '2022-10-20 13:59:55',
   paid_at: '2022-10-13 13:59:55',
   payment_splited: 0,
+  split_price: 80.0,
+  subscription_fee: 0.0,
+  shipping_price: 0.0,
+  fee_total: 6.8,
+  id_offer: 1,
   credit_card: {
     brand: 'master',
     last_four: '9770',
     expiration_date: '02/2025',
+  },
+  offer: {
+    shipping_type: 1,
   },
   src: null,
   sck: null,
@@ -187,6 +219,14 @@ const saleItemData = {
       original_price: 0.0,
       subscription_fee: 0.0,
       split_price: 0.0,
+    },
+  ],
+  commissions: [
+    {
+      id: 901,
+      id_user: 3,
+      amount: 7.4,
+      id_status: 3,
     },
   ],
   product: {
@@ -448,7 +488,16 @@ const fakeBalanceHistoryRepo = () => {
 };
 
 const fakeDatabaseConfig = () => ({
-  transaction: (cb) => cb(),
+  transaction: async (cb) => {
+    if (typeof cb === 'function') {
+      return cb({});
+    }
+    return {
+      commit: jest.fn(),
+      rollback: jest.fn(),
+      afterCommit: (afterCommitCb) => afterCommitCb(),
+    };
+  },
 });
 
 const fakeSalesItemsTransactionsRepo = () => {
@@ -489,12 +538,9 @@ const makeSut = (data) => {
     data,
     saleItemRepoStub,
     affiliateRepoStub,
-    transactionRepoStub,
     balanceRepoStub,
-    balanceHistoryRepoStub,
     subscriptionRepoStub,
     databaseConfigStub,
-    salesItemsTransactionsStub,
   );
 
   return {
@@ -506,10 +552,46 @@ const makeSut = (data) => {
     balanceHistoryRepoStub,
     subscriptionRepoStub,
     databaseConfigStub,
+    transactionRepoStub,
+    salesItemsTransactionsStub,
   };
 };
 
 describe('testing split sale item to affiliate', () => {
+  beforeEach(() => {
+    Affiliates.findOne.mockResolvedValue({
+      id: 1,
+      id_user: 3,
+      id_product: 2,
+      commission: 30.0,
+      status: 2,
+      subscription_fee: 0,
+      subscription_fee_commission: 0.0,
+      commission_all_charges: 0,
+      subscription_fee_only: 0,
+      user: {
+        id: 3,
+        user_sale_settings: {
+          release_billet: 1,
+          release_credit_card: 14,
+          release_pix: 0,
+        },
+      },
+    });
+    Managers.sequelize.query.mockResolvedValue(null);
+    Managers.findOne.mockResolvedValue(null);
+    Suppliers.findAll.mockResolvedValue([]);
+    SalesSettings.findOne.mockResolvedValue({
+      release_billet: 1,
+      release_credit_card: 14,
+      release_pix: 0,
+    });
+    Commissions.update.mockResolvedValue(null);
+    Commissions.create.mockImplementation((data) => ({ ...data, id: 123 }));
+    SalesMetricsDaily.decrement.mockResolvedValue(null);
+    aws.add.mockResolvedValue(null);
+  });
+
   it('should return 400 if sale item is not found', async () => {
     const data = {
       affiliate_uuid: 'any_affiliate',
@@ -625,7 +707,7 @@ describe('testing split sale item to affiliate', () => {
 
     const transactions = await sut.execute();
     const affiliateCommission = transactions.find((t) => t.id_role === 3);
-    expect(affiliateCommission.user_net_amount).toBeCloseTo(
+    expect(affiliateCommission.amount).toBeCloseTo(
       (paymentTransaction.split_price * affiliate.commission) / 100,
     );
   });
@@ -672,12 +754,11 @@ describe('testing split sale item to affiliate', () => {
 
     const transactions = await sut.execute();
     const affiliateCommission = transactions.find((t) => t.id_role === 3);
-    expect(affiliateCommission.user_net_amount).toBeCloseTo(
+    expect(affiliateCommission.amount).toBeCloseTo(
       (paymentTransaction.split_price * affiliate.commission) / 100,
     );
     expect(balance).toBeCloseTo(
-      commissionTransaction.user_net_amount -
-        affiliateCommission.user_net_amount,
+      commissionTransaction.user_net_amount - affiliateCommission.amount,
     );
   });
 
@@ -736,27 +817,13 @@ describe('testing split sale item to affiliate', () => {
       sale_item_uuid: 'valid_sale_item',
     };
 
-    const { sut, transactionRepoStub } = makeSut(data);
-
-    let transactionData;
-    jest
-      .spyOn(transactionRepoStub, 'create')
-      // eslint-disable-next-line no-unused-vars
-      .mockImplementationOnce((d) => {
-        d.release_date = new Date();
-        return d;
-      });
-
-    jest
-      .spyOn(transactionRepoStub, 'update')
-      // eslint-disable-next-line no-unused-vars
-      .mockImplementation((w, d) => {
-        transactionData = d;
-        return d;
-      });
+    const { sut } = makeSut(data);
+    const commissionsSpy = jest.spyOn(Commissions, 'update');
 
     await sut.execute();
-    expect(transactionData.released).toBe(true);
-    expect(transactionData.id_status).toBe(2);
+    expect(commissionsSpy).toHaveBeenCalledWith(
+      { id_status: 3 },
+      { where: { id: 123 } },
+    );
   });
 });

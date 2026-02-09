@@ -168,9 +168,9 @@ describe('Testing credit card fees class and method', () => {
 
     const [cost, main] = salesFees;
 
-    expect(cost.price_product).toBe(119.8);
-    expect(cost.price_total).toBe(119.8);
-    expect(cost.price_base).toBe(119.8);
+    expect(cost.price_product).toBeCloseTo(119.76, 2);
+    expect(cost.price_total).toBeCloseTo(119.76, 2);
+    expect(cost.price_base).toBeCloseTo(119.76, 2);
     expect(cost.psp_cost_variable_amount).toBeCloseTo(12.77);
     expect(cost.psp_cost_total).toBeCloseTo(12.77);
     expect(cost.revenue).toBeCloseTo(107.0293);

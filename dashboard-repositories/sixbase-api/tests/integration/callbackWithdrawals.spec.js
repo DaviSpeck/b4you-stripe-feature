@@ -1,6 +1,11 @@
 /* eslint-disable max-classes-per-file */
+jest.mock('../../database/models/ReferralBalance', () => ({
+  increment: jest.fn(),
+}));
+
 const CallbackWithdrawal = require('../../useCases/callbacks/CallbackWithdrawals');
 const callbackParsers = require('../../utils/callbackParses');
+const ReferralBalance = require('../../database/models/ReferralBalance');
 
 jest.mock('../../utils/callbackParses');
 
@@ -128,6 +133,10 @@ describe('Testing withdrawal callback', () => {
         label: 'Pago',
       },
     });
+  });
+
+  beforeEach(() => {
+    ReferralBalance.increment.mockResolvedValue(null);
   });
 
   it('should throw if payment service withdrawal not found', async () => {

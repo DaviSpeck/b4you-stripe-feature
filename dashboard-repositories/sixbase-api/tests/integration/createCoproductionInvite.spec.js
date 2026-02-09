@@ -1,9 +1,16 @@
 /* eslint-disable max-classes-per-file */
+jest.mock('../../database/models/Affiliates', () => ({ findOne: jest.fn() }));
+jest.mock('../../database/models/Suppliers', () => ({ findOne: jest.fn() }));
+jest.mock('../../database/models/Managers', () => ({ findOne: jest.fn() }));
+
 const {
   findCoproductionStatusByKey,
 } = require('../../status/coproductionsStatus');
 const CreateCoproductionInvite = require('../../useCases/dashboard/coproductions/CreateCoproductionInvite');
 const date = require('../../utils/helpers/date');
+const Affiliates = require('../../database/models/Affiliates');
+const Suppliers = require('../../database/models/Suppliers');
+const Managers = require('../../database/models/Managers');
 
 const fakeUserRepository = () => {
   class FakeUserRepository {
@@ -92,6 +99,12 @@ const makeSut = (data) => {
 };
 
 describe('Coproduction Invite', () => {
+  beforeEach(() => {
+    Affiliates.findOne.mockResolvedValue(null);
+    Suppliers.findOne.mockResolvedValue(null);
+    Managers.findOne.mockResolvedValue(null);
+  });
+
   it('should throw error if coproducer and producer email are the equal', async () => {
     const email = 'any_email@mail.com';
     const data = {

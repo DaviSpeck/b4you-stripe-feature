@@ -51,5 +51,7 @@ Entregar um fluxo internacional mínimo viável com Stripe que suporte:
 - **32-etapa-3-preparatorio-sem-execucao.md**: estrutura preparatória da FASE 5 · Etapa 3 (sem execução).
 - **33-execucao-etapa-3-governanca-fail-safe.md**: execução da FASE 5 · Etapa 3 (governança + fail-safe).
 - **34-encerramento-fase-5.md**: encerramento formal da FASE 5.
+- **35-transicao-fases-finais-operacao-internacional.md**: transição formal para fases finais de operação internacional (pós-FASE 5).
+- **36-ponto-controle-encerramento-checkout-e-entrada-execucao-operacional.md**: ponto de controle técnico para entrada em execução operacional pós-checkout.
 
 > Nota de governança: o **dashboard** é o canal de gestão da feature após liberação (uso por produtores), enquanto o **backoffice** permanece como canal interno da B4You para configurar produtos/ofertas internacionais e habilitar a integração do checkout.

@@ -1,6 +1,7 @@
 const validateDTO = require('../../middlewares/validate-dto');
 const createStripePaymentIntentDTO = require('../../dto/international/createStripePaymentIntent');
 const stripeFeatureFlag = require('../../middlewares/stripe-feature-flag');
+const readStripeFeatureFlag = require('../../services/feature-flags/read-stripe-feature-flag');
 const {
   createStripePaymentIntentController,
 } = require('../../controllers/checkout/international');
@@ -45,6 +46,7 @@ jest.mock('../../repositories/sequelize/StripePaymentIntentsRepository', () => (
   findByTransactionId: jest.fn(),
 }));
 
+jest.mock('../../services/feature-flags/read-stripe-feature-flag', () => jest.fn());
 jest.mock('../../middlewares/prom', () => ({
   incrementPaymentIntentsCreated: jest.fn(),
 }));
@@ -138,6 +140,7 @@ const basePayload = {
 describe('Stripe international payment intent - Phase 1', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    readStripeFeatureFlag.mockResolvedValue({ enabled: true, source: 'database', reason: null });
     process.env.STRIPE_SECRET_KEY = 'sk_test_mock';
     process.env.STRIPE_INTERNATIONAL_ENABLED = 'true';
     mockFindStudentByEmail.mockResolvedValue(null);
@@ -198,8 +201,9 @@ describe('Stripe international payment intent - Phase 1', () => {
     });
   });
 
-  it('blocks creation when feature flag is disabled', async () => {
-    process.env.STRIPE_INTERNATIONAL_ENABLED = 'false';
+  it('blocks creation when feature flag is disabled in database source', async () => {
+    process.env.STRIPE_INTERNATIONAL_ENABLED = '';
+    readStripeFeatureFlag.mockResolvedValue({ enabled: false, source: 'database', reason: 'stripe_international_disabled' });
 
     const req = { body: basePayload };
     const res = buildRes();
@@ -209,7 +213,60 @@ describe('Stripe international payment intent - Phase 1', () => {
 
     expect(res.status).toHaveBeenCalledWith(403);
     expect(res.send).toHaveBeenCalledWith({
-      message: 'Stripe internacional desabilitado',
+      message: 'Stripe internacional indisponível',
+      reason: 'stripe_international_disabled',
+    });
+    expect(next).not.toHaveBeenCalled();
+  });
+
+  it('blocks creation with fail-safe when feature flag response is inconsistent', async () => {
+    readStripeFeatureFlag.mockResolvedValue({ enabled: false, source: 'fail-safe', reason: 'flag_inconsistent' });
+
+    const req = { body: basePayload };
+    const res = buildRes();
+    const next = jest.fn();
+
+    await stripeFeatureFlag(req, res, next);
+
+    expect(res.status).toHaveBeenCalledWith(403);
+    expect(res.send).toHaveBeenCalledWith({
+      message: 'Stripe internacional indisponível',
+      reason: 'flag_inconsistent',
+    });
+    expect(next).not.toHaveBeenCalled();
+  });
+
+  it('blocks creation with fail-safe when backoffice is unavailable', async () => {
+    readStripeFeatureFlag.mockResolvedValue({ enabled: false, source: 'fail-safe', reason: 'backoffice_unavailable' });
+
+    const req = { body: basePayload };
+    const res = buildRes();
+    const next = jest.fn();
+
+    await stripeFeatureFlag(req, res, next);
+
+    expect(res.status).toHaveBeenCalledWith(403);
+    expect(res.send).toHaveBeenCalledWith({
+      message: 'Stripe internacional indisponível',
+      reason: 'backoffice_unavailable',
+    });
+    expect(next).not.toHaveBeenCalled();
+  });
+
+  it('blocks creation when env and backoffice flags are inconsistent', async () => {
+    process.env.STRIPE_INTERNATIONAL_ENABLED = 'false';
+    readStripeFeatureFlag.mockResolvedValue({ enabled: true, source: 'database', reason: null });
+
+    const req = { body: basePayload };
+    const res = buildRes();
+    const next = jest.fn();
+
+    await stripeFeatureFlag(req, res, next);
+
+    expect(res.status).toHaveBeenCalledWith(403);
+    expect(res.send).toHaveBeenCalledWith({
+      message: 'Stripe internacional indisponível',
+      reason: 'flag_inconsistent',
     });
     expect(next).not.toHaveBeenCalled();
   });

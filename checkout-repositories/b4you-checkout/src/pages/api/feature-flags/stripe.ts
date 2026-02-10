@@ -1,13 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { apiExternal } from "@/services/axios";
 
-const resolveFlagEndpoint = () => {
-  const explicit = process.env.BACKOFFICE_FEATURE_FLAG_URL;
-  if (explicit) return explicit;
-
-  const base = process.env.BACKOFFICE_BASE_URL;
-  if (!base) return null;
-
-  return `${base.replace(/\/$/, "")}/feature-flags/stripe`;
+type StripeFeatureFlagResponse = {
+  enabled?: unknown;
+  source?: string;
+  reason?: string;
 };
 
 export default async function handler(
@@ -22,36 +19,26 @@ export default async function handler(
     });
   }
 
-  const endpoint = resolveFlagEndpoint();
-
-  if (!endpoint) {
-    return res.status(200).json({
-      enabled: false,
-      source: "fail-safe",
-      reason: "backoffice_unavailable",
-    });
-  }
-
   try {
-    const response = await fetch(endpoint, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await apiExternal.get<StripeFeatureFlagResponse>(
+      "/feature-flags/stripe",
+      { timeout: 3000 },
+    );
 
-    if (!response.ok) {
+    const data = response.data;
+
+    if (typeof data?.enabled !== "boolean") {
       return res.status(200).json({
         enabled: false,
         source: "fail-safe",
-        reason: "backoffice_unavailable",
+        reason: "flag_inconsistent",
       });
     }
 
-    const data = (await response.json()) as { enabled?: boolean };
-
     return res.status(200).json({
-      enabled: Boolean(data?.enabled),
-      source: "backoffice",
+      enabled: data.enabled,
+      source: data.source ?? "database",
+      ...(data.reason ? { reason: data.reason } : {}),
     });
   } catch (error) {
     return res.status(200).json({

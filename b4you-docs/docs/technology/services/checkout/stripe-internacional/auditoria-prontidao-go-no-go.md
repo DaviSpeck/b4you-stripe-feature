@@ -36,24 +36,22 @@ O conjunto está coerente no eixo principal do programa:
 
 ---
 
-## Ação 2 — Checklist de prontidão para execução das fases 6–8
+## Ação 2 — Checklist de prontidão para execução das fases 7–8 (após encerramento da FASE 6)
 
 ## Fase 6 — Backoffice (produto internacional)
+
+### Status de auditoria
+- **Concluída** no escopo aprovado de governança internacional.
 
 ### Já está pronto
 - decisão formal de que checkout não é o gargalo atual;
 - governança técnica de habilitação já consolidada no escopo encerrado;
 - regra documental de não reabertura de checkout.
+- endpoints de governança internacional e trilha auditável por produtor.
+- bloqueio backend de criação internacional sem habilitação formal.
 
-### Precisa existir antes de começar
-- definição institucional do que caracteriza produto internacional;
-- validações mínimas obrigatórias para evitar produto internacional inválido;
-- clareza de vínculo entre classificação de produto internacional e governança de habilitação.
-
-### Bloqueia execução se faltar
-- ausência de definição oficial de produto internacional;
-- ausência de validações mínimas formalizadas;
-- ausência de trilha auditável de decisão de criação/habilitação.
+### Registro de encerramento
+- A fase permanece limitada a governança/elegibilidade e não implica operação internacional completa para todos os produtores.
 
 ---
 
@@ -101,10 +99,10 @@ O conjunto está coerente no eixo principal do programa:
 **Sim.** A base documental afirma encerramento técnico, ausência de pendência de checkout e classificação de novas demandas como evolução futura.
 
 ### 2) O que impede hoje a operação internacional para produtores?
-Faltam os domínios de habilitação operacional: produto internacional governado no Backoffice, operação clara na Dashboard e política de rollout/comunicação em nível executivo.
+Com a FASE 6 encerrada, faltam os domínios de operação e escala: operação clara na Dashboard (FASE 7) e política de rollout/comunicação em nível executivo (FASE 8).
 
 ### 3) Qual é o próximo domínio correto de investimento?
-**Backoffice (Fase 6)**, seguido de Dashboard (Fase 7) e Operação/Rollout/Comunicação (Fase 8), sem retrabalho de checkout.
+**Dashboard (Fase 7)**, seguido de Operação/Rollout/Comunicação (Fase 8), sem retrabalho de checkout.
 
 ### 4) Quais decisões precisam obrigatoriamente de fórum executivo antes de qualquer execução?
 - critérios de rollout por produtor/segmento;

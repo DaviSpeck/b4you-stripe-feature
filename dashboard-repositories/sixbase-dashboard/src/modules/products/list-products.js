@@ -24,6 +24,9 @@ const formatIcon = (type) => {
   return <i class='bx bx-credit-card-alt'></i>;
 };
 
+const formatScope = (scope) =>
+  scope === 'international' ? 'Internacional' : 'Nacional';
+
 const PageProductsList = () => {
   const [modalShow, setModalShow] = useState(false);
   const [products, setProducts] = useState([]);
@@ -132,6 +135,17 @@ const PageProductsList = () => {
                         </div>
                         <div class='content p-3'>
                           <div class='label mt-0'>{product.name}</div>
+                          <div className='text mt-1 d-flex flex-wrap scope-tags'>
+                            <span className='scope-pill mr-1'>
+                              Operação: {formatScope(product.operation_scope)}
+                            </span>
+                            <span className='scope-pill mr-1'>
+                              Moeda: {product.currency_code || 'BRL'}
+                            </span>
+                            <span className='scope-pill'>
+                              Adquirente: {product.acquirer_key || 'pagarme'}
+                            </span>
+                          </div>
                           <div class='text d-flex justify-content-end'>
                             {product.payment_type === 'single'
                               ? 'Único'
@@ -306,6 +320,9 @@ export const ModalNewCourse = ({ modalShow, setModalShow, handleClose }) => {
           <Col md={6}>
             <div className='form-group'>
               <label htmlFor='operation_scope'>Operação</label>
+              <small className='d-block text-muted mb-1'>
+                Nacional (BRL / pagarme) ou Internacional (USD / stripe).
+              </small>
               <Form.Control
                 as='select'
                 name='operation_scope'
@@ -321,6 +338,9 @@ export const ModalNewCourse = ({ modalShow, setModalShow, handleClose }) => {
           <Col md={6}>
             <div className='form-group'>
               <label htmlFor='currency_code'>Moeda</label>
+              <small className='d-block text-muted mb-1'>
+                Defina a moeda de venda conforme a operação selecionada.
+              </small>
               <Form.Control
                 as='select'
                 name='currency_code'
@@ -336,6 +356,9 @@ export const ModalNewCourse = ({ modalShow, setModalShow, handleClose }) => {
           <Col md={6}>
             <div className='form-group'>
               <label htmlFor='acquirer_key'>Adquirente</label>
+              <small className='d-block text-muted mb-1'>
+                Defina o adquirente de acordo com o escopo operacional.
+              </small>
               <Form.Control
                 as='select'
                 name='acquirer_key'

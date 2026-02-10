@@ -85,6 +85,10 @@ const InternationalGovernanceCard = ({ userUuid }) => {
     <Card style={{ height: '100%' }}>
       <CardBody>
         <h6 className="mb-1">Governança Internacional</h6>
+        <small className="text-muted d-block mb-1">
+          Esta seção controla apenas elegibilidade internacional (Stripe), sem
+          alterar o fluxo nacional.
+        </small>
         {loading ? (
           <div className="text-center py-2">
             <Spinner size="sm" color="primary" />
@@ -105,13 +109,13 @@ const InternationalGovernanceCard = ({ userUuid }) => {
                     }))
                   }
                 >
-                  <option value="blocked">blocked</option>
-                  <option value="enabled">enabled</option>
+                  <option value="blocked">Bloqueado</option>
+                  <option value="enabled">Habilitado</option>
                 </Input>
               </Col>
 
               <Col xs="12" className="mb-1">
-                <FormGroup switch className="mb-0">
+                <FormGroup className="mb-0 form-switch">
                   <Input
                     aria-label="Stripe internacional habilitada"
                     type="switch"
@@ -128,9 +132,9 @@ const InternationalGovernanceCard = ({ userUuid }) => {
               </Col>
 
               <Col xs="12" className="mb-1">
-                <Label className="mb-0">Rules (JSON)</Label>
+                <Label className="mb-0">Regras internacionais (JSON)</Label>
                 <Input
-                  aria-label="Rules (JSON)"
+                  aria-label="Regras internacionais (JSON)"
                   type="textarea"
                   rows="4"
                   value={rulesText}

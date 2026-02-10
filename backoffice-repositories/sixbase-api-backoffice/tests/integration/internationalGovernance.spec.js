@@ -4,8 +4,16 @@ const {
 } = require('../fixtures/auth.fixtures');
 
 jest.mock('../../database/models/Users', () => ({
+  init: jest.fn(() => ({ associate: jest.fn() })),
+  associate: jest.fn(),
   findOne: jest.fn(),
   update: jest.fn(),
+}));
+
+jest.mock('../../database/models', () => ({
+  sequelize: {
+    query: jest.fn(),
+  },
 }));
 
 jest.mock('../../database/controllers/logs_backoffice', () => ({

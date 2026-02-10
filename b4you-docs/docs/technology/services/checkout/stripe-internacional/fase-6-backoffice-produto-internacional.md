@@ -1,11 +1,14 @@
 ---
-title: Stripe Internacional na B4You — FASE 6 (Backoffice: Governança de Elegibilidade e Regras)
+title: "Stripe Internacional na B4You — FASE 6 (Backoffice: Governança de Elegibilidade e Regras)"
 ---
 
 # Stripe Internacional na B4You — FASE 6 (Backoffice)
 
 ## Objetivo
 Registrar a implementação técnica real da FASE 6: Backoffice como camada de governança institucional para elegibilidade internacional de produtor e regras condicionais da Stripe.
+
+## Status
+FASE 6 concluída no escopo aprovado de governança/elegibilidade.
 
 ---
 
@@ -77,3 +80,7 @@ A próxima fase deverá implementar na Dashboard:
 3. operação orientada por regras condicionais já persistidas.
 
 Regra final: execução sem decisão formal continua proibida.
+
+## Declaração de limite de negócio
+- A FASE 6 não representa liberação internacional geral para todos os produtores.
+- A liberação continua por produtor, condicionada à governança formal do Backoffice.

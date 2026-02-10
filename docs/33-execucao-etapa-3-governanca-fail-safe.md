@@ -6,26 +6,27 @@
 ---
 
 ## 1) Escopo executado
-- Governança centralizada da feature flag internacional com backoffice como fonte de verdade.
+- Governança centralizada da feature flag internacional com **leitura direta da base de dados compartilhada** como fonte de verdade operacional.
 - Comportamento fail-safe determinístico para inconsistências de habilitação.
-- Bloqueio do fluxo internacional quando houver inconsistência de flag.
+- Bloqueio do fluxo internacional quando houver inconsistência de flag ou indisponibilidade da fonte de verdade.
 - Preservação explícita do fluxo nacional (sem alteração de contrato/estado/pós-venda).
 
 ---
 
 ## 2) Evidências de implementação
-- `api-checkout` passou a resolver a habilitação internacional por leitura de backoffice e bloquear em fail-safe quando indisponível/inconsistente.
-- `api-checkout` registra motivo auditável de bloqueio (`flag_inconsistent` / `backoffice_unavailable`).
-- `b4you-checkout` passou a bloquear em fail-safe quando o payload da feature flag vier inconsistente.
+- `api-checkout` passou a resolver a habilitação internacional por leitura direta da base compartilhada (sem comunicação HTTP entre APIs).
+- `api-checkout` registra motivo auditável de bloqueio (`flag_inconsistent` / `backoffice_unavailable` / `stripe_international_disabled`).
+- `api-checkout` expõe endpoint interno de leitura de flag para o checkout (`/api/checkout/feature-flags/stripe`) com resposta derivada da mesma fonte de verdade.
+- `b4you-checkout` consome a flag via `api-checkout`, mantendo fail-safe para payload inconsistente.
 
 ---
 
 ## 3) Evidências de teste (determinístico, sem API externa real)
-- Suíte automatizada de `api-checkout` validando:
-  - bloqueio com flag desabilitada no backoffice;
+- Suítes automatizadas de `api-checkout` validando:
+  - bloqueio com flag desabilitada na fonte de verdade;
   - bloqueio fail-safe por payload inconsistente;
-  - bloqueio fail-safe por indisponibilidade de backoffice;
-  - bloqueio por inconsistência entre ambiente e backoffice.
+  - bloqueio fail-safe por indisponibilidade/erro de acesso à fonte de verdade;
+  - bloqueio por inconsistência entre env e fonte de verdade.
 
 ---
 

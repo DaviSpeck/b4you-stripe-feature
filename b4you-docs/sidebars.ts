@@ -74,6 +74,18 @@ const sidebars: SidebarsConfig = {
                 },
                 'technology/services/checkout/multiacquirer-service',
                 'technology/services/checkout/testing-multi-acquirer',
+                {
+                  type: 'category',
+                  label: 'Stripe Internacional',
+                  items: [
+                    'technology/services/checkout/stripe-internacional/overview',
+                    'technology/services/checkout/stripe-internacional/timeline-status',
+                    'technology/services/checkout/stripe-internacional/governanca-pos-venda',
+                    'technology/services/checkout/stripe-internacional/pendencias-proximos-passos',
+                    'technology/services/checkout/stripe-internacional/glossario',
+                    'technology/services/checkout/stripe-internacional/matriz-auditoria',
+                  ],
+                },
               ],
             },
             {

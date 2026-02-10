@@ -1,5 +1,5 @@
 ---
-title: Stripe Internacional na B4You — FASE 6 (Backoffice: Governança de Elegibilidade e Regras)
+title: "Stripe Internacional na B4You — FASE 6 (Backoffice: Governança de Elegibilidade e Regras)"
 ---
 
 # Stripe Internacional na B4You — FASE 6 (Backoffice)

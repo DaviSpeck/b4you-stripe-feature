@@ -103,7 +103,7 @@ O projeto **não nasceu pronto**. Ele foi construído por blocos, com fechamento
 ## 9) Status Atual do Projeto
 
 ### O que está 100% concluído
-- integração internacional no escopo aprovado;
+- integração técnica internacional no escopo aprovado;
 - convergência de estados internos para operação;
 - governança por feature flag com fail-safe obrigatório;
 - trilha documental de fases e encerramentos formais.

@@ -47,10 +47,18 @@ export default async function handler(
       });
     }
 
-    const data = (await response.json()) as { enabled?: boolean };
+    const data = (await response.json()) as { enabled?: unknown };
+
+    if (typeof data?.enabled !== "boolean") {
+      return res.status(200).json({
+        enabled: false,
+        source: "fail-safe",
+        reason: "flag_inconsistent",
+      });
+    }
 
     return res.status(200).json({
-      enabled: Boolean(data?.enabled),
+      enabled: data.enabled,
       source: "backoffice",
     });
   } catch (error) {

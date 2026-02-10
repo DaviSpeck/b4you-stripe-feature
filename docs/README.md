@@ -49,5 +49,6 @@ Entregar um fluxo internacional mínimo viável com Stripe que suporte:
 - **ADR-001-checkout-internacional-como-variacao.md**: decisão arquitetural do checkout internacional como variação.
 - **31-encerramento-etapa-2-fase-5.md**: encerramento formal da FASE 5 · Etapa 2 (pós-venda / thank-you).
 - **32-etapa-3-preparatorio-sem-execucao.md**: estrutura preparatória da FASE 5 · Etapa 3 (sem execução).
+- **33-execucao-etapa-3-governanca-fail-safe.md**: execução da FASE 5 · Etapa 3 (governança + fail-safe).
 
 > Nota de governança: o **dashboard** é o canal de gestão da feature após liberação (uso por produtores), enquanto o **backoffice** permanece como canal interno da B4You para configurar produtos/ofertas internacionais e habilitar a integração do checkout.

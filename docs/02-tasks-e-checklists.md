@@ -119,9 +119,9 @@
 - [ ] Retry idempotente sem criação de nova transação.
 - [x] Thank you page internacional confirma pagamento apenas com `approved`. **(convergência Etapa 2)**
 - [x] `refunded` e `dispute` tratados como informativos. **(convergência Etapa 2)**
-- [ ] Feature flag com fail-safe (inconsistência → bloquear internacional).
-- [ ] Testes automatizados cobrindo estados e flag.
-- [ ] Garantia explícita de não impacto no fluxo nacional.
+- [x] Feature flag com fail-safe (inconsistência → bloquear internacional). **(FASE 5 · Etapa 3)**
+- [x] Testes automatizados cobrindo estados e flag. **(FASE 5 · Etapa 3)**
+- [x] Garantia explícita de não impacto no fluxo nacional. **(FASE 5 · Etapa 3)**
 
 ### Ordem sugerida
 1. UI internacional.

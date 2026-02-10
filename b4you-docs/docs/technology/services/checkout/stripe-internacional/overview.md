@@ -145,6 +145,9 @@ Sem esta fase, não há base organizacional confiável para liberar operação i
 - vínculo com governança de habilitação está explícito e auditável;
 - documentação operacional aprovada para uso interno.
 
+### Documento de execução da fase
+- `fase-6-backoffice-produto-internacional.md`
+
 ---
 
 ## Fase 7 — Produto Internacional (Dashboard)

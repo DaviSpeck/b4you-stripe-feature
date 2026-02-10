@@ -262,6 +262,25 @@ class Users extends Sequelize.Model {
           allowNull: false,
           defaultValue: false,
         },
+        international_status: {
+          type: Sequelize.ENUM('enabled', 'blocked'),
+          allowNull: false,
+          defaultValue: 'blocked',
+        },
+        international_stripe_enabled: {
+          type: Sequelize.BOOLEAN,
+          allowNull: false,
+          defaultValue: false,
+        },
+        international_rules: {
+          type: Sequelize.JSON,
+          allowNull: false,
+          defaultValue: {},
+        },
+        international_status_updated_at: {
+          type: Sequelize.DATE,
+          allowNull: true,
+        },
         id_manager: {
           type: Sequelize.BIGINT,
           allowNull: true,

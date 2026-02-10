@@ -261,6 +261,16 @@ const userEventsTypes = [
     key: 'upsell-native-disabled',
     label: 'Desabilitou Upsell Nativo',
   },
+  {
+    id: 49,
+    key: 'international-governance-enabled',
+    label: 'Habilitou governança internacional do produtor',
+  },
+  {
+    id: 50,
+    key: 'international-governance-blocked',
+    label: 'Bloqueou governança internacional do produtor',
+  },
 ];
 
 const findUserEventType = (role) => {

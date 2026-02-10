@@ -1644,6 +1644,135 @@ module.exports.unblockAwardEligibility = async (req, res, next) => {
   }
 };
 
+
+module.exports.getInternationalGovernance = async (req, res, next) => {
+  const {
+    params: { userUuid },
+  } = req;
+
+  try {
+    const user = await Users.findOne({
+      raw: true,
+      attributes: [
+        'uuid',
+        'international_status',
+        'international_stripe_enabled',
+        'international_rules',
+        'international_status_updated_at',
+        'international_status_updated_by',
+      ],
+      where: { uuid: userUuid },
+    });
+
+    if (!user) throw ApiError.badRequest('Usuário não encontrado');
+
+    return res.status(200).send(user);
+  } catch (error) {
+    if (error instanceof ApiError) return res.status(error.code).send(error);
+    return next(
+      ApiError.internalservererror(
+        `Internal Server Error, ${Object.keys(
+          req.route.methods,
+        )[0].toUpperCase()}: ${req.originalUrl}`,
+        error,
+      ),
+    );
+  }
+};
+
+module.exports.updateInternationalGovernance = async (req, res, next) => {
+  const {
+    params: { userUuid },
+    body: {
+      status,
+      international_stripe_enabled,
+      rules = {},
+      reason,
+    },
+    user: { id: id_user_backoffice },
+  } = req;
+
+  try {
+    const ip_address =
+      req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+    const user_agent = req.get('User-Agent');
+
+    const user = await Users.findOne({
+      where: { uuid: userUuid },
+      attributes: [
+        'id',
+        'uuid',
+        'international_status',
+        'international_stripe_enabled',
+        'international_rules',
+      ],
+    });
+
+    if (!user) throw ApiError.badRequest('Usuário não encontrado');
+
+    const previousState = {
+      status: user.international_status,
+      international_stripe_enabled: user.international_stripe_enabled,
+      rules: user.international_rules || {},
+    };
+
+    const featurePayload = {
+      enabled: status === 'enabled' && Boolean(international_stripe_enabled),
+      status,
+      stripe_enabled: Boolean(international_stripe_enabled),
+      rules: rules || {},
+      updated_at: DateHelper().utc().toISOString(),
+    };
+
+    await Users.update(
+      {
+        international_status: status,
+        international_stripe_enabled: Boolean(international_stripe_enabled),
+        international_rules: rules || {},
+        international_status_updated_at: new Date(),
+        international_status_updated_by: id_user_backoffice,
+      },
+      { where: { id: user.id } },
+    );
+
+    const eventKey =
+      status === 'enabled'
+        ? 'international-governance-enabled'
+        : 'international-governance-blocked';
+
+    await createLogBackoffice({
+      id_user_backoffice,
+      id_event: findUserEventTypeByKey(eventKey).id,
+      params: {
+        user_agent,
+        reason,
+        rule_applied: rules || {},
+        feature_flag: featurePayload,
+        old_state: previousState,
+        new_state: {
+          status,
+          international_stripe_enabled: Boolean(international_stripe_enabled),
+          rules: rules || {},
+        },
+      },
+      ip_address,
+      id_user: user.id,
+    });
+
+    return res.sendStatus(200);
+  } catch (error) {
+    if (error instanceof ApiError) return res.status(error.code).send(error);
+    return next(
+      ApiError.internalservererror(
+        `Internal Server Error, ${Object.keys(
+          req.route.methods,
+        )[0].toUpperCase()}: ${req.originalUrl}`,
+        error,
+      ),
+    );
+  }
+};
+
 module.exports.getUpsellNative = async (req, res, next) => {
   const {
     params: { userUuid },

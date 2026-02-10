@@ -42,6 +42,7 @@ const DeleteCover = require('../../useCases/dashboard/products/images/DeleteCove
 const DeleteEbookCover = require('../../useCases/dashboard/products/images/DeleteEbookCover');
 const ClassroomsRepository = require('../../repositories/sequelize/ClassroomsRepository');
 const ProductAffiliateSettingsRepository = require('../../repositories/sequelize/ProductsAffiliateSettingsRepository');
+const UserRepository = require('../../repositories/sequelize/UserRepository');
 const {
   findAffiliateStatusByKey,
   findAffiliateStatus,
@@ -342,6 +343,7 @@ const createNewProductController = async (req, res, next) => {
       ProductsRepository,
       ClassroomsRepository,
       ProductAffiliateSettingsRepository,
+      UserRepository,
     ).save({ ...body, id_user });
     return res.status(200).send(new SerializeGeneralProduct(product).adapt());
   } catch (error) {

@@ -43,7 +43,7 @@ Concentrar, em formato auditável, os elementos centrais da iniciativa sem ambig
 4. Idempotência e deduplicação aplicadas ao ciclo de eventos.
 
 ## Status consolidado
-1. Núcleo internacional entregue no escopo aprovado.
+1. Núcleo técnico internacional entregue no escopo aprovado (checkout + governança + pós-venda no limite formal).
 2. Governança/fail-safe implementados no modelo autorizado.
 3. Pós-venda convergido para estados internos nos cenários cobertos.
 4. Pendências de negócio ainda existentes para evolução estratégica.

@@ -89,6 +89,7 @@ const sidebars: SidebarsConfig = {
                     'technology/services/checkout/stripe-internacional/faq-executivo-tecnico',
                     'technology/services/checkout/stripe-internacional/estado-atual-fases-finais',
                     'technology/services/checkout/stripe-internacional/rastreabilidade-execucao',
+                    'technology/services/checkout/stripe-internacional/auditoria-prontidao-go-no-go',
                   ],
                 },
               ],

@@ -37,20 +37,38 @@ const makeClassroomsRepo = () => {
   return ClassroomsRepository;
 };
 
+
+const makeUserRepo = () => {
+  class UserRepository {
+    static async findById() {
+      return {
+        id: 1,
+        international_status: 'enabled',
+        international_stripe_enabled: true,
+      };
+    }
+  }
+
+  return UserRepository;
+};
+
 const makeSut = () => {
   const productsRepositoryStub = makeProductsRepo();
   const productAffiliateSettingsStub = makeProductAffiliateSettingsRepo();
   const classroomsStub = makeClassroomsRepo();
+  const userRepoStub = makeUserRepo();
   const sut = new CreateProduct(
     productsRepositoryStub,
     classroomsStub,
     productAffiliateSettingsStub,
+    userRepoStub,
   );
   return {
     sut,
     productsRepositoryStub,
     productAffiliateSettingsStub,
     classroomsStub,
+    userRepoStub,
   };
 };
 

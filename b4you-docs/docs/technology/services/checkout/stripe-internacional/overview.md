@@ -313,3 +313,14 @@ A B4You só poderá declarar operação internacional finalizada quando, simulta
 - Produto: usar este documento para transformar gap em backlog de conclusão operacional.
 - Engenharia: manter foco em domínios que antecedem checkout, sem retrabalho do checkout encerrado.
 - Reuniões: usar pendências como pauta formal para decisões objetivas.
+
+
+---
+
+## 14) Navegação recomendada (institucional + rastreabilidade)
+
+Para uso institucional (status, lacunas e fases finais), consultar:
+- `estado-atual-fases-finais.md`
+- `rastreabilidade-execucao.md`
+
+Para trilha detalhada de execução técnica, consultar os encerramentos formais e gates em `./docs` conforme matriz de rastreabilidade.

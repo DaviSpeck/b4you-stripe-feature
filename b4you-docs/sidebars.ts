@@ -87,6 +87,8 @@ const sidebars: SidebarsConfig = {
                     'technology/services/checkout/stripe-internacional/modelo-operacional',
                     'technology/services/checkout/stripe-internacional/runbook-governanca-incidentes',
                     'technology/services/checkout/stripe-internacional/faq-executivo-tecnico',
+                    'technology/services/checkout/stripe-internacional/estado-atual-fases-finais',
+                    'technology/services/checkout/stripe-internacional/rastreabilidade-execucao',
                   ],
                 },
               ],

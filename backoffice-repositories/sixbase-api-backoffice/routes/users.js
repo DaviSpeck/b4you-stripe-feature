@@ -13,6 +13,7 @@ const feesSchema = require('../schemas/users/fees');
 const updateEmailSchema = require('../schemas/updateEmail');
 const updateDocumenSchema = require('../schemas/updateDocumentNumber');
 const updateActiveSchema = require('../schemas/toggleActive');
+const internationalGovernanceSchema = require('../schemas/users/internationalGovernance');
 
 router.get('/', UserController.findUsers);
 
@@ -170,6 +171,16 @@ router.patch(
 router.patch(
   '/:userUuid/upsell-native/disable',
   UserController.disableUpsellNative,
+);
+
+router.get(
+  '/:userUuid/international-governance',
+  UserController.getInternationalGovernance,
+);
+router.patch(
+  '/:userUuid/international-governance',
+  validateSchema(internationalGovernanceSchema),
+  UserController.updateInternationalGovernance,
 );
 
 router.get('/reactivation/producers', UserController.listReactivationProducers);

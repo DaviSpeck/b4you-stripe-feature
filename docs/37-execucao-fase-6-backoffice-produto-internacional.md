@@ -1,95 +1,74 @@
-# FASE 6 — Execução controlada no Backoffice (Produto Internacional)
+# FASE 6 — Execução técnica real no Backoffice (Governança Internacional Stripe)
 
-## 1) Base formal desta execução
-Esta execução inicia a FASE 6 com base em documentação previamente aprovada, sem reabertura de checkout, governança técnica encerrada ou pós-venda já consolidado.
+## 1) Escopo executado nesta fase
+Implementação realizada com foco em governança institucional no Backoffice, sem alteração de checkout e sem execução da FASE 7/8.
 
-Referências de controle utilizadas nesta execução:
-- `b4you-docs/docs/technology/services/checkout/stripe-internacional/overview.md`
-- `b4you-docs/docs/technology/services/checkout/stripe-internacional/auditoria-prontidao-go-no-go.md`
-- `docs/36-ponto-controle-encerramento-checkout-e-entrada-execucao-operacional.md`
-
----
-
-## 2) Escopo efetivamente executado (FASE 6)
-Foi executado exclusivamente o escopo autorizado para Backoffice:
-1. definição operacional do que caracteriza produto internacional;
-2. validações mínimas obrigatórias para impedir produto internacional inválido;
-3. trilha auditável de criação/habilitação de produto internacional;
-4. integração conceitual com governança já existente via feature flag.
-
-Sem alteração de checkout, sem mudança de estados internos e sem execução de Dashboard.
+Implementado:
+1. elegibilidade internacional por produtor (habilitado/bloqueado) persistida em base;
+2. governança condicional da Stripe em nível de produtor;
+3. trilha auditável de transição de estado (anterior/novo, motivo, regra, ator, data);
+4. bloqueio técnico no backend da Dashboard para impedir criação de produto internacional por produtor não habilitado;
+5. separação explícita de dados do produto (escopo nacional/internacional, moeda, adquirente, contexto de conversão).
 
 ---
 
-## 3) Definição operacional de produto internacional (Backoffice)
-Para efeito de operação institucional, produto internacional é o produto que:
-1. nasce com marcação explícita de internacionalidade no Backoffice;
-2. respeita os campos mínimos obrigatórios do escopo internacional vigente;
-3. está associado a uma habilitação internacional governada (feature flag);
-4. possui trilha de auditoria de criação/edição/habilitação.
+## 2) Implementações técnicas (código)
 
-### Limite de governança
-Sem marcação explícita + validações mínimas + coerência com habilitação, o produto não existe operacionalmente como internacional.
+### 2.1 Backoffice API — governança por produtor
+- Novos campos de governança internacional no `users`:
+  - `international_status` (`enabled|blocked`);
+  - `international_stripe_enabled` (boolean);
+  - `international_rules` (JSON);
+  - `international_status_updated_at`;
+  - `international_status_updated_by`.
+- Novas rotas no Backoffice:
+  - `GET /users/:userUuid/international-governance`;
+  - `PATCH /users/:userUuid/international-governance`.
+- O PATCH exige payload validado com `status`, `international_stripe_enabled`, `rules`, `reason`.
+- Cada transição gera log auditável com:
+  - estado anterior;
+  - novo estado;
+  - regra aplicada;
+  - motivo;
+  - ator (`id_user_backoffice`), `user_agent` e `ip_address`.
 
----
+### 2.2 Dashboard API — bloqueio backend de criação internacional sem habilitação
+- Fluxo de criação de produto (`CreateProduct`) passou a validar governança do produtor quando `operation_scope = international`.
+- Se produtor não estiver com `international_status = enabled` e `international_stripe_enabled = true`, a criação é bloqueada com erro `403`.
+- A decisão não é feita na UI: o bloqueio está no backend da Dashboard.
 
-## 4) Validações mínimas obrigatórias (sem inferência de negócio pendente)
-As validações mínimas desta fase foram formalizadas em nível operacional e de governança:
-
-1. **Classificação obrigatória**
-   - Bloquear criação/habilitação internacional sem sinalização explícita de produto internacional.
-
-2. **Completude mínima de dados internacionais**
-   - Bloquear habilitação internacional se os dados obrigatórios definidos no escopo atual estiverem incompletos.
-   - Qualquer novo dado obrigatório não previamente decidido permanece pendência de negócio.
-
-3. **Coerência com governança vigente**
-   - Bloquear habilitação de produto internacional quando a governança (feature flag) não permitir operação internacional.
-
-4. **Proibição de bypass operacional**
-   - Não permitir caminho alternativo que habilite produto internacional fora do Backoffice governado.
-
-5. **Rastreabilidade obrigatória**
-   - Registrar quem criou, quem alterou, quando alterou e qual decisão de habilitação foi aplicada.
-
----
-
-## 5) Trilha auditável mínima exigida na FASE 6
-A trilha auditável de Backoffice deve registrar, no mínimo:
-- identificador do produto;
-- estado da classificação (nacional/internacional);
-- status de habilitação internacional;
-- data/hora dos eventos de criação e habilitação;
-- ator responsável pela ação;
-- motivo de bloqueio quando validação reprovar.
-
-Essa trilha existe para auditoria operacional e para impedir decisões implícitas fora da governança aprovada.
+### 2.3 Separação explícita de dados no produto (sem checkout)
+- Novos campos persistidos em `products`:
+  - `operation_scope` (`national|international`);
+  - `currency_code`;
+  - `acquirer_key`;
+  - `conversion_context` (JSON).
+- Esses campos permitem separar venda nacional vs internacional sem reprocessar histórico.
+- Checkout não foi alterado; apenas passa a consumir dados já governados.
 
 ---
 
-## 6) Evidências de separação de responsabilidades
-Evidência formal registrada nesta fase:
-1. **Produto internacional nasce no Backoffice** (origem da decisão institucional).
-2. **Checkout apenas consome** a decisão governada (não cria internacionalidade).
-3. **Dashboard ainda não executa** esta operação nesta fase (execução reservada à FASE 7).
+## 3) Evidência de responsabilidades por domínio
+1. **Backoffice controla elegibilidade internacional do produtor e regra da Stripe**.
+2. **Dashboard continua criando produto**, mas só cria produto internacional se habilitado pelo Backoffice.
+3. **Checkout permanece consumidor** da decisão já tomada.
 
 ---
 
-## 7) Não execução deliberada (fora de escopo)
-Durante esta execução da FASE 6, foi explicitamente mantido fora de escopo:
-- qualquer alteração em checkout;
-- qualquer alteração em estados internos;
-- qualquer criação de nova família de checkout;
-- qualquer bypass de governança;
-- qualquer início de execução da FASE 7 (Dashboard) ou FASE 8 (Rollout/Comunicação).
+## 4) Fora de escopo preservado
+Não foi implementado nesta fase:
+- criação de produto no Backoffice;
+- qualquer alteração de checkout;
+- alteração de estados internos;
+- execução da FASE 7 (Dashboard operacional de governança);
+- execução da FASE 8 (rollout/comunicação).
 
 ---
 
-## 8) Critério de parada obrigatório
-A FASE 6 deve ser interrompida imediatamente se ocorrer:
-1. necessidade de decisão de negócio ainda não formalizada;
-2. tentativa de puxar execução de Dashboard (FASE 7);
-3. tentativa de puxar rollout/comunicação (FASE 8);
-4. tentativa de alterar checkout ou governança técnica já encerrada.
+## 5) Dependências claras para FASE 7 (não executar agora)
+A FASE 7 deverá:
+1. expor os estados de governança internacional ao produtor na UI da Dashboard;
+2. apresentar mensagens e bloqueios operacionais consistentes com o backend;
+3. detalhar UX de regras condicionais da Stripe usando os campos `international_rules`.
 
-Regra: executar sem decisão formal é proibido; documentar pendência para deliberação é obrigatório.
+Regra mantida: se surgir decisão de negócio não documentada, bloquear implementação e registrar pendência formal.

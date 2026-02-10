@@ -32,7 +32,8 @@
 - Redirecionamento para checkout internacional apenas quando produto for internacional.
 - Fluxo nacional inalterado.
 - Parâmetros legados preservados no redirecionamento.
-- Fallback seguro preserva experiência nacional.
+- Erro controlado em falha de handoff (sem fallback internacional → nacional).
+- Decisão baseada em contrato canônico (sem heurística no frontend legado).
 - Componentes e mensagens compartilhados com o novo checkout.
 - Camada de comunicação com api-checkout alinhada ao novo checkout.
 

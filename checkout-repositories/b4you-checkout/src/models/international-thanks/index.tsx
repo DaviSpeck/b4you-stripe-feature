@@ -1,6 +1,5 @@
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { IoCheckmark } from "react-icons/io5";
 import { LiaCheckCircle } from "react-icons/lia";
 import { iSaleData } from "@/interfaces/sale-data";
@@ -27,7 +26,6 @@ const resolveStatus = (saleData: iSaleData): PaymentStatus => {
 };
 
 export function InternationalThanks({ saleData }: InternationalThanksProps) {
-  const searchParams = useSearchParams();
   const [context, setContext] = useState<StoredContext | null>(null);
 
   useEffect(() => {
@@ -40,13 +38,7 @@ export function InternationalThanks({ saleData }: InternationalThanksProps) {
     }
   }, []);
 
-  const resolvedStatus = useMemo(() => {
-    const override = searchParams?.get("status") as PaymentStatus | null;
-    if (override && typeof window !== "undefined" && "Cypress" in window) {
-      return override;
-    }
-    return resolveStatus(saleData);
-  }, [saleData, searchParams]);
+  const resolvedStatus = resolveStatus(saleData);
 
   const statusInfo = statusConfig[resolvedStatus];
   const primaryTitle = saleData.products[0]?.name ?? "your purchase";

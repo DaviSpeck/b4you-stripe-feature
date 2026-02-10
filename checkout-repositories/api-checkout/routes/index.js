@@ -5,6 +5,7 @@ const { findFrenet } = require('../controllers/common');
 const Frenet = require('../services/integrations/Frenet');
 const FindOffer = require('../useCases/checkout/offers/FindOffer');
 const { metricsProm } = require('../middlewares/prom');
+const readStripeFeatureFlag = require('../services/feature-flags/read-stripe-feature-flag');
 
 const router = express.Router();
 router.use(session);
@@ -31,6 +32,16 @@ router.use(
   require('./affiliates'),
 );
 router.use('/checkout-info', require('./checkout_info'));
+
+router.get('/feature-flags/stripe', async (_req, res) => {
+  const flag = await readStripeFeatureFlag();
+
+  return res.status(200).send({
+    enabled: flag.enabled,
+    source: flag.source,
+    ...(flag.reason ? { reason: flag.reason } : {}),
+  });
+});
 
 router.post('/shippingOptions', async (req, res) => {
   const { body } = req;

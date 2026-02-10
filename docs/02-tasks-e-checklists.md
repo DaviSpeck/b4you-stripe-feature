@@ -114,14 +114,14 @@
 - [ ] Cliente de comunicação com api-checkout reutilizável.
 
 ### Checklist — FASE 4 (Checkout Internacional)
-- [ ] Checkout internacional em EN consumindo apenas estado interno (`pending`, `approved`, `failed`, `refunded`, `dispute`).
+- [x] Checkout internacional em EN consumindo apenas estado interno (`pending`, `approved`, `failed`, `refunded`, `dispute`). **(convergência Etapa 2)**
 - [ ] Comportamento sem webhook exibe `pending` e impede confirmação sem webhook.
 - [ ] Retry idempotente sem criação de nova transação.
-- [ ] Thank you page internacional confirma pagamento apenas com `approved`.
-- [ ] `refunded` e `dispute` tratados como informativos.
-- [ ] Feature flag com fail-safe (inconsistência → bloquear internacional).
-- [ ] Testes automatizados cobrindo estados e flag.
-- [ ] Garantia explícita de não impacto no fluxo nacional.
+- [x] Thank you page internacional confirma pagamento apenas com `approved`. **(convergência Etapa 2)**
+- [x] `refunded` e `dispute` tratados como informativos. **(convergência Etapa 2)**
+- [x] Feature flag com fail-safe (inconsistência → bloquear internacional). **(FASE 5 · Etapa 3)**
+- [x] Testes automatizados cobrindo estados e flag. **(FASE 5 · Etapa 3)**
+- [x] Garantia explícita de não impacto no fluxo nacional. **(FASE 5 · Etapa 3)**
 
 ### Ordem sugerida
 1. UI internacional.
@@ -143,13 +143,15 @@
 5. Assegurar que falhas no handoff não quebrem o fluxo nacional.
 6. Consolidar componentes e mensagens com o novo checkout.
 7. Adotar camada de comunicação com api-checkout compartilhada.
+8. Consumir contrato canônico de internacionalização (sem heurísticas no legado).
 
 ### Checklist do MVP
-- [ ] Detecção de produto internacional por flag explícita.
-- [ ] Redirecionamento consistente para novo checkout.
-- [ ] Fluxo nacional intacto.
-- [ ] Parâmetros legados mantidos no handoff.
-- [ ] Fallback seguro em caso de falha no redirecionamento.
+- [x] Detecção de produto internacional por flag explícita. **(FASE 5 · Etapa 1)**
+- [x] Redirecionamento consistente para novo checkout. **(FASE 5 · Etapa 1)**
+- [x] Fluxo nacional intacto. **(FASE 5 · Etapa 1)**
+- [x] Parâmetros legados mantidos no handoff. **(FASE 5 · Etapa 1)**
+- [x] Erro controlado sem fallback internacional → nacional. **(FASE 5 · Etapa 1)**
+- [x] Contrato canônico consumido (com compatibilidade temporária documentada). **(FASE 5 · Etapa 1)**
 - [ ] Componentes e mensagens compartilhados com o novo checkout.
 - [ ] Comunicação com api-checkout alinhada ao novo checkout.
 

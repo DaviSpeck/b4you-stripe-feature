@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start -p 3000",
     "lint": "next lint",
-    "cy:test": "npx cypress run --browser electron",
+    "cy:test": "CYPRESS_XVFB=0 npx cypress run --browser electron --headless",
     "cy:open": "npx cypress open",
     "test:e2e": "npm run build && start-server-and-test start http://localhost:3000 'npm run cy:test'",
     "test:e2e:dev": "start-server-and-test dev http://localhost:3000 'npm run cy:open'",

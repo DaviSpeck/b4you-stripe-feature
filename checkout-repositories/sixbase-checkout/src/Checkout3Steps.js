@@ -1,4 +1,6 @@
 import api from 'api';
+import Error from './Error';
+import { getInternationalHandoffDecision } from './international/handoff';
 import PopupAlerta from 'components/Popup';
 import {
   currency,
@@ -180,6 +182,7 @@ const Checkout3Steps = ({ pixels, setPixels }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [hasFrenet, setHasFrenet] = useState(false);
   const [oldCart, setOldCart] = useState(null);
+  const [handoffError, setHandoffError] = useState(null);
   const [confirmAction, setConfirmAction] = useState(false);
   const [isSetDefeutInstallment, setIsSetDefeutInstallment] = useState(false);
   const [paymentType, setPaymentType] = useState('cpf');
@@ -500,6 +503,21 @@ const Checkout3Steps = ({ pixels, setPixels }) => {
         const response = await api.get(
           `/offers/${uuidOffer}${b4f ? `?b4f=${b4f}` : ''}`
         );
+        const handoffDecision = getInternationalHandoffDecision({
+          offer: response.data,
+          offerId: uuidOffer,
+          search: window.location.search,
+        });
+
+        if (handoffDecision.action === 'redirect') {
+          window.location.assign(handoffDecision.redirectUrl);
+          return;
+        }
+
+        if (handoffDecision.action === 'error') {
+          setHandoffError(handoffDecision.message);
+          return;
+        }
         setHasFrenet(response.data.has_frenet);
         setProduct(response.data.product);
         if (!response.data.shipping_by_region) {
@@ -950,7 +968,8 @@ const Checkout3Steps = ({ pixels, setPixels }) => {
           />
         )}
       </Modal>
-      {!offer && <Loader />}
+      {handoffError && <Error title={handoffError} />}
+      {!handoffError && !offer && <Loader />}
       {offer && (
         <div className='frame1-container'>
           <div className='frame1-frame1'>

@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useRouter } from "next/router";
 import { apiExternal } from "@/services/axios";
 import { iSaleData } from "@/interfaces/sale-data";
 import { InternationalThanks } from "@/models/international-thanks";
 
 export default function InternationalThankYouPage() {
-  const params = useParams<{ saleUuid: string }>();
-  const saleUuid = params?.saleUuid;
+  const router = useRouter();
+  const saleUuid =
+    typeof router.query.saleUuid === "string" ? router.query.saleUuid : null;
   const [saleData, setSaleData] = useState<iSaleData | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!saleUuid) return;
+    if (!router.isReady || !saleUuid) return;
 
     let isMounted = true;
 
@@ -35,7 +36,7 @@ export default function InternationalThankYouPage() {
     return () => {
       isMounted = false;
     };
-  }, [saleUuid]);
+  }, [router.isReady, saleUuid]);
 
   if (error) {
     return (

@@ -61,6 +61,8 @@
 
 **Checkpoint**
 - ✅ Fluxo internacional como variação explícita do checkout existente.
+- ✅ Pós-venda internacional convergido ao modelo nacional (delivery/thank-you).
+- ✅ E2E determinístico validando thank-you/delivery sem API real.
 
 ---
 

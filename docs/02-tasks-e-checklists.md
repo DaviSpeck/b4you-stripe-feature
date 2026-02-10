@@ -114,11 +114,11 @@
 - [ ] Cliente de comunicação com api-checkout reutilizável.
 
 ### Checklist — FASE 4 (Checkout Internacional)
-- [ ] Checkout internacional em EN consumindo apenas estado interno (`pending`, `approved`, `failed`, `refunded`, `dispute`).
+- [x] Checkout internacional em EN consumindo apenas estado interno (`pending`, `approved`, `failed`, `refunded`, `dispute`). **(convergência Etapa 2)**
 - [ ] Comportamento sem webhook exibe `pending` e impede confirmação sem webhook.
 - [ ] Retry idempotente sem criação de nova transação.
-- [ ] Thank you page internacional confirma pagamento apenas com `approved`.
-- [ ] `refunded` e `dispute` tratados como informativos.
+- [x] Thank you page internacional confirma pagamento apenas com `approved`. **(convergência Etapa 2)**
+- [x] `refunded` e `dispute` tratados como informativos. **(convergência Etapa 2)**
 - [ ] Feature flag com fail-safe (inconsistência → bloquear internacional).
 - [ ] Testes automatizados cobrindo estados e flag.
 - [ ] Garantia explícita de não impacto no fluxo nacional.

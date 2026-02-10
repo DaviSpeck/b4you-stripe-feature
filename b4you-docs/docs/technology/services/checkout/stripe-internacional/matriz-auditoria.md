@@ -46,13 +46,15 @@ Concentrar, em formato auditável, os elementos centrais da iniciativa sem ambig
 1. Núcleo técnico internacional entregue no escopo aprovado (checkout + governança + pós-venda no limite formal).
 2. Governança/fail-safe implementados no modelo autorizado.
 3. Pós-venda convergido para estados internos nos cenários cobertos.
-4. Pendências de negócio ainda existentes para evolução estratégica.
+4. FASE 6 (Backoffice governança internacional por produtor) encerrada no escopo aprovado.
+5. Pendências de negócio ainda existentes para evolução estratégica.
 
 ## Pendências consolidadas
-1. Estratégia executiva de rollout por segmento.
-2. Definição final de KPIs de sucesso internacional.
-3. Política completa de UX de erro internacional.
-4. Regras adicionais para expansão de meios de pagamento internacionais.
+1. Execução da FASE 7 (operação do produtor na Dashboard sob governança já existente).
+2. Estratégia executiva de rollout por segmento (FASE 8).
+3. Definição final de KPIs de sucesso internacional.
+4. Política completa de UX de erro internacional.
+5. Regras adicionais para expansão de meios de pagamento internacionais.
 
 ---
 

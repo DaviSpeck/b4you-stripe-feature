@@ -22,7 +22,7 @@
     "swagger:bundle": "node scripts/generateSwaggerComplete.js",
     "swagger:generate": "yarn swagger:paths && yarn swagger:schemas && yarn swagger:bundle",
     "test": "npm run test:integration",
-    "test:integration": "npx jest --runTestsByPath tests/integration/internationalGovernance.spec.js",
+    "test:integration": "node -e \"const fs=require('fs');const local='./node_modules/jest/bin/jest.js';const fallback='../../dashboard-repositories/sixbase-api/node_modules/jest/bin/jest.js';const bin=fs.existsSync(local)?local:fallback;require('child_process').spawnSync('node',[bin,'--forceExit','--runTestsByPath','tests/integration/internationalGovernance.spec.js','tests/integration/internationalGovernance.http.spec.js'],{stdio:'inherit'});\"",
     "test:front": "echo \"N/A: backend repository\""
   },
   "dependencies": {

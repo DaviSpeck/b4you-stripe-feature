@@ -20,10 +20,12 @@ Consolidar, em linguagem de governança, o estado real do programa após encerra
 - Capacidade técnica de processar pagamento internacional no escopo vigente.
 - Contrato de estados internos como fonte oficial para frontend/pós-venda.
 - Base documental de execução por fases concluídas.
+- Governança internacional por produtor no Backoffice (FASE 6).
+- Bloqueio backend na Dashboard para criação internacional sem habilitação formal.
+- Separação explícita nacional vs internacional em produto (`operation_scope`, moeda e adquirente).
 
 ### O que ainda falta
-- Capacidade institucional de criação governada de produto internacional no Backoffice.
-- Capacidade operacional do produtor na Dashboard, respeitando governança.
+- Capacidade operacional completa do produtor na Dashboard, respeitando governança (FASE 7).
 - Rollout e comunicação operacional com critérios executivos de acompanhamento.
 
 ### O que não faz parte do escopo atual
@@ -53,13 +55,15 @@ Regra de foco:
 - **Operação internacional concluída**: produtor consegue operar produto internacional governado ponta a ponta.
 
 ### Gargalo real atual
-Sem produto internacional governado no Backoffice e operável na Dashboard, a capacidade de checkout não gera valor pleno e sustentável para negócio.
+Com a governança internacional já implementada no Backoffice (FASE 6), o gargalo real está em operação completa na Dashboard (FASE 7) e rollout/comunicação executiva (FASE 8).
 
 ---
 
 ## 4) Fases finais do programa
 
 ## Fase 6 — Backoffice (origem da decisão)
+
+**Status atual:** concluída no escopo aprovado.
 
 ### Objetivo
 Garantir que a criação/qualificação de produto internacional exista sob governança institucional e auditável.
@@ -81,6 +85,11 @@ Evita internacional implícito, inconsistente ou fora de controle organizacional
 - decisão de produto internacional nasce no Backoffice;
 - existe trilha auditável da decisão;
 - regras de validação estão formalizadas para operação interna.
+
+### Resultado consolidado
+- endpoints de governança internacional no Backoffice e trilha auditável de decisão;
+- bloqueio backend de criação internacional na Dashboard quando produtor não habilitado;
+- manutenção explícita de não-regressão do fluxo nacional.
 
 ---
 
@@ -146,6 +155,8 @@ Evita expansão sem critério, ambiguidade entre áreas e desalinhamento com pro
 - política de rollout por segmento;
 - comunicação padrão de limitações para produtor;
 - roadmap de meios de pagamento internacionais futuros.
+
+Regra executiva: FASE 6 concluída não significa liberação internacional ampla; qualquer liberação continua condicionada à governança formal por produtor.
 
 ### Fora de escopo atual
 - retrabalho de checkout encerrado;

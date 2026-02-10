@@ -157,7 +157,7 @@ const PageProductsList = () => {
   );
 };
 
-const ModalNewCourse = ({ modalShow, setModalShow, handleClose }) => {
+export const ModalNewCourse = ({ modalShow, setModalShow, handleClose }) => {
   const [requesting, setRequesting] = useState(null);
   const [categories, setCategories] = useState([]);
   const [registerReturn, setRegisterReturn] = useState(null);
@@ -180,6 +180,9 @@ const ModalNewCourse = ({ modalShow, setModalShow, handleClose }) => {
     mode: 'onChange',
     defaultValues: {
       type: 'video',
+      operation_scope: 'national',
+      currency_code: 'BRL',
+      acquirer_key: 'pagarme',
     },
   });
 
@@ -194,6 +197,10 @@ const ModalNewCourse = ({ modalShow, setModalShow, handleClose }) => {
       data.payment_type = 'single';
     }
 
+    if (!data.operation_scope) data.operation_scope = 'national';
+    if (!data.currency_code) data.currency_code = 'BRL';
+    if (!data.acquirer_key) data.acquirer_key = 'pagarme';
+
     api
       .post('/products', data)
       .then(() => {
@@ -201,7 +208,15 @@ const ModalNewCourse = ({ modalShow, setModalShow, handleClose }) => {
         notify({ message: 'Produto criado com sucesso', type: 'success' });
       })
       .catch((err) => {
-        notify({ message: 'Falha ao criar o produto', type: 'error' });
+        if (err?.response?.status === 403 && data.operation_scope === 'international') {
+          notify({
+            message:
+              'Seu produtor não está habilitado para criar produto internacional.',
+            type: 'error',
+          });
+        } else {
+          notify({ message: 'Falha ao criar o produto', type: 'error' });
+        }
         if (err.response.data.body.errors) {
           err.response.data.body.errors.forEach((element) => {
             return setRegisterReturn(`${Object.values(element)[0]} `);
@@ -285,6 +300,51 @@ const ModalNewCourse = ({ modalShow, setModalShow, handleClose }) => {
                     </option>
                   );
                 })}
+              </Form.Control>
+            </div>
+          </Col>
+          <Col md={6}>
+            <div className='form-group'>
+              <label htmlFor='operation_scope'>Operação</label>
+              <Form.Control
+                as='select'
+                name='operation_scope'
+                id='operation_scope'
+                className='form-control'
+                ref={register}
+              >
+                <option value='national'>Nacional</option>
+                <option value='international'>Internacional</option>
+              </Form.Control>
+            </div>
+          </Col>
+          <Col md={6}>
+            <div className='form-group'>
+              <label htmlFor='currency_code'>Moeda</label>
+              <Form.Control
+                as='select'
+                name='currency_code'
+                id='currency_code'
+                className='form-control'
+                ref={register}
+              >
+                <option value='BRL'>BRL</option>
+                <option value='USD'>USD</option>
+              </Form.Control>
+            </div>
+          </Col>
+          <Col md={6}>
+            <div className='form-group'>
+              <label htmlFor='acquirer_key'>Adquirente</label>
+              <Form.Control
+                as='select'
+                name='acquirer_key'
+                id='acquirer_key'
+                className='form-control'
+                ref={register}
+              >
+                <option value='pagarme'>pagarme</option>
+                <option value='stripe'>stripe</option>
               </Form.Control>
             </div>
           </Col>

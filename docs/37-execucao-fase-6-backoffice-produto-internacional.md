@@ -3,6 +3,8 @@
 ## 1) Escopo executado nesta fase
 Implementação realizada com foco em governança institucional no Backoffice, sem alteração de checkout e sem execução da FASE 7/8.
 
+Status: **FASE 6 encerrada no escopo de governança internacional**.
+
 Implementado:
 1. elegibilidade internacional por produtor (habilitado/bloqueado) persistida em base;
 2. governança condicional da Stripe em nível de produtor;
@@ -53,6 +55,8 @@ Implementado:
 2. **Dashboard continua criando produto**, mas só cria produto internacional se habilitado pelo Backoffice.
 3. **Checkout permanece consumidor** da decisão já tomada.
 
+Regra de governança: ausência de decisão formal do Backoffice implica bloqueio internacional no backend da Dashboard.
+
 ---
 
 ## 4) Fora de escopo preservado
@@ -70,5 +74,7 @@ A FASE 7 deverá:
 1. expor os estados de governança internacional ao produtor na UI da Dashboard;
 2. apresentar mensagens e bloqueios operacionais consistentes com o backend;
 3. detalhar UX de regras condicionais da Stripe usando os campos `international_rules`.
+
+Observação de negócio/governança: FASE 6 **não** representa liberação internacional para todos os produtores; representa decisão institucional por produtor com trilha auditável.
 
 Regra mantida: se surgir decisão de negócio não documentada, bloquear implementação e registrar pendência formal.

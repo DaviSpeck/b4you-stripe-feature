@@ -26,7 +26,7 @@
     "swagger:schemas": "node scripts/generateSchemas.js",
     "swagger:bundle": "node scripts/generateSwaggerComplete.js",
     "swagger:generate": "yarn swagger:paths && yarn swagger:schemas && yarn swagger:bundle",
-    "test:integration": "npm test -- --runTestsByPath tests/integration/createProduct.spec.js tests/integration/createProductInternational.spec.js",
+    "test:integration": "npm test -- --runTestsByPath tests/integration/createProduct.spec.js tests/integration/createProductInternational.spec.js tests/integration/createProductInternational.http.spec.js",
     "test:front": "echo \"N/A: backend repository\""
   },
   "lint-staged": {

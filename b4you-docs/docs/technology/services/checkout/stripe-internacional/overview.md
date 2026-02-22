@@ -110,20 +110,21 @@ Esta iniciativa declara formalmente que:
 - proteção explícita contra regressão nacional.
 
 ### Capacidades que ainda faltam para gerar valor pleno ao produtor
-- trilha completa de criação governada de **produto internacional**;
-- visibilidade operacional do produto internacional na Dashboard;
-- capacidade de operação comercial internacional pelo produtor dentro de regras claras;
-- comunicação de escopo/limitações para evitar uso incorreto.
+- visibilidade operacional completa do produto internacional na Dashboard para o produtor (FASE 7);
+- capacidade operacional completa do produtor internacional com UX consolidada (FASE 7);
+- rollout/comunicação executiva e governança de expansão (FASE 8).
 
 ### Conclusão do gap
 “Checkout internacional concluído” **não** significa “operação internacional concluída”.
-Sem produto internacional governado e operável para produtor, a capacidade de checkout não se converte integralmente em valor de negócio.
+A governança de produto internacional já existe no Backoffice (FASE 6), porém a operação completa de produto pelo produtor e o rollout institucional ainda dependem de FASE 7 e FASE 8.
 
 ---
 
-## 7) Fases restantes para conclusão operacional do programa
+## 7) Fases finais para conclusão operacional do programa
 
 ## Fase 6 — Produto Internacional (Backoffice)
+
+**Status atual:** concluída no escopo aprovado.
 
 ### Objetivo
 Estabelecer a origem governada da decisão de produto internacional no Backoffice.
@@ -144,6 +145,11 @@ Sem esta fase, não há base organizacional confiável para liberar operação i
 - regras mínimas de validação estão formalizadas;
 - vínculo com governança de habilitação está explícito e auditável;
 - documentação operacional aprovada para uso interno.
+
+### Resultado consolidado da fase
+- governança internacional por produtor registrada no Backoffice (status, Stripe, regras e trilha de auditoria);
+- bloqueio backend de criação internacional na Dashboard para produtor sem habilitação formal;
+- separação explícita nacional vs internacional no domínio de produtos.
 
 ### Documento de execução da fase
 - `fase-6-backoffice-produto-internacional.md`

@@ -1,0 +1,11 @@
+{
+  "name": "b4you-stripe-feature",
+  "private": true,
+  "scripts": {
+    "test:fa6:backoffice": "npm --prefix backoffice-repositories/sixbase-api-backoffice run test:integration",
+    "test:fa6:dashboard": "npm --prefix dashboard-repositories/sixbase-api run test:integration",
+    "test:fa6:front": "npm --prefix backoffice-repositories/sixbase-backoffice run test:front && npm --prefix dashboard-repositories/sixbase-dashboard run test:front",
+    "test:fa6:back": "npm run test:fa6:backoffice && npm run test:fa6:dashboard",
+    "test:fa6": "npm run test:fa6:back && npm run test:fa6:front"
+  }
+}

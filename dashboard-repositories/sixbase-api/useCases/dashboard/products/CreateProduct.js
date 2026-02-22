@@ -32,15 +32,19 @@ module.exports = class CreateProduct {
 
   #ProductAffiliateSettingsRepository;
 
+  #UserRepository;
+
   constructor(
     ProductsRepository,
     ClassroomsRepository,
     ProductAffiliateSettingsRepository,
+    UserRepository,
   ) {
     this.#ProductsRepository = ProductsRepository;
     this.#ClassroomsRepository = ClassroomsRepository;
     this.#ProductAffiliateSettingsRepository =
       ProductAffiliateSettingsRepository;
+    this.#UserRepository = UserRepository;
   }
 
   async save({
@@ -51,12 +55,30 @@ module.exports = class CreateProduct {
     id_user,
     warranty,
     sales_page_url,
+    operation_scope = 'national',
+    currency_code = 'BRL',
+    acquirer_key = 'pagarme',
+    conversion_context = null,
   }) {
     const id_type = resolveType(type);
     if (payment_type === SUBSCRIPTION && id_type === EBOOKTYPE)
       throw ApiError.badRequest(
         'Este tipo de produto não aceita assinatura como método de pagamento',
       );
+
+    if (operation_scope === 'international') {
+      const producer = await this.#UserRepository.findById(id_user);
+
+      if (!producer) throw ApiError.badRequest('Usuário não encontrado');
+
+      const internationalEnabled =
+        producer.international_status === 'enabled' &&
+        Boolean(producer.international_stripe_enabled);
+
+      if (!internationalEnabled) {
+        throw ApiError.forbidden();
+      }
+    }
 
     const productData = {
       name,
@@ -68,6 +90,10 @@ module.exports = class CreateProduct {
       sales_page_url,
       payment_type,
       id_type,
+      operation_scope,
+      currency_code,
+      acquirer_key,
+      conversion_context,
     };
 
     const product = await this.#ProductsRepository.create(productData);

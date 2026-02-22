@@ -95,6 +95,24 @@ A iniciativa foi executada em fases com escopo delimitado. O projeto evoluiu de 
 - mudança da semântica de estados internos;
 - lógica de autorização internacional delegada ao frontend.
 
+## Fase 6 — Backoffice (governança internacional por produtor)
+### Entregas
+- endpoints de governança internacional por produtor no Backoffice;
+- persistência de status internacional, habilitação Stripe e regras condicionais;
+- trilha auditável com motivo, ator e transição de estado;
+- bloqueio backend na Dashboard para criação internacional sem habilitação formal;
+- separação explícita nacional vs internacional no domínio de produtos.
+
+### Problemas resolvidos
+- eliminação de decisão implícita de internacionalidade no frontend;
+- proteção contra criação internacional fora de governança;
+- rastreabilidade institucional da decisão por produtor.
+
+### Fora de escopo declarado
+- operação internacional completa pelo produtor na Dashboard (FASE 7);
+- rollout/comunicação executiva do programa (FASE 8);
+- qualquer retrabalho de checkout já encerrado.
+
 ## Declaração de evolução controlada
 O projeto **não nasceu pronto**. Ele foi construído por blocos, com fechamento formal por fase e sem expansão indevida de escopo.
 
@@ -107,6 +125,7 @@ O projeto **não nasceu pronto**. Ele foi construído por blocos, com fechamento
 - convergência de estados internos para operação;
 - governança por feature flag com fail-safe obrigatório;
 - trilha documental de fases e encerramentos formais.
+- FASE 6 de governança internacional por produtor no Backoffice.
 
 ### O que está formalmente fechado por decisão
 - internacional como variação do checkout existente;
@@ -121,7 +140,8 @@ O projeto **não nasceu pronto**. Ele foi construído por blocos, com fechamento
 - expansão para temas fora da trilha aprovada.
 
 ### O que está pronto para fases futuras
-- rollout progressivo com governança;
+- operação completa do produtor na Dashboard sob governança (FASE 7);
+- rollout progressivo com governança (FASE 8);
 - evolução de UX/UI internacional;
 - evolução de i18n;
 - evolução de observabilidade de negócio.

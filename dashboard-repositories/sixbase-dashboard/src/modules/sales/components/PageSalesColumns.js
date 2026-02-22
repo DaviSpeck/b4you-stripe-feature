@@ -8,6 +8,15 @@ import { capitalizeName } from '../../../utils/commons';
 import formatDate from '../../../utils/formatters';
 import { currency } from '../../functions';
 
+const resolveOperationScope = (item) =>
+  item?.operation_scope || item?.product?.operation_scope || 'national';
+
+const resolveCurrencyCode = (item) =>
+  item?.currency_code || item?.payment?.currency_code || 'BRL';
+
+const formatScopeLabel = (scope) =>
+  scope === 'international' ? 'Internacional' : 'Nacional';
+
 export const columns = memoizeOne(
   (setModalSaleShow, setActiveSale, getStatusName) => [
     {
@@ -22,6 +31,10 @@ export const columns = memoizeOne(
               <span className='pointer'>{item.product.name}</span>
             </OverlayTrigger>
             <small className='d-block'>{formatDate(item.created_at)}</small>
+            <small className='d-block text-muted'>
+              Operação: {formatScopeLabel(resolveOperationScope(item))} • Moeda:{' '}
+              {resolveCurrencyCode(item)}
+            </small>
           </div>
           <div className='d-flex mb-1'>
             {item.type.type !== 'main' && (

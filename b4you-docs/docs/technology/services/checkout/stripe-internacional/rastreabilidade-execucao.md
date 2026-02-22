@@ -44,6 +44,10 @@ Conectar a documentação institucional viva (b4you-docs) com a trilha de execu�
 - `docs/31-encerramento-etapa-2-fase-5.md`
 - `docs/32-etapa-3-preparatorio-sem-execucao.md`
 
+### Execução e ponto de controle da Fase 6
+- `docs/37-execucao-fase-6-backoffice-produto-internacional.md`
+- `docs/36-ponto-controle-encerramento-checkout-e-entrada-execucao-operacional.md`
+
 ---
 
 ## Regra de coerência documental

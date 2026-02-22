@@ -386,6 +386,22 @@
   }
 }
 
+#pageProductsList {
+  .scope-tags {
+    gap: 6px;
+  }
+
+  .scope-pill {
+    border: 1px solid #d9dee7;
+    border-radius: 999px;
+    padding: 2px 8px;
+    font-size: 11px;
+    line-height: 1.4;
+    color: #4b5565;
+    background-color: #f8fafc;
+  }
+}
+
 .form-error {
   color: #ef6351;
   margin-bottom: 8px;

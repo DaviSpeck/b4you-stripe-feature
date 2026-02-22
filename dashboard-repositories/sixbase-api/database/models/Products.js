@@ -314,6 +314,25 @@ class Products extends Sequelize.Model {
           type: Sequelize.INTEGER,
           defaultValue: 3,
         },
+        operation_scope: {
+          type: Sequelize.ENUM('national', 'international'),
+          allowNull: false,
+          defaultValue: 'national',
+        },
+        currency_code: {
+          type: Sequelize.STRING(3),
+          allowNull: false,
+          defaultValue: 'BRL',
+        },
+        acquirer_key: {
+          type: Sequelize.STRING,
+          allowNull: false,
+          defaultValue: 'pagarme',
+        },
+        conversion_context: {
+          type: Sequelize.JSON,
+          allowNull: true,
+        },
         created_at: Sequelize.DATE,
         updated_at: Sequelize.DATE,
         deleted_at: Sequelize.DATE,

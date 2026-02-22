@@ -55,4 +55,18 @@ module.exports = yup.object().shape({
         value === 'physical',
     }),
   warranty: yup.number().required().min(7).max(30),
+  operation_scope: yup
+    .string()
+    .oneOf(['national', 'international'])
+    .default('national'),
+  currency_code: yup
+    .string()
+    .uppercase()
+    .length(3)
+    .default('BRL'),
+  acquirer_key: yup
+    .string()
+    .trim()
+    .default('pagarme'),
+  conversion_context: yup.object().nullable(),
 });

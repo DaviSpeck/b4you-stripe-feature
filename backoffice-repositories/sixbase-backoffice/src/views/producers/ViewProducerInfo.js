@@ -72,6 +72,7 @@ import { useSkin } from '../../utility/hooks/useSkin';
 import ConfirmAction from '../components/ConfirmAction';
 import ChangeFee from './ChangeFee';
 import BlockNotesModal from './components/BlockNotesModal';
+import InternationalGovernanceCard from './components/InternationalGovernanceCard';
 import FilterSales from './FilterSales';
 import ModalNotes from './ModalNotes';
 import { OnboardingTable } from './onboarding-table';
@@ -2297,6 +2298,15 @@ const ViewProducerInfo = () => {
                             </Card>
                           </Col>
                         )}
+                      {ability.can(
+                        'manage',
+                        'Producers.manage-dashboard-functionalities',
+                      ) && (
+                        <Col xs="12" md="4" className="mt-3 mt-md-0">
+                          <InternationalGovernanceCard userUuid={userUuid} />
+                        </Col>
+                      )}
+
                     </Row>
                     <Table hover>
                       <tbody>

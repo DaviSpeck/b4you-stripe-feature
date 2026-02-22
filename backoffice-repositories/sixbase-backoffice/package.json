@@ -118,7 +118,9 @@
     "lint": "eslint src/**/*.{js,jsx,ts,tsx}",
     "lint:fix": "eslint src/**/*.{js,jsx,ts,tsx} --fix",
     "type-check": "tsc --noEmit",
-    "type-check:watch": "tsc --noEmit --watch"
+    "type-check:watch": "tsc --noEmit --watch",
+    "test:integration": "craco test --runInBand --watchAll=false src/views/producers/components/InternationalGovernanceCard.test.jsx",
+    "test:front": "npm run test:integration"
   },
   "eslintConfig": {
     "extends": "react-app"
